@@ -1,7 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ModalDiv } from "./mobileModal.styled";
+import { useDispatch } from "react-redux";
+import authOperations from "../../redux/auth/auth-operations";
 
 export default function MobileModal({ handleClickClose }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <ModalDiv>
       <div className="HeaderOfModal">
@@ -9,22 +13,24 @@ export default function MobileModal({ handleClickClose }) {
       </div>
       <ul className="NavList">
         <li>
-          <NavLink className="NavElement" to="/dictionary">
-            Dictionary
+          <NavLink className="NavElement" to="/recommended">
+            Home
           </NavLink>
         </li>
         <li>
-          <NavLink className="NavElement" to="/recommend">
-            Recommend
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="NavElement" to="/training">
-            Training
+          <NavLink className="NavElement" to="/library">
+            Ma library
           </NavLink>
         </li>
       </ul>
-      <div className="Img" />
+      <button
+        className="ButtonLogOut"
+        onClick={() =>
+          dispatch(authOperations.logOut()).then(navigate("/login"))
+        }
+      >
+        Log out
+      </button>
     </ModalDiv>
   );
 }
