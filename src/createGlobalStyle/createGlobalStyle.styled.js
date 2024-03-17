@@ -30,6 +30,7 @@ p{
 }
 
 body {
+  padding: 20px;
 background: #141414;
 }
 
