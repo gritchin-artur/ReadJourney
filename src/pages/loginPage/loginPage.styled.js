@@ -56,7 +56,6 @@ export const MainContainer = styled.div`
 
   .Title {
     margin-top: 40px;
-    font-family: "Gilroy", sans-serif;
     font-weight: 700;
     font-size: 30px;
     line-height: 100%;
@@ -102,7 +101,6 @@ export const MainContainer = styled.div`
     height: 44px;
     background: #262626;
 
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 133%;
@@ -143,7 +141,6 @@ export const MainContainer = styled.div`
     left: 14px;
     top: 14px;
 
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 133%;
@@ -186,7 +183,6 @@ export const MainContainer = styled.div`
     display: flex;
     justify-content: center;
 
-    font-family: "Gilroy", sans-serif;
     font-weight: 700;
     font-size: 14px;
     line-height: 129%;
@@ -204,7 +200,6 @@ export const MainContainer = styled.div`
 
   .ButtonGoLogIn {
     cursor: pointer;
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 117%;
@@ -312,7 +307,6 @@ export const MainContainer = styled.div`
     position: absolute;
     top: 43px;
     left: 20px;
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 10px;
     line-height: 117%;
@@ -328,7 +322,6 @@ export const MainContainer = styled.div`
     position: absolute;
     top: 43px;
     left: 20px;
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 10px;
     line-height: 117%;

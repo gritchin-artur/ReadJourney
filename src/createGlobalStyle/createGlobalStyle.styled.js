@@ -30,6 +30,7 @@ p{
 }
 
 body {
+   font-family: "Gilroy", sans-serif;
   padding: 20px;
 background: #141414;
 }

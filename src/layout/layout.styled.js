@@ -40,7 +40,6 @@ export const LayoutContainer = styled.div`
 
   .Link {
     position: relative;
-    font-family: "Gilroy", sans-serif;
     font-weight: 500;
     font-size: 16px;
     line-height: 112%;
@@ -79,7 +78,6 @@ export const LayoutContainer = styled.div`
   }
 
   .UserNameIcon {
-    font-family: "Gilroy", sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 100%;
@@ -100,7 +98,6 @@ export const LayoutContainer = styled.div`
     display: none;
 
     @media only screen and (min-width: 1440px) {
-      font-family: "Gilroy", sans-serif;
       font-weight: 700;
       font-size: 16px;
       line-height: 112%;
@@ -123,7 +120,6 @@ export const LayoutContainer = styled.div`
       height: 42px;
       background: #1f1f1f;
 
-      font-family: "Gilroy", sans-serif;
       font-weight: 700;
       font-size: 16px;
       line-height: 112%;
