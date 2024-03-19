@@ -6,6 +6,10 @@ export const RecommendedPageContainer = styled.div`
   justify-content: center;
   margin-top: 10px;
 
+  @media only screen and (min-width: 768px) {
+    margin-top: 20px;
+  }
+
   .FormContainer {
     box-sizing: border-box;
     border-radius: 30px;
@@ -14,6 +18,14 @@ export const RecommendedPageContainer = styled.div`
     background: #1f1f1f;
 
     padding: 20px;
+
+    @media only screen and (min-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+      padding: 30px;
+      width: 704px;
+      height: 336px;
+    }
   }
 
   .Form {
@@ -115,6 +127,13 @@ export const RecommendedPageContainer = styled.div`
     height: 244px;
 
     background: #262626;
+
+    @media only screen and (min-width: 768px) {
+      gap: 30px;
+      margin-top: 0px;
+      width: 313px;
+      height: 272px;
+    }
   }
 
   .Title {
@@ -123,6 +142,10 @@ export const RecommendedPageContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 20px;
+    }
   }
 
   .WorkOutList {
@@ -140,7 +163,7 @@ export const RecommendedPageContainer = styled.div`
     align-items: center;
     justify-content: center;
 
-    width: 80px;
+    width: 40px;
     height: 40px;
     border-radius: 50%;
     background: #ffff;
@@ -149,7 +172,7 @@ export const RecommendedPageContainer = styled.div`
     font-size: 18px;
     line-height: 100%;
     letter-spacing: -0.02em;
-    text-align: center;
+
     color: #1f1f1f;
   }
 
@@ -236,19 +259,68 @@ export const RecommendedPageContainer = styled.div`
     height: 32px;
     border-radius: 50%;
     border: 1px solid #686868;
-  }
 
-  .Arrow {
-    path {
-      stroke: #f9f9f9;
-    }
-    &:hover,
-    &:active {
+    &:hover .Arrow {
       path {
         stroke: #686868;
         transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
       }
       transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
     }
+  }
+
+  .BookListContainer {
+    margin-top: 20px;
+    width: 295px;
+    height: 248px;
+    transform: translate(0%, 0%);
+    overflow: hidden;
+  }
+
+  .BookList {
+    display: flex;
+
+    gap: 20px;
+  }
+
+  .BookItem {
+    width: 137px;
+    height: 248px;
+
+    display: grid;
+    gap: 5px;
+  }
+
+  .BookImg {
+    border-radius: 8px;
+    width: 137px;
+    height: 208px;
+  }
+
+  .BookList {
+    display: flex;
+    list-style: none;
+    position: fixed;
+    transition: all ease 1s;
+  }
+
+  .BookTitle {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .BookAuthor {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #686868;
   }
 `;

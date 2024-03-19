@@ -3,20 +3,13 @@ import axios, { token } from "../../api/axiosSettings";
 import toast from "react-hot-toast";
 
 export const getRecommendBooks = createAsyncThunk(
-  "/words/all",
-  async (formData, thunkAPI) => {
+  "/books/recommend",
+  async (params, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
-    const params = {
-      keyword: formData.filters,
-      category: formData.statistics,
-      isIrregular: formData.isIrregular,
-      page: formData.page,
-      limit: 7,
-    };
 
     try {
-      const response = await axios.get("/words/all", params);
+      const response = await axios.get("/books/recommend", { params });
       token.set(persistedToken);
       return response.data;
     } catch (error) {
