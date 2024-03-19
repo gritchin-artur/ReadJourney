@@ -5,31 +5,57 @@ import { ReactComponent as Prev } from "../../img/svg/chevron-left (1)-2.svg";
 import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function RecommendedPage() {
-  //   const email = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
   console.log(recommendedBooks);
 
   let offset = 0;
   const sliderLine = document.querySelector(".BookList");
+  const sliderWindow = document.querySelector(".BookListContainer");
 
   const handlePrevClick = () => {
     offset = offset - 157;
     if (offset < 0) {
-      offset = (recommendedBooks.results.length - 2) * 157;
+      if (sliderWindow && sliderWindow.offsetWidth === 295) {
+        offset = (recommendedBooks.results.length - 2) * 157;
+      }
+      if (sliderWindow && sliderWindow.offsetWidth === 610) {
+        offset = (recommendedBooks.results.length - 9) * 157;
+      }
     }
     sliderLine.style.left = -offset + "px";
   };
 
   const handleNextClick = () => {
     offset = offset + 157;
-    if (offset > (recommendedBooks.results.length - 2) * 157) {
+    if (
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 295 &&
+        offset === (recommendedBooks.results.length - 2) * 157) ||
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 610 &&
+        offset === (recommendedBooks.results.length - 8) * 157)
+    ) {
       offset = 0;
     }
     sliderLine.style.left = -offset + "px";
+  };
+
+  const hideButtonNextPrev = () => {
+    if (
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 295 &&
+        recommendedBooks.results.length < 2) ||
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 610 &&
+        recommendedBooks.results.length < 8)
+    ) {
+      return "none";
+    }
+    return "flex";
   };
 
   useEffect(() => {
@@ -134,7 +160,10 @@ export default function RecommendedPage() {
       <div className="RecommendedboksContainer">
         <div className="TitleButtonContainer">
           <h2 className="RecommendedboksTitle">Recommended</h2>
-          <ul className="PrevNextButtonList">
+          <ul
+            className="PrevNextButtonList"
+            style={{ display: hideButtonNextPrev() }}
+          >
             <li className="PrevNextButton" onClick={handlePrevClick}>
               <Prev className="Arrow" />
             </li>

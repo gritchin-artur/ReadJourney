@@ -129,7 +129,7 @@ export const RecommendedPageContainer = styled.div`
     background: #262626;
 
     @media only screen and (min-width: 768px) {
-      gap: 30px;
+      gap: 40px;
       margin-top: 0px;
       width: 313px;
       height: 272px;
@@ -154,7 +154,8 @@ export const RecommendedPageContainer = styled.div`
   }
 
   .WorkOutElement {
-    display: flex;
+    display: -webkit-box;
+    width: 230px;
     gap: 12px;
   }
 
@@ -230,11 +231,22 @@ export const RecommendedPageContainer = styled.div`
     background: #1f1f1f;
 
     padding: 40px 20px;
+
+    @media only screen and (min-width: 768px) {
+      width: 704px;
+      height: 663px;
+
+      padding: 50px;
+    }
   }
 
   .TitleButtonContainer {
     display: flex;
     justify-content: space-between;
+
+    @media only screen and (min-width: 768px) {
+      align-items: center;
+    }
   }
 
   .RecommendedboksTitle {
@@ -243,6 +255,12 @@ export const RecommendedPageContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 28px;
+      line-height: 114%;
+      letter-spacing: 0.02em;
+    }
   }
 
   .PrevNextButtonList {
@@ -275,12 +293,23 @@ export const RecommendedPageContainer = styled.div`
     height: 248px;
     transform: translate(0%, 0%);
     overflow: hidden;
+
+    @media only screen and (min-width: 768px) {
+      width: 610px;
+      height: 516px;
+    }
   }
 
   .BookList {
     display: flex;
 
     gap: 20px;
+
+    @media only screen and (min-width: 768px) {
+      flex-wrap: wrap;
+      width: 767px;
+      height: 516px;
+    }
   }
 
   .BookItem {
