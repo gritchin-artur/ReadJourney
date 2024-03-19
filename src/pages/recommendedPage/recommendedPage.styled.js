@@ -93,6 +93,15 @@ export const RecommendedPageContainer = styled.div`
     line-height: 129%;
     letter-spacing: 0.02em;
     color: #f9f9f9;
+
+    &:hover {
+      color: #1f1f1f;
+      background-color: #f9f9f9;
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .StartWorkContainer {
@@ -171,6 +180,23 @@ export const RecommendedPageContainer = styled.div`
     text-decoration: underline;
     text-decoration-skip-ink: none;
     color: #686868;
+
+    &:hover {
+      color: #f9f9f9;
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .ArrowNext {
+    cursor: pointer;
+    &:hover,
+    &:active {
+      path {
+        stroke: #686868;
+        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
 
   .RecommendedboksContainer {
