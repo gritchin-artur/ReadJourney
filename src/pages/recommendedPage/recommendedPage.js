@@ -3,6 +3,7 @@ import { RecommendedPageContainer } from "./recommendedPage.styled";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
 import { ReactComponent as Prev } from "../../img/svg/chevron-left (1)-2.svg";
 import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
+
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useEffect } from "react";
@@ -155,6 +156,13 @@ export default function RecommendedPage() {
               <Arrow className="ArrowNext" />
             </li>
           </ul>
+        </div>
+        <div className="DesctopBookContainer">
+          <div className="BooksPicture" />
+          <p className="TextBook">
+            "Books are <span className="PartTextBook">windows</span> to the
+            world, and reading is a journey into the unknown."
+          </p>
         </div>
       </div>
       <div className="RecommendedboksContainer">

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import BookImg from "../../img/png/📚desctop.png";
 
 export const RecommendedPageContainer = styled.div`
   display: grid;
@@ -8,6 +9,11 @@ export const RecommendedPageContainer = styled.div`
 
   @media only screen and (min-width: 768px) {
     margin-top: 20px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    display: flex;
+    gap: 20px;
   }
 
   .FormContainer {
@@ -25,6 +31,13 @@ export const RecommendedPageContainer = styled.div`
       padding: 30px;
       width: 704px;
       height: 336px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      display: block;
+      width: 353px;
+      height: 651px;
+      padding: 40px 20px 20px 20px;
     }
   }
 
@@ -63,6 +76,10 @@ export const RecommendedPageContainer = styled.div`
 
     &:focus {
       outline: none;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      width: 100%;
     }
   }
 
@@ -131,6 +148,13 @@ export const RecommendedPageContainer = styled.div`
     @media only screen and (min-width: 768px) {
       gap: 40px;
       margin-top: 0px;
+      width: 313px;
+      height: 272px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      margin-top: 20px;
+      border-radius: 12px;
       width: 313px;
       height: 272px;
     }
@@ -223,6 +247,43 @@ export const RecommendedPageContainer = styled.div`
     }
   }
 
+  .DesctopBookContainer {
+    display: none;
+
+    @media only screen and (min-width: 1440px) {
+      margin-top: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-radius: 12px;
+      width: 313px;
+      height: 83px;
+
+      background: #262626;
+    }
+  }
+
+  .BooksPicture {
+    width: 45px;
+    height: 45px;
+    background-image: url(${BookImg});
+  }
+
+  .TextBook {
+    width: 219px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #686868;
+  }
+
+  .PartTextBook {
+    color: #f9f9f9;
+  }
+
   .RecommendedboksContainer {
     box-sizing: border-box;
     border-radius: 30px;
@@ -237,6 +298,13 @@ export const RecommendedPageContainer = styled.div`
       height: 663px;
 
       padding: 50px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      width: 847px;
+      height: 651px;
+
+      padding: 40px;
     }
   }
 
@@ -296,6 +364,11 @@ export const RecommendedPageContainer = styled.div`
 
     @media only screen and (min-width: 768px) {
       width: 610px;
+      height: 516px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      width: 767px;
       height: 516px;
     }
   }
