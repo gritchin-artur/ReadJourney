@@ -30,88 +30,88 @@ export default function RecommendedPage() {
   useEffect(() => {
     console.log(values);
     dispatch(getRecommendBooks(values));
-  }, [dispatch, values.page]);
+  }, [dispatch, values]);
 
   let offset = 0;
   const sliderLine = document.querySelector(".BookList");
   const sliderWindow = document.querySelector(".BookListContainer");
 
   const handlePrevClick = () => {
-    if (values.page > 1) {
-      const updatedPage = values.page - 1;
-      handleChange({
-        target: {
-          name: "page",
-          value: updatedPage,
-        },
-      });
-    }
-
-    if (sliderWindow && sliderWindow.offsetWidth === 295) {
-      handleChange({
-        target: {
-          name: "limit",
-          value: 2,
-        },
-      });
-    }
-    if (sliderWindow && sliderWindow.offsetWidth === 610) {
-      handleChange({
-        target: {
-          name: "limit",
-          value: 8,
-        },
-      });
-    }
-    // console.log(values);
-    // offset = offset - 157;
-    // if (offset < 0) {
-    //   if (sliderWindow && sliderWindow.offsetWidth === 295) {
-    //     offset = (recommendedBooks.results.length - 2) * 157;
-    //   }
-    //   if (sliderWindow && sliderWindow.offsetWidth === 610) {
-    //     offset = (recommendedBooks.results.length - 9) * 157;
-    //   }
+    // if (values.page > 1) {
+    //   const updatedPage = values.page - 1;
+    //   handleChange({
+    //     target: {
+    //       name: "page",
+    //       value: updatedPage,
+    //     },
+    //   });
     // }
-    // sliderLine.style.left = -offset + "px";
+
+    // if (sliderWindow && sliderWindow.offsetWidth === 295) {
+    //   handleChange({
+    //     target: {
+    //       name: "limit",
+    //       value: 2,
+    //     },
+    //   });
+    // }
+    // if (sliderWindow && sliderWindow.offsetWidth === 610) {
+    //   handleChange({
+    //     target: {
+    //       name: "limit",
+    //       value: 8,
+    //     },
+    //   });
+    // }
+    console.log(values);
+    offset = offset - 157;
+    if (offset < 0) {
+      if (sliderWindow && sliderWindow.offsetWidth === 295) {
+        offset = (recommendedBooks.results.length - 2) * 157;
+      }
+      if (sliderWindow && sliderWindow.offsetWidth === 610) {
+        offset = (recommendedBooks.results.length - 9) * 157;
+      }
+    }
+    sliderLine.style.left = -offset + "px";
   };
 
   const handleNextClick = () => {
-    if (recommendedBooks.totalPages > values.page) {
-      const updatedPage = values.page + 1;
-      handleChange({
-        target: {
-          name: "page",
-          value: updatedPage,
-        },
-      });
-    }
-    // offset = offset + 157;
-    // if (
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 295 &&
-    //     offset === (recommendedBooks.results.length - 2) * 157) ||
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 610 &&
-    //     offset === (recommendedBooks.results.length - 8) * 157)
-    // ) {
-    //   offset = 0;
+    // if (recommendedBooks.totalPages > values.page) {
+    //   const updatedPage = values.page + 1;
+    //   handleChange({
+    //     target: {
+    //       name: "page",
+    //       value: updatedPage,
+    //     },
+    //   });
     // }
-    // sliderLine.style.left = -offset + "px";
+    offset = offset + 157;
+    if (
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 295 &&
+        offset === (recommendedBooks.results.length - 2) * 157) ||
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 610 &&
+        offset === (recommendedBooks.results.length - 8) * 157)
+    ) {
+      offset = 0;
+    }
+    sliderLine.style.left = -offset + "px";
   };
 
   const hideButtonNextPrev = () => {
-    // if (
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 295 &&
-    //     recommendedBooks.results.length < 2) ||
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 610 &&
-    //     recommendedBooks.results.length < 8)
-    // ) {
-    //   return "none";
-    // }
-    // return "flex";
+    if (
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 295 &&
+        recommendedBooks.results.length < 2) ||
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 610 &&
+        recommendedBooks.results.length < 8)
+    ) {
+      return "none";
+    }
+    return "flex";
   };
 
   return (
