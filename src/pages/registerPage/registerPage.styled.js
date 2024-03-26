@@ -197,6 +197,12 @@ export const MainContainer = styled.div`
     letter-spacing: 0.02em;
     color: #1f1f1f;
 
+    &:hover {
+      color: #f9f9f9;
+      background: none;
+      border: 1px solid #f9f9f9;
+    }
+
     @media only screen and (min-width: 768px) {
       width: 225px;
       height: 52px;
