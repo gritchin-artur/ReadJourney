@@ -11,7 +11,7 @@ import { useEffect } from "react";
 export default function RecommendedPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
-  console.log(recommendedBooks);
+  // console.log(recommendedBooks);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -22,13 +22,11 @@ export default function RecommendedPage() {
     },
 
     onSubmit: (values) => {
-      console.log(values);
       dispatch(getRecommendBooks(values));
     },
   });
 
   useEffect(() => {
-    console.log(values);
     dispatch(getRecommendBooks(values));
   }, [dispatch, values]);
 
@@ -72,6 +70,9 @@ export default function RecommendedPage() {
       if (sliderWindow && sliderWindow.offsetWidth === 610) {
         offset = (recommendedBooks.results.length - 9) * 157;
       }
+      if (sliderWindow && sliderWindow.offsetWidth === 767) {
+        offset = ((recommendedBooks.results.length - 8) / 2) * 157 - 18;
+      }
     }
     sliderLine.style.left = -offset + "px";
   };
@@ -93,25 +94,54 @@ export default function RecommendedPage() {
         offset === (recommendedBooks.results.length - 2) * 157) ||
       (sliderWindow &&
         sliderWindow.offsetWidth === 610 &&
-        offset === (recommendedBooks.results.length - 8) * 157)
+        offset === (recommendedBooks.results.length - 8) * 157) ||
+      (sliderWindow &&
+        sliderWindow.offsetWidth === 767 &&
+        offset >= ((recommendedBooks.results.length - 8) / 2) * 157 - 18)
     ) {
+      // const updatedPage = values.page + 1;
+      // handleChange({
+      //   target: {
+      //     name: "page",
+      //     value: updatedPage,
+      //   },
+      // });
+      // console.log(updatedPage);
       offset = 0;
     }
     sliderLine.style.left = -offset + "px";
+
+    // if (
+    //   sliderWindow &&
+    //   sliderWindow.offsetWidth === 767 &&
+    //   offset >= ((recommendedBooks.results.length - 8) / 2) * 157 - 18
+    // ) {
+    //   const updatedPage = values.page + 1;
+    //   handleChange({
+    //     target: {
+    //       name: "page",
+    //       value: updatedPage,
+    //     },
+    //   });
+    //   console.log(updatedPage);
+    // }
+
+    // (recommendedBooks.results.length / 2) * 157 - 18,
+    // ((recommendedBooks.results.length - 2) / 2) * 157;
   };
 
   const hideButtonNextPrev = () => {
-    if (
-      (sliderWindow &&
-        sliderWindow.offsetWidth === 295 &&
-        recommendedBooks.results.length < 2) ||
-      (sliderWindow &&
-        sliderWindow.offsetWidth === 610 &&
-        recommendedBooks.results.length < 8)
-    ) {
-      return "none";
-    }
-    return "flex";
+    // if (
+    //   (sliderWindow &&
+    //     sliderWindow.offsetWidth === 295 &&
+    //     recommendedBooks.results.length < 2) ||
+    //   (sliderWindow &&
+    //     sliderWindow.offsetWidth === 610 &&
+    //     recommendedBooks.results.length < 8)
+    // ) {
+    //   return "none";
+    // }
+    // return "flex";
   };
 
   return (
