@@ -6,12 +6,46 @@ import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
 
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function RecommendedPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
-  // console.log(recommendedBooks);
+  console.log(recommendedBooks);
+  const [books, setBooks] = useState([]);
+
+  // useEffect(() => {
+  //   const updatedBooks = recommendedBooks.results
+  //     ? [...books, ...recommendedBooks.results]
+  //     : [];
+  //   const uniqueBooks = Array.from(
+  //     new Set(updatedBooks.map((book) => book._id))
+  //   ).map((_id) => {
+  //     return updatedBooks.find((book) => book._id === _id);
+  //   });
+
+  //   setBooks(uniqueBooks);
+  //   console.log(books);
+  // }, [recommendedBooks.results]);
+
+  useEffect(() => {
+    const updatedBooks = recommendedBooks.results
+      ? [...books, ...recommendedBooks.results]
+      : [];
+    const uniqueBooks = Array.from(
+      new Set(updatedBooks.map((book) => book._id))
+    ).map((_id) => {
+      return updatedBooks.find((book) => book._id === _id);
+    });
+
+    setBooks((prevBooks) => {
+      if (JSON.stringify(prevBooks) !== JSON.stringify(uniqueBooks)) {
+        return uniqueBooks;
+      } else {
+        return prevBooks;
+      }
+    });
+  }, [recommendedBooks.results, books]);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -35,117 +69,62 @@ export default function RecommendedPage() {
   const sliderWindow = document.querySelector(".BookListContainer");
 
   const handlePrevClick = () => {
-    // if (values.page > 1) {
-    //   const updatedPage = values.page - 1;
-    //   handleChange({
-    //     target: {
-    //       name: "page",
-    //       value: updatedPage,
-    //     },
-    //   });
-    // }
-
-    // if (sliderWindow && sliderWindow.offsetWidth === 295) {
-    //   handleChange({
-    //     target: {
-    //       name: "limit",
-    //       value: 2,
-    //     },
-    //   });
-    // }
-    // if (sliderWindow && sliderWindow.offsetWidth === 610) {
-    //   handleChange({
-    //     target: {
-    //       name: "limit",
-    //       value: 8,
-    //     },
-    //   });
-    // }
-    console.log(values);
     offset = offset - 157;
     if (offset < 0) {
       if (sliderWindow && sliderWindow.offsetWidth === 295) {
-        offset = (recommendedBooks.results.length - 2) * 157;
+        offset = (books.length - 2) * 157;
       }
       if (sliderWindow && sliderWindow.offsetWidth === 610) {
-        offset = (recommendedBooks.results.length - 9) * 157;
+        offset = (books.length / 2 - 4) * 157;
       }
       if (sliderWindow && sliderWindow.offsetWidth === 767) {
-        offset = ((recommendedBooks.results.length - 8) / 2) * 157 - 18;
+        offset = ((books.length - 10) / 2) * 157;
       }
     }
     sliderLine.style.left = -offset + "px";
   };
 
   const handleNextClick = () => {
-    // if (recommendedBooks.totalPages > values.page) {
-    //   const updatedPage = values.page + 1;
-    //   handleChange({
-    //     target: {
-    //       name: "page",
-    //       value: updatedPage,
-    //     },
-    //   });
-    // }
     offset = offset + 157;
     if (
       (sliderWindow &&
         sliderWindow.offsetWidth === 295 &&
-        offset === (recommendedBooks.results.length - 2) * 157) ||
+        offset === (books.length - 2) * 157) ||
       (sliderWindow &&
         sliderWindow.offsetWidth === 610 &&
-        offset === (recommendedBooks.results.length - 8) * 157) ||
+        offset === ((books.length - 6) / 2) * 157) ||
       (sliderWindow &&
         sliderWindow.offsetWidth === 767 &&
-        offset >= ((recommendedBooks.results.length - 8) / 2) * 157 - 18)
+        offset >= ((books.length - 8) / 2) * 157 - 18)
     ) {
-      // const updatedPage = values.page + 1;
-      // handleChange({
-      //   target: {
-      //     name: "page",
-      //     value: updatedPage,
-      //   },
-      // });
-      // console.log(updatedPage);
-      offset = 0;
+      const updatedPage = values.page + 1;
+      if (updatedPage > recommendedBooks.totalPages) {
+        console.log("offset = 0");
+        offset = 0;
+      } else {
+        handleChange({
+          target: {
+            name: "page",
+            value: updatedPage,
+          },
+        });
+      }
     }
     sliderLine.style.left = -offset + "px";
-
-    // if (
-    //   sliderWindow &&
-    //   sliderWindow.offsetWidth === 767 &&
-    //   offset >= ((recommendedBooks.results.length - 8) / 2) * 157 - 18
-    // ) {
-    //   const updatedPage = values.page + 1;
-    //   handleChange({
-    //     target: {
-    //       name: "page",
-    //       value: updatedPage,
-    //     },
-    //   });
-    //   console.log(updatedPage);
-    // }
-
-    // (recommendedBooks.results.length / 2) * 157 - 18,
-    // ((recommendedBooks.results.length - 2) / 2) * 157;
   };
 
-  const hideButtonNextPrev = () => {
-    // if (
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 295 &&
-    //     recommendedBooks.results.length < 2) ||
-    //   (sliderWindow &&
-    //     sliderWindow.offsetWidth === 610 &&
-    //     recommendedBooks.results.length < 8)
-    // ) {
-    //   return "none";
-    // }
-    // return "flex";
-  };
+  const renderedBooks = useMemo(() => {
+    return books.map((book, item) => (
+      <li key={item} className="BookItem">
+        <img className="BookImg" src={book.imageUrl} alt={book.author} />
+        <h2 className="BookTitle">{book.title}</h2>
+        <p className="BookAuthor">{book.author}</p>
+      </li>
+    ));
+  }, [books]);
 
   return (
-    <RecommendedPageContainer>
+    <RecommendedPageContainer $lengthbooks={books.length}>
       <div className="FormContainer">
         <div>
           <form className="Form">
@@ -225,10 +204,7 @@ export default function RecommendedPage() {
       <div className="RecommendedboksContainer">
         <div className="TitleButtonContainer">
           <h2 className="RecommendedboksTitle">Recommended</h2>
-          <ul
-            className="PrevNextButtonList"
-            style={{ display: hideButtonNextPrev() }}
-          >
+          <ul className="PrevNextButtonList">
             <li className="PrevNextButton" onClick={handlePrevClick}>
               <Prev className="Arrow" />
             </li>
@@ -237,21 +213,9 @@ export default function RecommendedPage() {
             </li>
           </ul>
         </div>
-        {recommendedBooks && recommendedBooks.results && (
+        {books && (
           <div className="BookListContainer">
-            <ul className="BookList">
-              {recommendedBooks.results.map((book, item) => (
-                <li key={item} className="BookItem">
-                  <img
-                    className="BookImg"
-                    src={book.imageUrl}
-                    alt={book.author}
-                  />
-                  <h2 className="BookTitle">{book.title}</h2>
-                  <p className="BookAuthor">{book.author}</p>
-                </li>
-              ))}
-            </ul>
+            <ul className="BookList">{renderedBooks}</ul>
           </div>
         )}
       </div>

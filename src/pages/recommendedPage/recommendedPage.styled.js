@@ -375,12 +375,12 @@ export const RecommendedPageContainer = styled.div`
 
   .BookList {
     display: flex;
-
     gap: 20px;
+    width: ${(props) => props.$lengthbooks * 157}px;
 
     @media only screen and (min-width: 768px) {
       flex-wrap: wrap;
-      width: 767px;
+      width: ${(props) => (props.$lengthbooks * 157) / 2}px;
       height: 516px;
     }
   }
