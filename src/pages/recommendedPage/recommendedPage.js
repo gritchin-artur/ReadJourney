@@ -13,20 +13,7 @@ export default function RecommendedPage() {
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
   console.log(recommendedBooks);
   const [books, setBooks] = useState([]);
-
-  // useEffect(() => {
-  //   const updatedBooks = recommendedBooks.results
-  //     ? [...books, ...recommendedBooks.results]
-  //     : [];
-  //   const uniqueBooks = Array.from(
-  //     new Set(updatedBooks.map((book) => book._id))
-  //   ).map((_id) => {
-  //     return updatedBooks.find((book) => book._id === _id);
-  //   });
-
-  //   setBooks(uniqueBooks);
-  //   console.log(books);
-  // }, [recommendedBooks.results]);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     const updatedBooks = recommendedBooks.results
@@ -45,6 +32,7 @@ export default function RecommendedPage() {
         return prevBooks;
       }
     });
+    console.log(books);
   }, [recommendedBooks.results, books]);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
@@ -64,43 +52,41 @@ export default function RecommendedPage() {
     dispatch(getRecommendBooks(values));
   }, [dispatch, values]);
 
-  let offset = 0;
   const sliderLine = document.querySelector(".BookList");
   const sliderWindow = document.querySelector(".BookListContainer");
 
   const handlePrevClick = () => {
-    offset = offset - 157;
-    if (offset < 0) {
-      if (sliderWindow && sliderWindow.offsetWidth === 295) {
-        offset = (books.length - 2) * 157;
+    let newOffset = offset - 157;
+    if (newOffset < 0) {
+      if (sliderWindow && sliderWindow.offsetWidth === 321) {
+        newOffset = (books.length - 2) * 157;
       }
-      if (sliderWindow && sliderWindow.offsetWidth === 610) {
-        offset = (books.length / 2 - 4) * 157;
+      if (sliderWindow && sliderWindow.offsetWidth === 634) {
+        newOffset = (books.length / 2 - 4) * 157;
       }
-      if (sliderWindow && sliderWindow.offsetWidth === 767) {
-        offset = ((books.length - 10) / 2) * 157;
+      if (sliderWindow && sliderWindow.offsetWidth === 789) {
+        newOffset = ((books.length - 10) / 2) * 157;
       }
     }
-    sliderLine.style.left = -offset + "px";
+    setOffset(newOffset);
   };
 
   const handleNextClick = () => {
-    offset = offset + 157;
+    let newOffset = offset + 157;
     if (
       (sliderWindow &&
-        sliderWindow.offsetWidth === 295 &&
-        offset === (books.length - 2) * 157) ||
+        sliderWindow.offsetWidth === 321 &&
+        newOffset === (books.length - 2) * 157) ||
       (sliderWindow &&
-        sliderWindow.offsetWidth === 610 &&
-        offset === ((books.length - 6) / 2) * 157) ||
+        sliderWindow.offsetWidth === 634 &&
+        newOffset === ((books.length - 6) / 2) * 157) ||
       (sliderWindow &&
-        sliderWindow.offsetWidth === 767 &&
-        offset >= ((books.length - 8) / 2) * 157 - 18)
+        sliderWindow.offsetWidth === 789 &&
+        newOffset >= ((books.length - 8) / 2) * 157 - 18)
     ) {
       const updatedPage = values.page + 1;
       if (updatedPage > recommendedBooks.totalPages) {
-        console.log("offset = 0");
-        offset = 0;
+        newOffset = 0;
       } else {
         handleChange({
           target: {
@@ -110,8 +96,14 @@ export default function RecommendedPage() {
         });
       }
     }
-    sliderLine.style.left = -offset + "px";
+    setOffset(newOffset);
   };
+
+  useEffect(() => {
+    if (sliderLine) {
+      sliderLine.style.left = -offset + "px";
+    }
+  }, [offset, sliderLine]);
 
   const renderedBooks = useMemo(() => {
     return books.map((book, item) => (

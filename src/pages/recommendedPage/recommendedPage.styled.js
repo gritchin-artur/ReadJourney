@@ -291,7 +291,9 @@ export const RecommendedPageContainer = styled.div`
     height: 382px;
     background: #1f1f1f;
 
-    padding: 40px 20px;
+    /* padding: 40px 20px; */
+    justify-content: center;
+    display: grid;
 
     @media only screen and (min-width: 768px) {
       width: 704px;
@@ -311,9 +313,11 @@ export const RecommendedPageContainer = styled.div`
   .TitleButtonContainer {
     display: flex;
     justify-content: space-between;
+    padding: 40px 20px 0 20px;
 
     @media only screen and (min-width: 768px) {
       align-items: center;
+      padding: 0;
     }
   }
 
@@ -356,26 +360,30 @@ export const RecommendedPageContainer = styled.div`
   }
 
   .BookListContainer {
-    margin-top: 20px;
-    width: 295px;
-    height: 248px;
+    width: 321px;
+    height: 274px;
     transform: translate(0%, 0%);
     overflow: hidden;
+    padding: 13px;
+    box-sizing: border-box;
 
     @media only screen and (min-width: 768px) {
-      width: 610px;
-      height: 516px;
+      margin-top: 20px;
+
+      width: 634px;
+      height: 550px;
     }
 
     @media only screen and (min-width: 1440px) {
-      width: 767px;
-      height: 516px;
+      width: 789px;
+      height: 550px;
     }
   }
 
   .BookList {
     display: flex;
     gap: 20px;
+    margin-left: 13px;
     width: ${(props) => props.$lengthbooks * 157}px;
 
     @media only screen and (min-width: 768px) {
@@ -386,11 +394,17 @@ export const RecommendedPageContainer = styled.div`
   }
 
   .BookItem {
+    cursor: pointer;
     width: 137px;
     height: 248px;
 
     display: grid;
     gap: 5px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   .BookImg {
