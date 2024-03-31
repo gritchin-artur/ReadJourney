@@ -160,8 +160,9 @@ export default function RecommendedPage() {
       (sliderWindow && sliderWindow.offsetWidth === 789 && books.length < 10);
 
     setHideButtons(shouldHideButtons);
-    shouldHideButtons && handleNextClick();
-  }, [books, sliderWindow, hideButtons, sliderLine]);
+
+    hideButtons && handleNextClick();
+  }, [books, sliderWindow, hideButtons, sliderLine, handleNextClick]);
 
   return (
     <RecommendedPageContainer $lengthbooks={books.length}>
