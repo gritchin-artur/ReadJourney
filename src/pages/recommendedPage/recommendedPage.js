@@ -11,29 +11,39 @@ import { useEffect, useMemo, useState } from "react";
 export default function RecommendedPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
-  console.log(recommendedBooks);
+
   const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [hideButtons, setHideButtons] = useState(false);
+  const [page, setPage] = useState({
+    title: "",
+    author: "",
+    page: 1,
+    limit: 10,
+  });
 
   useEffect(() => {
-    const updatedBooks = recommendedBooks.results
-      ? [...books, ...recommendedBooks.results]
-      : [];
-    const uniqueBooks = Array.from(
-      new Set(updatedBooks.map((book) => book._id))
-    ).map((_id) => {
-      return updatedBooks.find((book) => book._id === _id);
-    });
+    if (recommendedBooks.totalPages < 3) {
+      setBooks(recommendedBooks.results);
+    } else {
+      const updatedBooks = recommendedBooks.results
+        ? [...books, ...recommendedBooks.results]
+        : [];
+      const uniqueBooks = Array.from(
+        new Set(updatedBooks.map((book) => book._id))
+      ).map((_id) => {
+        return updatedBooks.find((book) => book._id === _id);
+      });
 
-    setBooks((prevBooks) => {
-      if (JSON.stringify(prevBooks) !== JSON.stringify(uniqueBooks)) {
-        return uniqueBooks;
-      } else {
-        return prevBooks;
-      }
-    });
-    console.log(books);
-  }, [recommendedBooks.results, books]);
+      setBooks((prevBooks) => {
+        if (JSON.stringify(prevBooks) !== JSON.stringify(uniqueBooks)) {
+          return uniqueBooks;
+        } else {
+          return prevBooks;
+        }
+      });
+    }
+  }, [recommendedBooks, books]);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -44,13 +54,27 @@ export default function RecommendedPage() {
     },
 
     onSubmit: (values) => {
+      handleChange({
+        target: {
+          name: "page",
+          value: 1,
+        },
+      });
+      console.log(values);
       dispatch(getRecommendBooks(values));
     },
   });
 
   useEffect(() => {
-    dispatch(getRecommendBooks(values));
-  }, [dispatch, values]);
+    setPage((prevState) => ({
+      ...prevState,
+      page: values.page,
+    }));
+  }, [values.page]);
+
+  useEffect(() => {
+    dispatch(getRecommendBooks(page));
+  }, [dispatch, page]);
 
   const sliderLine = document.querySelector(".BookList");
   const sliderWindow = document.querySelector(".BookListContainer");
@@ -72,7 +96,15 @@ export default function RecommendedPage() {
   };
 
   const handleNextClick = () => {
-    let newOffset = offset + 157;
+    let newOffset = hideButtons ? 0 : offset + 157;
+    console.log(newOffset);
+    if (
+      sliderWindow &&
+      books.length &&
+      sliderWindow.offsetWidth > (books.length * 157) / 2 + 4
+    ) {
+      newOffset = 0;
+    }
     if (
       (sliderWindow &&
         sliderWindow.offsetWidth === 321 &&
@@ -106,14 +138,30 @@ export default function RecommendedPage() {
   }, [offset, sliderLine]);
 
   const renderedBooks = useMemo(() => {
-    return books.map((book, item) => (
-      <li key={item} className="BookItem">
-        <img className="BookImg" src={book.imageUrl} alt={book.author} />
-        <h2 className="BookTitle">{book.title}</h2>
-        <p className="BookAuthor">{book.author}</p>
-      </li>
-    ));
-  }, [books]);
+    return recommendedBooks.results && recommendedBooks.results.length !== 0 ? (
+      books.map((book, item) => (
+        <li key={item} className="BookItem">
+          <img className="BookImg" src={book.imageUrl} alt={book.author} />
+          <h2 className="BookTitle">{book.title}</h2>
+          <p className="BookAuthor">{book.author}</p>
+        </li>
+      ))
+    ) : (
+      <h2 style={{ fontSize: "40px", color: "white", whiteSpace: "nowrap" }}>
+        Not found
+      </h2>
+    );
+  }, [books, recommendedBooks]);
+
+  useEffect(() => {
+    const shouldHideButtons =
+      (sliderWindow && sliderWindow.offsetWidth === 321 && books.length < 2) ||
+      (sliderWindow && sliderWindow.offsetWidth === 634 && books.length < 8) ||
+      (sliderWindow && sliderWindow.offsetWidth === 789 && books.length < 10);
+
+    setHideButtons(shouldHideButtons);
+    shouldHideButtons && handleNextClick();
+  }, [books, sliderWindow, hideButtons, sliderLine]);
 
   return (
     <RecommendedPageContainer $lengthbooks={books.length}>
@@ -196,7 +244,10 @@ export default function RecommendedPage() {
       <div className="RecommendedboksContainer">
         <div className="TitleButtonContainer">
           <h2 className="RecommendedboksTitle">Recommended</h2>
-          <ul className="PrevNextButtonList">
+          <ul
+            className="PrevNextButtonList"
+            style={{ display: hideButtons ? "none" : "flex" }}
+          >
             <li className="PrevNextButton" onClick={handlePrevClick}>
               <Prev className="Arrow" />
             </li>

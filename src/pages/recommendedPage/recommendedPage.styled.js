@@ -371,7 +371,7 @@ export const RecommendedPageContainer = styled.div`
       margin-top: 20px;
 
       width: 634px;
-      height: 550px;
+      height: 548px;
     }
 
     @media only screen and (min-width: 1440px) {
