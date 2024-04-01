@@ -3,10 +3,10 @@ import { RecommendedPageContainer } from "./recommendedPage.styled";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
 import { ReactComponent as Prev } from "../../img/svg/chevron-left (1)-2.svg";
 import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
-
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { openModalBook } from "../../redux/modals/modal-slice";
 
 export default function RecommendedPage() {
   const dispatch = useDispatch();
@@ -184,7 +184,11 @@ export default function RecommendedPage() {
   const renderedBooks = useMemo(() => {
     return recommendedBooks.results && recommendedBooks.results.length !== 0 ? (
       books.map((book, item) => (
-        <li key={item} className="BookItem">
+        <li
+          key={item}
+          className="BookItem"
+          onClick={() => dispatch(openModalBook(book))}
+        >
           <img className="BookImg" src={book.imageUrl} alt={book.author} />
           <h2 className="BookTitle">{book.title}</h2>
           <p className="BookAuthor">{book.author}</p>
@@ -195,7 +199,7 @@ export default function RecommendedPage() {
         Not found
       </h2>
     );
-  }, [books, recommendedBooks]);
+  }, [books, recommendedBooks, dispatch]);
 
   useEffect(() => {
     const shouldHideButtons =

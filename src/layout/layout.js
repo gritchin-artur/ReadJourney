@@ -14,6 +14,8 @@ export default function Layout() {
   const isMobileModalOpen = useSelector(
     (state) => state.modal.isModalOpenMobile
   );
+  const isModalOpenBook = useSelector((state) => state.modal.isModalOpenBook);
+
   return (
     <>
       <LayoutContainer display={isLoggedIn ? "flex" : "none"}>
@@ -54,7 +56,7 @@ export default function Layout() {
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
-      {isMobileModalOpen && <Modals />}
+      {(isMobileModalOpen || isModalOpenBook) && <Modals />}
     </>
   );
 }

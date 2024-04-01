@@ -1,21 +1,10 @@
 import { useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  // closeModalAddWord,
-  // closeModalClickWord,
-  // closeModalConfirmation,
-  // closeModalEdil,
-  closeModalMobile,
-  // closeModalWellDone,
-} from "../redux/modals/modal-slice";
+import { closeModalBook, closeModalMobile } from "../redux/modals/modal-slice";
 import MobileModal from "./mobileModal/mobileModal";
 import { BackdropStyle } from "./modals.styled";
-// import { AddWordModal } from "./addWordModal/addWordModal";
-// import { ClickWord } from "./clickWord/clickWord";
-// import { EditModal } from "./editModal/editModal";
-// import { ConfirmationModal } from "./confirmation/confirmationModal";
-// import WellDoneModal from "./wellDoneModal/wellDoneModal";
+import ModalBook from "./modalBook/modalBook";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -24,27 +13,11 @@ export default function Modals() {
   const isMobileModalOpen = useSelector(
     (state) => state.modal.isModalOpenMobile
   );
-  // const isModalOpenAddWord = useSelector(
-  //   (state) => state.modal.isModalOpenAddWord
-  // );
-  // const isModalOpenClickWord = useSelector(
-  //   (state) => state.modal.isModalOpenClickWord
-  // );
-  // const isModalOpenConfirmation = useSelector(
-  //   (state) => state.modal.isModalOpenConfirmation
-  // );
-  // const isModalOpenEdit = useSelector((state) => state.modal.isModalOpenEdit);
-  // const isModalOpenWellDone = useSelector(
-  //   (state) => state.modal.isModalOpenWellDone
-  // );
+  const isModalOpenBook = useSelector((state) => state.modal.isModalOpenBook);
 
   const handleClickClose = useCallback(() => {
     dispatch(closeModalMobile());
-    // dispatch(closeModalAddWord());
-    // dispatch(closeModalClickWord());
-    // dispatch(closeModalEdil());
-    // dispatch(closeModalConfirmation());
-    // dispatch(closeModalWellDone());
+    dispatch(closeModalBook());
   }, [dispatch]);
 
   const handleBackdropClick = (e) => {
@@ -67,38 +40,15 @@ export default function Modals() {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.cssText = `overflow: auto; `;
     };
-  }, [
-    isMobileModalOpen,
-    // isModalOpenAddWord,
-    // isModalOpenClickWord,
-    // isModalOpenConfirmation,
-    // isModalOpenEdit,
-    // isModalOpenWellDone,
-    handleClickClose,
-    dispatch,
-  ]);
+  }, [isMobileModalOpen, isModalOpenBook, handleClickClose, dispatch]);
   return createPortal(
     <>
-      {isMobileModalOpen && (
-        // ||
-        // isModalOpenAddWord ||
-        // isModalOpenEdit ||
-        // isModalOpenConfirmation ||
-        // isModalOpenWellDone
+      {(isMobileModalOpen || isModalOpenBook) && (
         <BackdropStyle onClick={handleBackdropClick}>
           {isMobileModalOpen && (
             <MobileModal handleClickClose={handleClickClose} />
           )}
-          {/* {isModalOpenAddWord && (
-            <AddWordModal handleClickClose={handleClickClose} />
-          )}
-          {isModalOpenConfirmation && (
-            <ConfirmationModal handleClickClose={handleClickClose} />
-          )}
-          {isModalOpenEdit && <EditModal handleClickClose={handleClickClose} />}
-          {isModalOpenWellDone && (
-            <WellDoneModal handleClickClose={handleClickClose} />
-          )} */}
+          {isModalOpenBook && <ModalBook handleClickClose={handleClickClose} />}
         </BackdropStyle>
       )}
       {/* {isModalOpenClickWord && (

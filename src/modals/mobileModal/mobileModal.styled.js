@@ -29,6 +29,12 @@ export const ModalDiv = styled.div`
     width: 28px;
     height: 28px;
     background-image: url(${X});
+
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   .NavList {
