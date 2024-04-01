@@ -6,7 +6,7 @@ import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
 
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function RecommendedPage() {
   const dispatch = useDispatch();
@@ -95,7 +95,43 @@ export default function RecommendedPage() {
     setOffset(newOffset);
   };
 
-  const handleNextClick = () => {
+  // const handleNextClick = () => {
+  //   let newOffset = hideButtons ? 0 : offset + 157;
+  //   console.log(newOffset);
+  //   if (
+  //     sliderWindow &&
+  //     books.length &&
+  //     sliderWindow.offsetWidth > (books.length * 157) / 2 + 4
+  //   ) {
+  //     newOffset = 0;
+  //   }
+  //   if (
+  //     (sliderWindow &&
+  //       sliderWindow.offsetWidth === 321 &&
+  //       newOffset === (books.length - 2) * 157) ||
+  //     (sliderWindow &&
+  //       sliderWindow.offsetWidth === 634 &&
+  //       newOffset === ((books.length - 6) / 2) * 157) ||
+  //     (sliderWindow &&
+  //       sliderWindow.offsetWidth === 789 &&
+  //       newOffset >= ((books.length - 8) / 2) * 157 - 18)
+  //   ) {
+  //     const updatedPage = values.page + 1;
+  //     if (updatedPage > recommendedBooks.totalPages) {
+  //       newOffset = 0;
+  //     } else {
+  //       handleChange({
+  //         target: {
+  //           name: "page",
+  //           value: updatedPage,
+  //         },
+  //       });
+  //     }
+  //   }
+  //   setOffset(newOffset);
+  // };
+
+  const handleNextClick = useCallback(() => {
     let newOffset = hideButtons ? 0 : offset + 157;
     console.log(newOffset);
     if (
@@ -129,7 +165,15 @@ export default function RecommendedPage() {
       }
     }
     setOffset(newOffset);
-  };
+  }, [
+    books,
+    hideButtons,
+    offset,
+    sliderWindow,
+    handleChange,
+    values.page,
+    recommendedBooks.totalPages,
+  ]);
 
   useEffect(() => {
     if (sliderLine) {
