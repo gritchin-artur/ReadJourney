@@ -13,6 +13,7 @@ const RegisterPage = lazy(() => import("pages/registerPage/registerPage"));
 const RecommendedPage = lazy(() =>
   import("pages/recommendedPage/recommendedPage")
 );
+const MyLibraryPage = lazy(() => import("pages/myLibraryPage/myLibraryPage"));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,14 @@ export const App = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path="library" element={<p>page 2</p>} />
+              <Route
+                path="library"
+                element={
+                  <PrivateRoute>
+                    <MyLibraryPage />
+                  </PrivateRoute>
+                }
+              />
               <Route path="reading" element={<p>page 3</p>} />
               {/* <Route path="register" element={<RegisterPage />} /> */}
               <Route

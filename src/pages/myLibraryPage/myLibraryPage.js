@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RecommendedPageContainer } from "./recommendedPage.styled";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
 import { ReactComponent as Prev } from "../../img/svg/chevron-left (1)-2.svg";
 import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
@@ -7,8 +6,9 @@ import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { openModalBook } from "../../redux/modals/modal-slice";
+import { MyLibraryPageContainer } from "./myLibraryPage.styled";
 
-export default function RecommendedPage() {
+export default function MyLibraryPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
 
@@ -18,6 +18,7 @@ export default function RecommendedPage() {
   const [page, setPage] = useState({
     title: "",
     author: "",
+    number: null,
     page: 1,
     limit: 10,
   });
@@ -60,7 +61,6 @@ export default function RecommendedPage() {
           value: 1,
         },
       });
-      console.log(values);
       dispatch(getRecommendBooks(values));
     },
   });
@@ -76,46 +76,48 @@ export default function RecommendedPage() {
     dispatch(getRecommendBooks(page));
   }, [dispatch, page]);
 
-  const sliderLine = document.querySelector(".BookList");
-  const sliderWindow = document.querySelector(".BookListContainer");
+  const sliderLine = document.querySelector(".BookListLibrary");
+  const sliderWindow = document.querySelector(".BookListLibraryContainer");
 
-  const handlePrevClick = () => {
-    let newOffset = offset - 157;
-    if (newOffset < 0) {
-      if (sliderWindow && sliderWindow.offsetWidth === 321) {
-        newOffset = (books.length - 2) * 157;
-      }
-      if (sliderWindow && sliderWindow.offsetWidth === 634) {
-        newOffset = (books.length / 2 - 4) * 157;
-      }
-      if (sliderWindow && sliderWindow.offsetWidth === 789) {
-        newOffset = ((books.length - 10) / 2) * 157;
-      }
-    }
-    setOffset(newOffset);
-  };
+  //   const handlePrevClick = () => {
+  //     let newOffset = offset - 91;
+  //     if (newOffset < 0) {
+  //       if (sliderWindow && sliderWindow.offsetWidth === 279) {
+  //         newOffset = (books.length - 3) * 91;
+  //       }
+  //       if (sliderWindow && sliderWindow.offsetWidth === 634) {
+  //         newOffset = (books.length / 2 - 4) * 91;
+  //       }
+  //       if (sliderWindow && sliderWindow.offsetWidth === 789) {
+  //         newOffset = ((books.length - 10) / 2) * 91;
+  //       }
+  //     }
+  //     setOffset(newOffset);
+  //   };
 
-  const handleNextClick = useCallback(() => {
-    let newOffset = hideButtons ? 0 : offset + 157;
+  const handleNextClick = () => {
+    let newOffset = offset + 91;
     console.log(newOffset);
     if (
       sliderWindow &&
       books.length &&
-      sliderWindow.offsetWidth > (books.length * 157) / 2 + 4
+      sliderWindow.offsetWidth > (books.length * 91) / 2 + 4
     ) {
       newOffset = 0;
     }
+
     if (
       (sliderWindow &&
-        sliderWindow.offsetWidth === 321 &&
-        newOffset === (books.length - 2) * 157) ||
+        sliderWindow.offsetWidth === 279 &&
+        newOffset === (books.length - 3) * 91) ||
       (sliderWindow &&
         sliderWindow.offsetWidth === 634 &&
-        newOffset === ((books.length - 6) / 2) * 157) ||
+        newOffset === ((books.length - 6) / 2) * 91) ||
       (sliderWindow &&
         sliderWindow.offsetWidth === 789 &&
-        newOffset >= ((books.length - 8) / 2) * 157)
+        newOffset >= ((books.length - 8) / 2) * 91)
     ) {
+      console.log("updatedPage");
       const updatedPage = values.page + 1;
       if (updatedPage > recommendedBooks.totalPages) {
         newOffset = 0;
@@ -128,22 +130,15 @@ export default function RecommendedPage() {
         });
       }
     }
-    setOffset(newOffset);
-  }, [
-    books,
-    hideButtons,
-    offset,
-    sliderWindow,
-    handleChange,
-    values.page,
-    recommendedBooks.totalPages,
-  ]);
+    sliderLine.style.left = -offset + "px";
+  };
 
-  useEffect(() => {
-    if (sliderLine) {
-      sliderLine.style.left = -offset + "px";
-    }
-  }, [offset, sliderLine]);
+  //   useEffect(() => {
+  //     if (sliderLine) {
+  //       console.log("sliderLine", -offset + "px");
+  //       sliderLine.style.left = -offset + "px";
+  //     }
+  //   }, [offset, sliderLine]);
 
   const renderedBooks = useMemo(() => {
     return recommendedBooks.results && recommendedBooks.results.length !== 0 ? (
@@ -165,19 +160,19 @@ export default function RecommendedPage() {
     );
   }, [books, recommendedBooks, dispatch]);
 
-  useEffect(() => {
-    const shouldHideButtons =
-      (sliderWindow && sliderWindow.offsetWidth === 321 && books.length < 2) ||
-      (sliderWindow && sliderWindow.offsetWidth === 634 && books.length < 8) ||
-      (sliderWindow && sliderWindow.offsetWidth === 789 && books.length < 10);
+  //   useEffect(() => {
+  //     const shouldHideButtons =
+  //       (sliderWindow && sliderWindow.offsetWidth === 279 && books.length < 2) ||
+  //       (sliderWindow && sliderWindow.offsetWidth === 634 && books.length < 8) ||
+  //       (sliderWindow && sliderWindow.offsetWidth === 789 && books.length < 10);
 
-    setHideButtons(shouldHideButtons);
+  //     setHideButtons(shouldHideButtons);
 
-    hideButtons && handleNextClick();
-  }, [books, sliderWindow, hideButtons, sliderLine, handleNextClick]);
+  //     hideButtons && handleNextClick();
+  //   }, [books, sliderWindow, hideButtons, sliderLine, handleNextClick]);
 
   return (
-    <RecommendedPageContainer $lengthbooks={books.length}>
+    <MyLibraryPageContainer $lengthbooks={books.length}>
       <div className="FormContainer">
         <div>
           <form className="Form">
@@ -208,39 +203,39 @@ export default function RecommendedPage() {
               />
               <span className="TextInput">The author:</span>
             </div>
+
+            <div className="DivInput">
+              <input
+                id="number"
+                name="number"
+                type="number"
+                placeholder="Enter text"
+                className="AuthorInput"
+                onChange={handleChange}
+                value={values.number}
+                onBlur={handleBlur}
+              />
+              <span className="TextInput">Number of pages:</span>
+            </div>
           </form>
           <button
             className="ButtonToApply"
             type="submit"
             onClick={handleSubmit}
           >
-            To apply
+            Add book
           </button>
         </div>
         <div className="StartWorkContainer">
-          <h2 className="Title">Start your workout</h2>
-          <ul className="WorkOutList">
-            <li className="WorkOutElement">
-              <span className="WorkOutNumber">1</span>
-              <p className="WorkOutText">
-                Create a personal library:
-                <span className="WorkOutPartText">
-                  add the books you intend to read to it.
-                </span>
-              </p>
-            </li>
-            <li className="WorkOutElement">
-              <span className="WorkOutNumber">2</span>
-              <p className="WorkOutText">
-                Create your first workout:
-                <span className="WorkOutPartText">
-                  define a goal, choose a period, start training.
-                </span>
-              </p>
-            </li>
-          </ul>
+          <h2 className="Title">Recommended books</h2>
+
+          {books && (
+            <div className="BookListLibraryContainer">
+              <ul className="BookListLibrary">{renderedBooks}</ul>
+            </div>
+          )}
           <ul className="ButtonList">
-            <li className="ButtonMyLibrary">My library</li>
+            <li className="ButtonMyLibrary">Home</li>
             <li>
               <Arrow className="ArrowNext" />
             </li>
@@ -256,25 +251,10 @@ export default function RecommendedPage() {
       </div>
       <div className="RecommendedboksContainer">
         <div className="TitleButtonContainer">
-          <h2 className="RecommendedboksTitle">Recommended</h2>
-          <ul
-            className="PrevNextButtonList"
-            style={{ display: hideButtons ? "none" : "flex" }}
-          >
-            <li className="PrevNextButton" onClick={handlePrevClick}>
-              <Prev className="Arrow" />
-            </li>
-            <li className="PrevNextButton" onClick={handleNextClick}>
-              <Next className="Arrow" />
-            </li>
-          </ul>
+          <h2 className="RecommendedboksTitle">My library</h2>
+          <input className="InputAllBooks" />
         </div>
-        {books && (
-          <div className="BookListContainer">
-            <ul className="BookList">{renderedBooks}</ul>
-          </div>
-        )}
       </div>
-    </RecommendedPageContainer>
+    </MyLibraryPageContainer>
   );
 }

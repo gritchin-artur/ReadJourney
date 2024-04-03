@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import BookImg from "../../img/png/📚desctop.png";
 
-export const RecommendedPageContainer = styled.div`
+export const MyLibraryPageContainer = styled.div`
   display: grid;
   gap: 10px;
   justify-content: center;
@@ -20,7 +20,7 @@ export const RecommendedPageContainer = styled.div`
     box-sizing: border-box;
     border-radius: 30px;
     width: 335px;
-    height: 478px;
+    height: 528px;
     background: #1f1f1f;
 
     padding: 20px;
@@ -91,6 +91,10 @@ export const RecommendedPageContainer = styled.div`
     padding-left: 80px;
   }
 
+  input[id="number"] {
+    padding-left: 112px;
+  }
+
   .TextInput {
     position: absolute;
     left: 14px;
@@ -109,7 +113,7 @@ export const RecommendedPageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 18px;
     border: 1px solid rgba(249, 249, 249, 0.2);
     border-radius: 30px;
     padding: 10px;
@@ -135,9 +139,10 @@ export const RecommendedPageContainer = styled.div`
 
   .StartWorkContainer {
     display: grid;
-    gap: 20px;
+    justify-content: center;
+    /* gap: 20px; */
     box-sizing: border-box;
-    margin-top: 20px;
+    margin-top: 18px;
     padding: 20px;
     border-radius: 12px;
     width: 295px;
@@ -166,6 +171,7 @@ export const RecommendedPageContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+    margin-left: 15px;
 
     @media only screen and (min-width: 768px) {
       font-size: 20px;
@@ -217,6 +223,8 @@ export const RecommendedPageContainer = styled.div`
   .ButtonList {
     display: flex;
     justify-content: space-between;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
   .ButtonMyLibrary {
@@ -288,7 +296,7 @@ export const RecommendedPageContainer = styled.div`
     box-sizing: border-box;
     border-radius: 30px;
     width: 335px;
-    height: 382px;
+    height: 407px;
     background: #1f1f1f;
 
     /* padding: 40px 20px; */
@@ -359,13 +367,13 @@ export const RecommendedPageContainer = styled.div`
     }
   }
 
-  .BookListContainer {
-    width: 321px;
-    height: 274px;
+  .BookListLibraryContainer {
+    width: 253px;
+    height: 141px;
     transform: translate(0%, 0%);
     overflow: hidden;
     padding: 13px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 
     @media only screen and (min-width: 768px) {
       margin-top: 20px;
@@ -380,28 +388,29 @@ export const RecommendedPageContainer = styled.div`
     }
   }
 
-  .BookList {
+  .BookListLibrary {
     display: flex;
     list-style: none;
     position: fixed;
     transition: all ease 1s;
     gap: 20px;
     margin-left: 13px;
-    width: ${(props) => props.$lengthbooks * 157}px;
+    width: ${(props) => props.$lengthbooks * 91}px;
 
     @media only screen and (min-width: 768px) {
       margin-left: 0;
       flex-direction: column;
+      list-style-type: none;
       flex-wrap: wrap;
-      width: ${(props) => (props.$lengthbooks * 157) / 2}px;
+      width: ${(props) => (props.$lengthbooks * 91) / 2}px;
       height: 516px;
     }
   }
 
   .BookItem {
     cursor: pointer;
-    width: 137px;
-    height: 248px;
+    width: 71px;
+    height: 141px;
 
     display: grid;
     gap: 5px;
@@ -414,16 +423,16 @@ export const RecommendedPageContainer = styled.div`
 
   .BookImg {
     border-radius: 8px;
-    width: 137px;
-    height: 208px;
+    width: 71px;
+    height: 107px;
   }
 
   .BookTitle {
     font-weight: 700;
-    font-size: 14px;
-    line-height: 129%;
+    font-size: 10px;
+    line-height: 120%;
     letter-spacing: -0.02em;
-    color: #f9f9f9;
+    color: #e3e3e3;
 
     overflow: hidden;
     white-space: nowrap;
@@ -436,5 +445,13 @@ export const RecommendedPageContainer = styled.div`
     line-height: 120%;
     letter-spacing: -0.02em;
     color: #686868;
+  }
+
+  .InputAllBooks {
+    border: 1px solid #3e3e3e;
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 120px;
+    height: 40px;
   }
 `;
