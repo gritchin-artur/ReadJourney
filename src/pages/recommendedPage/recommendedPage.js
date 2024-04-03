@@ -95,42 +95,6 @@ export default function RecommendedPage() {
     setOffset(newOffset);
   };
 
-  // const handleNextClick = () => {
-  //   let newOffset = hideButtons ? 0 : offset + 157;
-  //   console.log(newOffset);
-  //   if (
-  //     sliderWindow &&
-  //     books.length &&
-  //     sliderWindow.offsetWidth > (books.length * 157) / 2 + 4
-  //   ) {
-  //     newOffset = 0;
-  //   }
-  //   if (
-  //     (sliderWindow &&
-  //       sliderWindow.offsetWidth === 321 &&
-  //       newOffset === (books.length - 2) * 157) ||
-  //     (sliderWindow &&
-  //       sliderWindow.offsetWidth === 634 &&
-  //       newOffset === ((books.length - 6) / 2) * 157) ||
-  //     (sliderWindow &&
-  //       sliderWindow.offsetWidth === 789 &&
-  //       newOffset >= ((books.length - 8) / 2) * 157 - 18)
-  //   ) {
-  //     const updatedPage = values.page + 1;
-  //     if (updatedPage > recommendedBooks.totalPages) {
-  //       newOffset = 0;
-  //     } else {
-  //       handleChange({
-  //         target: {
-  //           name: "page",
-  //           value: updatedPage,
-  //         },
-  //       });
-  //     }
-  //   }
-  //   setOffset(newOffset);
-  // };
-
   const handleNextClick = useCallback(() => {
     let newOffset = hideButtons ? 0 : offset + 157;
     console.log(newOffset);
