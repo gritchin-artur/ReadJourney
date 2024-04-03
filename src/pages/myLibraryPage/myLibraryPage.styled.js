@@ -108,7 +108,7 @@ export const MyLibraryPageContainer = styled.div`
     color: #686868;
   }
 
-  .ButtonToApply {
+  .ButtonAddBook {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -178,7 +178,7 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-  .WorkOutList {
+  /* .WorkOutList {
     display: grid;
     gap: 20px;
   }
@@ -187,9 +187,9 @@ export const MyLibraryPageContainer = styled.div`
     display: -webkit-box;
     width: 230px;
     gap: 12px;
-  }
+  } */
 
-  .WorkOutNumber {
+  /* .WorkOutNumber {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,7 +218,7 @@ export const MyLibraryPageContainer = styled.div`
   .WorkOutPartText {
     color: #686868;
     margin-left: 8px;
-  }
+  } */
 
   .ButtonList {
     display: flex;
@@ -227,7 +227,7 @@ export const MyLibraryPageContainer = styled.div`
     margin-right: 15px;
   }
 
-  .ButtonMyLibrary {
+  .ButtonHome {
     cursor: pointer;
     font-weight: 500;
     font-size: 14px;
@@ -299,7 +299,6 @@ export const MyLibraryPageContainer = styled.div`
     height: 407px;
     background: #1f1f1f;
 
-    /* padding: 40px 20px; */
     justify-content: center;
     display: grid;
 
@@ -343,12 +342,12 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-  .PrevNextButtonList {
+  /* .PrevNextButtonList {
     display: flex;
     gap: 8px;
-  }
+  } */
 
-  .PrevNextButton {
+  /* .PrevNextButton {
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -365,7 +364,7 @@ export const MyLibraryPageContainer = styled.div`
       }
       transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
     }
-  }
+  } */
 
   .BookListLibraryContainer {
     width: 253px;
