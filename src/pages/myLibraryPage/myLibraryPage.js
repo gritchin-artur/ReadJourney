@@ -119,17 +119,6 @@ export default function MyLibraryPage() {
     );
   }, [recommendedBooks, dispatch]);
 
-  //   useEffect(() => {
-  //     const shouldHideButtons =
-  //       (sliderWindow && sliderWindow.offsetWidth === 279 && books.length < 2) ||
-  //       (sliderWindow && sliderWindow.offsetWidth === 634 && books.length < 8) ||
-  //       (sliderWindow && sliderWindow.offsetWidth === 789 && books.length < 10);
-
-  //     setHideButtons(shouldHideButtons);
-
-  //     hideButtons && handleNextClick();
-  //   }, [books, sliderWindow, hideButtons, sliderLine, handleNextClick]);
-
   return (
     <MyLibraryPageContainer $lengthbooks={recommendedBooks.length}>
       <div className="FormContainer">
