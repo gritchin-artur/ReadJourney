@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
-// import { ReactComponent as Prev } from "../../img/svg/chevron-left (1)-2.svg";
-// import { ReactComponent as Next } from "../../img/svg/chevron-left-2.svg";
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
