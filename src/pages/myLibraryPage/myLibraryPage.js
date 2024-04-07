@@ -27,7 +27,6 @@ export default function MyLibraryPage() {
     },
 
     onSubmit: (values) => {
-      console.log(values)
       handleChange({
         target: {
           name: "page",
