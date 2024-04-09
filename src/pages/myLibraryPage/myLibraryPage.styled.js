@@ -319,7 +319,7 @@ export const MyLibraryPageContainer = styled.div`
 
   .TitleButtonContainer {
     display: flex;
-    justify-content: space-between;
+    gap: 80px;
     padding: 40px 20px 0 20px;
 
     @media only screen and (min-width: 768px) {
@@ -394,7 +394,7 @@ export const MyLibraryPageContainer = styled.div`
     transition: all ease 1s;
     gap: 20px;
     margin-left: 13px;
-    width: ${(props) => props.$lengthbooks * 91}px;
+    width: ${(props) => console.log(props.$lengthbooks * 91)}px;
 
     @media only screen and (min-width: 768px) {
       margin-left: 0;
@@ -446,11 +446,57 @@ export const MyLibraryPageContainer = styled.div`
     color: #686868;
   }
 
+  .custom-input {
+    position: relative;
+  }
+
   .InputAllBooks {
     border: 1px solid #3e3e3e;
     border-radius: 12px;
     padding: 12px 14px;
     width: 120px;
     height: 40px;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+  }
+
+  .IconSwitch {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+
+    &:hover,
+    &:active {
+      path {
+        stroke: #686868;
+        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    }
+  }
+
+  .dropdown {
+    z-index: 1000;
+    position: absolute;
+    margin-top: 5px;
+    display: none;
+    gap: 8px;
+
+    border-radius: 15px;
+    padding: 12px 18px;
+    border: 1px solid #3e3e3e;
+    color: #f9f9f9;
+  }
+
+  .ListItem {
+    cursor: pointer;
+    &:hover {
+      color: #f9f9f96b;
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
 `;

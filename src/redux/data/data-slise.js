@@ -4,6 +4,7 @@ import {
   // getAllCategories,
   // getAllWord,
   getRecommendBooks,
+  getOwnBooks,
   // ownWord,
   // statisticsWords,
   // tasksWords,
@@ -12,6 +13,8 @@ import {
 const initialState = {
   recommendedBooks: [],
   isLoadingRecommended: false,
+  ownBooks: [],
+  isLoadingOwn: false,
   // statistics: [],
   // isLoadingStatistics: false,
   // words: [],
@@ -35,6 +38,19 @@ const handleGetRecommendedBooksFulfilled = (state, { payload }) => {
 
 const handleGetRecommendedBooksRejected = (state, { payload }) => {
   state.isLoadingRecommended = true;
+};
+
+const handleGetOwnBooksPending = (state, { payload }) => {
+  state.isLoadingOwn = true;
+};
+
+const handleGetOwnBooksFulfilled = (state, { payload }) => {
+  state.ownBooks = payload;
+  state.isLoadingOwn = false;
+};
+
+const handleGetOwnBooksRejected = (state, { payload }) => {
+  state.isLoadingOwn = true;
 };
 
 // const handleGetStatisticsWordPending = (state, { payload }) => {
@@ -88,7 +104,10 @@ const dataSlise = createSlice({
     builder
       .addCase(getRecommendBooks.pending, handleGetRecommendedBooksPending)
       .addCase(getRecommendBooks.fulfilled, handleGetRecommendedBooksFulfilled)
-      .addCase(getRecommendBooks.rejected, handleGetRecommendedBooksRejected);
+      .addCase(getRecommendBooks.rejected, handleGetRecommendedBooksRejected)
+          .addCase(getOwnBooks.pending, handleGetOwnBooksPending)
+      .addCase(getOwnBooks.fulfilled, handleGetOwnBooksFulfilled)
+      .addCase(getOwnBooks.rejected, handleGetOwnBooksRejected)
     // .addCase(statisticsWords.fulfilled, handleGetStatisticsWordFulfilled)
     // .addCase(ownWord.pending, handleGetOwnWordPending)
     // .addCase(ownWord.fulfilled, handleGetOwnWordFulfilled)

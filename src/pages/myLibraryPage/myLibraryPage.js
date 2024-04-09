@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
+import { ReactComponent as SwitchInput} from "../../img/svg/chevron-down-2.svg";
 import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
@@ -9,14 +10,39 @@ import { MyLibraryPageContainer } from "./myLibraryPage.styled";
 export default function MyLibraryPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
-
+  const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);
+  const status = ['in-progress', "unread", "done"]
   const [page, setPage] = useState({
     title: "",
     author: "",
     page: 1,
     limit: 10,
   });
+
+    useEffect(() => {
+    if (recommendedBooks.totalPages < 3) {
+      setBooks(recommendedBooks.results);
+    } else {
+      const updatedBooks = recommendedBooks.results
+        ? [...books, ...recommendedBooks.results]
+        : [];
+      const uniqueBooks = Array.from(
+        new Set(updatedBooks.map((book) => book._id))
+      ).map((_id) => {
+        return updatedBooks.find((book) => book._id === _id);
+      });
+
+      setBooks((prevBooks) => {
+        if (JSON.stringify(prevBooks) !== JSON.stringify(uniqueBooks)) {
+          return uniqueBooks;
+        } else {
+          return prevBooks;
+        }
+      });
+    }
+      console.log(books)
+  }, [recommendedBooks, books]);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -58,22 +84,22 @@ export default function MyLibraryPage() {
       console.log(offset);
       if (
         sliderWindow &&
-        recommendedBooks.length &&
-        sliderWindow.offsetWidth > (recommendedBooks.length * 91) / 2 + 4
+        books.length &&
+        sliderWindow.offsetWidth > (books.length * 91) / 2 + 4
       ) {
         newOffset = 0;
       }
-      console.log((recommendedBooks.length - 3) * 91, newOffset);
+      console.log((books.length - 3) * 91, newOffset);
       if (
         (sliderWindow &&
           sliderWindow.offsetWidth === 279 &&
-          newOffset === (recommendedBooks.length - 3) * 91) ||
+          newOffset === (books.length - 3) * 91) ||
         (sliderWindow &&
           sliderWindow.offsetWidth === 634 &&
-          newOffset === ((recommendedBooks.length - 6) / 2) * 91) ||
+          newOffset === ((books.length - 6) / 2) * 91) ||
         (sliderWindow &&
           sliderWindow.offsetWidth === 789 &&
-          newOffset >= ((recommendedBooks.length - 8) / 2) * 91)
+          newOffset >= ((books.length - 8) / 2) * 91)
       ) {
         console.log("updatedPage");
         const updatedPage = values.page + 1;
@@ -98,9 +124,9 @@ export default function MyLibraryPage() {
   });
 
   const renderedBooks = useMemo(() => {
-    console.log(recommendedBooks);
-    return recommendedBooks && recommendedBooks.results.length !== 0 ? (
-      recommendedBooks.results.map((book, item) => (
+    console.log(books);
+    return books && books.length !== 0 ? (
+      books.map((book, item) => (
         <li
           key={item}
           className="BookItem"
@@ -116,10 +142,50 @@ export default function MyLibraryPage() {
         Not found
       </h2>
     );
-  }, [recommendedBooks, dispatch]);
+  }, [books, dispatch]);
+
+
+
+  useEffect(() => {
+    const customInput = document.querySelector(".custom-input");
+    const input = customInput.querySelector(".InputAllBooks");
+    const dropdown = customInput.querySelector(".dropdown");
+    const dropdownItems = dropdown.querySelectorAll(".ListItem");
+
+    const handleClick = () => {
+      dropdown.style.display = "grid";
+    };
+
+    const handleDropdownItemClick = (item) => {
+      input.value = item.textContent;
+      dropdown.style.display = "none";
+    };
+
+    const handleDocumentClick = (e) => {
+      if (!customInput.contains(e.target)) {
+        dropdown.style.display = "none";
+      }
+    };
+
+    input.addEventListener("click", handleClick);
+
+    dropdownItems.forEach((item) => {
+      item.addEventListener("click", () => handleDropdownItemClick(item));
+    });
+
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      input.removeEventListener("click", handleClick);
+      dropdownItems.forEach((item) =>
+        item.removeEventListener("click", handleDropdownItemClick)
+      );
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
 
   return (
-    <MyLibraryPageContainer $lengthbooks={recommendedBooks.length}>
+    <MyLibraryPageContainer $lengthbooks={books.length}>
       <div className="FormContainer">
         <div>
           <form className="Form">
@@ -176,7 +242,7 @@ export default function MyLibraryPage() {
         <div className="StartWorkContainer">
           <h2 className="Title">Recommended books</h2>
 
-          {recommendedBooks && (
+          {books && (
             <div className="BookListLibraryContainer">
               <ul className="BookListLibrary">{renderedBooks}</ul>
             </div>
@@ -199,7 +265,30 @@ export default function MyLibraryPage() {
       <div className="RecommendedboksContainer">
         <div className="TitleButtonContainer">
           <h2 className="RecommendedboksTitle">My library</h2>
-          <input className="InputAllBooks" />
+          <div className="custom-input">
+            <SwitchInput className="IconSwitch"/>
+            <input className="InputAllBooks" placeholder="All books" />
+                        <ul className="dropdown">
+              <li className="ListItem"
+                // onClick={() => handleListItemClick("")}
+              >
+                all books
+              </li>
+              {status ? (
+                status.map((item) => (
+                  <li
+                    className="ListItem"
+                    key={item}
+                    // onClick={() => handleListItemClick(item)}
+                  >
+                    {item}
+                  </li>
+                ))
+              ) : (
+                <div>Loading...</div>
+              )}
+            </ul>
+            </div>
         </div>
       </div>
     </MyLibraryPageContainer>

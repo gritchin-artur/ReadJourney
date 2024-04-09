@@ -23,25 +23,26 @@ export const getRecommendBooks = createAsyncThunk(
   }
 );
 
-// export const getRecommendBooks = createAsyncThunk(
-//   "/words/categories",
-//   async (_, thunkAPI) => {
-//     const state = thunkAPI.getState();
-//     const persistedToken = state.auth.token;
-//     try {
-//       const response = await axios.get("/words/categories");
-//       token.set(persistedToken);
-//       return response.data;
-//     } catch (error) {
-//       if (error.response && error.response.status === 404) {
-//         return toast.error("Service not found");
-//       }
-//       if (error.response && error.response.status === 500) {
-//         return toast.error("Server error");
-//       }
-//     }
-//   }
-// );
+export const getOwnBooks = createAsyncThunk(
+  "/books/own",
+  async (status, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    try {
+      const response = await axios.get("/words/own", { status });
+      token.set(persistedToken);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return toast.error("Service not found");
+      }
+      if (error.response && error.response.status === 500) {
+        return toast.error("Server error");
+      }
+    }
+  }
+);
 
 // export const statisticsWords = createAsyncThunk(
 //   "/words/statistics/",
