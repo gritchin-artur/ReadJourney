@@ -296,8 +296,9 @@ export const MyLibraryPageContainer = styled.div`
     box-sizing: border-box;
     border-radius: 30px;
     width: 335px;
-    height: 407px;
+    min-height: 407px;
     background: #1f1f1f;
+    padding: 40px 20px;
 
     justify-content: center;
     display: grid;
@@ -320,7 +321,6 @@ export const MyLibraryPageContainer = styled.div`
   .TitleButtonContainer {
     display: flex;
     gap: 80px;
-    padding: 40px 20px 0 20px;
 
     @media only screen and (min-width: 768px) {
       align-items: center;
@@ -480,6 +480,7 @@ export const MyLibraryPageContainer = styled.div`
   }
 
   .dropdown {
+    width: 70%;
     z-index: 1000;
     position: absolute;
     margin-top: 5px;
@@ -488,15 +489,86 @@ export const MyLibraryPageContainer = styled.div`
 
     border-radius: 15px;
     padding: 12px 18px;
-    border: 1px solid #3e3e3e;
-    color: #f9f9f9;
+    /* border: 1px solid #3e3e3e; */
+
+    background: #262626;
   }
 
   .ListItem {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: -0.02em;
+    color: #f9f9f96b;
     cursor: pointer;
     &:hover {
-      color: #f9f9f96b;
+      color: #f9f9f9;
       transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .BookOwnListLibrary {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .BookOwnItem {
+    cursor: pointer;
+    width: 137px;
+    height: 248px;
+
+    display: grid;
+    gap: 5px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .BookOwnContainer {
+    display: flex;
+    gap: 10px;
+  }
+
+  .BookOwnTitleContainer {
+    width: 95px;
+    height: 32px;
+  }
+
+  .BookOwnImg {
+    border-radius: 8px;
+    width: 137px;
+    height: 208px;
+  }
+
+  .BookOwnTitle {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .BookOwnAuthor {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #686868;
+  }
+
+  .DeleteBookIcon {
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.3);
     }
   }
 `;

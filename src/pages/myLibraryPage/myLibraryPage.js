@@ -1,8 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
-import { ReactComponent as SwitchInput} from "../../img/svg/chevron-down-2.svg";
+import { ReactComponent as SwitchInput } from "../../img/svg/chevron-down-2.svg";
+import { ReactComponent as Trash } from "../../img/svg/block-2.svg";
 import { useFormik } from "formik";
-import { getRecommendBooks } from "../../redux/data/data-operation";
+import {
+  getOwnBooks,
+  getRecommendBooks,
+  removeBooks,
+} from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
 import { openModalBook } from "../../redux/modals/modal-slice";
 import { MyLibraryPageContainer } from "./myLibraryPage.styled";
@@ -10,9 +15,12 @@ import { MyLibraryPageContainer } from "./myLibraryPage.styled";
 export default function MyLibraryPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
+  const ownBooks = useSelector((state) => state.data.ownBooks);
+  const isAddBook = useSelector((state) => state.data.isAddBook);
+  const isDeleteBook = useSelector((state) => state.data.isDeleteBook);
   const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);
-  const status = ['in-progress', "unread", "done"]
+  const status = ["In progress", "Unread", "Done"];
   const [page, setPage] = useState({
     title: "",
     author: "",
@@ -20,7 +28,7 @@ export default function MyLibraryPage() {
     limit: 10,
   });
 
-    useEffect(() => {
+  useEffect(() => {
     if (recommendedBooks.totalPages < 3) {
       setBooks(recommendedBooks.results);
     } else {
@@ -41,7 +49,7 @@ export default function MyLibraryPage() {
         }
       });
     }
-      console.log(books)
+    console.log(books);
   }, [recommendedBooks, books]);
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
@@ -53,7 +61,6 @@ export default function MyLibraryPage() {
     },
 
     onSubmit: (values) => {
-
       handleChange({
         target: {
           name: "page",
@@ -73,7 +80,8 @@ export default function MyLibraryPage() {
 
   useEffect(() => {
     dispatch(getRecommendBooks(page));
-  }, [dispatch, page]);
+    dispatch(getOwnBooks(isAddBook || isDeleteBook));
+  }, [dispatch, page, isDeleteBook, isAddBook]);
 
   const sliderLine = document.querySelector(".BookListLibrary");
   const sliderWindow = document.querySelector(".BookListLibraryContainer");
@@ -81,7 +89,6 @@ export default function MyLibraryPage() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       let newOffset = offset + 91;
-      console.log(offset);
       if (
         sliderWindow &&
         books.length &&
@@ -124,7 +131,6 @@ export default function MyLibraryPage() {
   });
 
   const renderedBooks = useMemo(() => {
-    console.log(books);
     return books && books.length !== 0 ? (
       books.map((book, item) => (
         <li
@@ -144,7 +150,36 @@ export default function MyLibraryPage() {
     );
   }, [books, dispatch]);
 
-
+  const renderedOwnBooks = useMemo(() => {
+    console.log(ownBooks);
+    return ownBooks && ownBooks.length !== 0 ? (
+      ownBooks.map((book, item) => (
+        <li
+          id="ownBook"
+          key={item}
+          className="BookOwnItem"
+          onClick={() =>   dispatch(openModalBook(book))}
+        >
+          <img className="BookOwnImg" src={book.imageUrl} alt={book.author} />
+          <div className="BookOwnContainer">
+            <div className="BookOwnTitleContainer">
+              <h2 className="BookOwnTitle">{book.title}</h2>
+              <p className="BookOwnAuthor">{book.author}</p>
+            </div>
+            <Trash
+              id="deleteOwnBook"
+              className="DeleteBookIcon"
+              onClick={() => dispatch(removeBooks(book._id))}
+            />
+          </div>
+        </li>
+      ))
+    ) : (
+      <h2 style={{ fontSize: "40px", color: "white", whiteSpace: "nowrap" }}>
+        Add Book
+      </h2>
+    );
+  }, [ownBooks, dispatch]);
 
   useEffect(() => {
     const customInput = document.querySelector(".custom-input");
@@ -266,13 +301,14 @@ export default function MyLibraryPage() {
         <div className="TitleButtonContainer">
           <h2 className="RecommendedboksTitle">My library</h2>
           <div className="custom-input">
-            <SwitchInput className="IconSwitch"/>
+            <SwitchInput className="IconSwitch" />
             <input className="InputAllBooks" placeholder="All books" />
-                        <ul className="dropdown">
-              <li className="ListItem"
+            <ul className="dropdown">
+              <li
+                className="ListItem"
                 // onClick={() => handleListItemClick("")}
               >
-                all books
+                All books
               </li>
               {status ? (
                 status.map((item) => (
@@ -288,8 +324,9 @@ export default function MyLibraryPage() {
                 <div>Loading...</div>
               )}
             </ul>
-            </div>
+          </div>
         </div>
+        <ul className="BookOwnListLibrary">{renderedOwnBooks}</ul>
       </div>
     </MyLibraryPageContainer>
   );

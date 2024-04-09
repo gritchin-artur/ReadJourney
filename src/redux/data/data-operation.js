@@ -23,6 +23,62 @@ export const getRecommendBooks = createAsyncThunk(
   }
 );
 
+export const addBooks = createAsyncThunk(
+  "/books/add",
+  async (bookId, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    try {
+      const response = await axios.post(`/books/add/${bookId}`);
+      token.set(persistedToken);
+      toast.success(`Succsess add to own ${response.data.author}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return toast.error("The same word you already have!");
+      }
+      if (error.response && error.response.status === 403) {
+        return toast.error("You don't have right to edit this word!");
+      }
+      if (error.response && error.response.status === 404) {
+        return toast.error("Service not found");
+      }
+      if (error.response && error.response.status === 500) {
+        return toast.error("Server error");
+      }
+    }
+  }
+);
+
+export const removeBooks = createAsyncThunk(
+  "/books/remove",
+  async (bookId, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    try {
+      const response = await axios.delete(`/books/remove/${bookId}`);
+      token.set(persistedToken);
+      toast.success(`${response.data.message}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return toast.error("The same word you already have!");
+      }
+      if (error.response && error.response.status === 403) {
+        return toast.error("You don't have right to edit this word!");
+      }
+      if (error.response && error.response.status === 404) {
+        return toast.error("Service not found");
+      }
+      if (error.response && error.response.status === 500) {
+        return toast.error("Server error");
+      }
+    }
+  }
+);
+
 export const getOwnBooks = createAsyncThunk(
   "/books/own",
   async (status, thunkAPI) => {
@@ -30,7 +86,7 @@ export const getOwnBooks = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     try {
-      const response = await axios.get("/words/own", { status });
+      const response = await axios.get("/books/own", { status });
       token.set(persistedToken);
       return response.data;
     } catch (error) {

@@ -5,6 +5,8 @@ import {
   // getAllWord,
   getRecommendBooks,
   getOwnBooks,
+  addBooks,
+  removeBooks,
   // ownWord,
   // statisticsWords,
   // tasksWords,
@@ -15,6 +17,9 @@ const initialState = {
   isLoadingRecommended: false,
   ownBooks: [],
   isLoadingOwn: false,
+  isAddBook: false,
+  isDeleteBook: false,
+
   // statistics: [],
   // isLoadingStatistics: false,
   // words: [],
@@ -51,6 +56,30 @@ const handleGetOwnBooksFulfilled = (state, { payload }) => {
 
 const handleGetOwnBooksRejected = (state, { payload }) => {
   state.isLoadingOwn = true;
+};
+
+const handleAddOwnBooksPending = (state, { payload }) => {
+  state.isAddBook = true;
+};
+
+const handleAddOwnBooksFulfilled = (state, { payload }) => {
+  state.isAddBook = false;
+};
+
+const handleAddOwnBooksRejected = (state, { payload }) => {
+  state.isAddBook = true;
+};
+
+const handleDeleteOwnBooksPending = (state, { payload }) => {
+  state.isDeleteBook = true;
+};
+
+const handleDeleteOwnBooksFulfilled = (state, { payload }) => {
+  state.isDeleteBook = false;
+};
+
+const handleDeleteOwnBooksRejected = (state, { payload }) => {
+  state.isDeleteBook = true;
 };
 
 // const handleGetStatisticsWordPending = (state, { payload }) => {
@@ -108,6 +137,12 @@ const dataSlise = createSlice({
           .addCase(getOwnBooks.pending, handleGetOwnBooksPending)
       .addCase(getOwnBooks.fulfilled, handleGetOwnBooksFulfilled)
       .addCase(getOwnBooks.rejected, handleGetOwnBooksRejected)
+              .addCase(addBooks.pending, handleAddOwnBooksPending)
+      .addCase(addBooks.fulfilled, handleAddOwnBooksFulfilled)
+      .addCase(addBooks.rejected, handleAddOwnBooksRejected)
+               .addCase(removeBooks.pending, handleDeleteOwnBooksPending)
+      .addCase(removeBooks.fulfilled, handleDeleteOwnBooksFulfilled)
+      .addCase(removeBooks.rejected, handleDeleteOwnBooksRejected)
     // .addCase(statisticsWords.fulfilled, handleGetStatisticsWordFulfilled)
     // .addCase(ownWord.pending, handleGetOwnWordPending)
     // .addCase(ownWord.fulfilled, handleGetOwnWordFulfilled)
