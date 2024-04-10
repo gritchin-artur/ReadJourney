@@ -175,9 +175,7 @@ export default function MyLibraryPage() {
         </li>
       ))
     ) : (
-      <h2 style={{ fontSize: "40px", color: "white", whiteSpace: "nowrap" }}>
-        Add Book
-      </h2>
+<div className="EmptyOwnBookContainer"><div className="ImagContainer"><div className="EmptyBookImg"/></div><p className="TextAddBook">To start training, add <span className="PartText">some of your books</span> or from the recommended ones</p></div>
     );
   }, [ownBooks, dispatch]);
 

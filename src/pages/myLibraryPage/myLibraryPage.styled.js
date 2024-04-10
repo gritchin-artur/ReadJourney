@@ -512,6 +512,8 @@ export const MyLibraryPageContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
+    justify-content: center;
   }
 
   .BookOwnItem {
@@ -570,5 +572,41 @@ export const MyLibraryPageContainer = styled.div`
     &:hover {
       transform: scale(1.3);
     }
+  }
+
+  .EmptyOwnBookContainer{
+width: 197px;
+height: 164px;
+    text-align: center;
+    display: ruby;
+  }
+
+  .ImagContainer{
+    width: 100px;
+    height: 100px;
+    background:  #262626;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .EmptyBookImg{
+     width: 50px;
+    height: 50px;
+    background-image: url(${BookImg});
+  }
+
+  .TextAddBook{
+    margin-top: 10px;
+    font-weight: 500;
+font-size: 14px;
+line-height: 129%;
+letter-spacing: -0.02em;
+color: #f9f9f9;
+  }
+
+  .PartText{
+    color: #686868;
   }
 `;
