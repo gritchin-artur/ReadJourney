@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { openModalBook } from "../../redux/modals/modal-slice";
 import { MyLibraryPageContainer } from "./myLibraryPage.styled";
+import { NavLink } from "react-router-dom";
 
 export default function MyLibraryPage() {
   const dispatch = useDispatch();
@@ -20,13 +21,15 @@ export default function MyLibraryPage() {
   const isDeleteBook = useSelector((state) => state.data.isDeleteBook);
   const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);
-  const status = ["In progress", "Unread", "Done"];
+  const [trashHovered, setTrashHovered] = useState(true);
+  const [bookStatus, setStatus] = useState('');
   const [page, setPage] = useState({
     title: "",
     author: "",
     page: 1,
     limit: 10,
   });
+  const status = ["in-progress", "unread", "done"];
 
   useEffect(() => {
     if (recommendedBooks.totalPages < 3) {
@@ -150,15 +153,20 @@ export default function MyLibraryPage() {
     );
   }, [books, dispatch]);
 
+
+
+
   const renderedOwnBooks = useMemo(() => {
-    console.log(ownBooks);
-    return ownBooks && ownBooks.length !== 0 ? (
-      ownBooks.map((book, item) => (
+    const SortStatus = bookStatus === "" ? ownBooks : ownBooks.filter(
+      (element) => element.status === bookStatus);
+    console.log(SortStatus);
+    return ownBooks && SortStatus.length !== 0 ? (
+      SortStatus.map((book, item) => (
         <li
           id="ownBook"
           key={item}
           className="BookOwnItem"
-          onClick={() =>   dispatch(openModalBook(book))}
+          onClick={() => trashHovered && dispatch(openModalBook(book))}
         >
           <img className="BookOwnImg" src={book.imageUrl} alt={book.author} />
           <div className="BookOwnContainer">
@@ -170,14 +178,25 @@ export default function MyLibraryPage() {
               id="deleteOwnBook"
               className="DeleteBookIcon"
               onClick={() => dispatch(removeBooks(book._id))}
+              onMouseEnter={() => setTrashHovered(false)}
+              onMouseLeave={() => setTrashHovered(true)}
             />
           </div>
         </li>
       ))
     ) : (
-<div className="EmptyOwnBookContainer"><div className="ImagContainer"><div className="EmptyBookImg"/></div><p className="TextAddBook">To start training, add <span className="PartText">some of your books</span> or from the recommended ones</p></div>
+      <div className="EmptyOwnBookContainer">
+        <div className="ImagContainer">
+          <div className="EmptyBookImg" />
+        </div>
+        <p className="TextAddBook">
+          To start training, add{" "}
+          <span className="PartText">some of your books</span> or from the
+          recommended ones
+        </p>
+      </div>
     );
-  }, [ownBooks, dispatch]);
+  }, [ownBooks, dispatch, trashHovered, bookStatus]);
 
   useEffect(() => {
     const customInput = document.querySelector(".custom-input");
@@ -216,6 +235,8 @@ export default function MyLibraryPage() {
       document.removeEventListener("click", handleDocumentClick);
     };
   }, []);
+
+
 
   return (
     <MyLibraryPageContainer $lengthbooks={books.length}>
@@ -281,7 +302,7 @@ export default function MyLibraryPage() {
             </div>
           )}
           <ul className="ButtonList">
-            <li className="ButtonHome">Home</li>
+            <li ><NavLink className="ButtonHome" to="">Home</NavLink></li>
             <li>
               <Arrow className="ArrowNext" />
             </li>
@@ -304,7 +325,7 @@ export default function MyLibraryPage() {
             <ul className="dropdown">
               <li
                 className="ListItem"
-                // onClick={() => handleListItemClick("")}
+                onClick={() => setStatus("")}
               >
                 All books
               </li>
@@ -313,7 +334,7 @@ export default function MyLibraryPage() {
                   <li
                     className="ListItem"
                     key={item}
-                    // onClick={() => handleListItemClick(item)}
+                    onClick={() => setStatus(item)}
                   >
                     {item}
                   </li>
