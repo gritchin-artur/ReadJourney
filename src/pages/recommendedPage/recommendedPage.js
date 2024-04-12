@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { getRecommendBooks } from "../../redux/data/data-operation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { openModalBook } from "../../redux/modals/modal-slice";
+import { NavLink } from "react-router-dom";
 
 export default function RecommendedPage() {
   const dispatch = useDispatch();
@@ -240,7 +241,7 @@ export default function RecommendedPage() {
             </li>
           </ul>
           <ul className="ButtonList">
-            <li className="ButtonMyLibrary">My library</li>
+            <li ><NavLink className="ButtonMyLibrary" to="/library">My library</NavLink></li>
             <li>
               <Arrow className="ArrowNext" />
             </li>

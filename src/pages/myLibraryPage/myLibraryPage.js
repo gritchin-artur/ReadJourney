@@ -22,7 +22,7 @@ export default function MyLibraryPage() {
   const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);
   const [trashHovered, setTrashHovered] = useState(true);
-  const [bookStatus, setStatus] = useState('');
+  const [bookStatus, setStatus] = useState("");
   const [page, setPage] = useState({
     title: "",
     author: "",
@@ -102,11 +102,11 @@ export default function MyLibraryPage() {
       console.log((books.length - 3) * 91, newOffset);
       if (
         (sliderWindow &&
-          sliderWindow.offsetWidth === 279 &&
+          (sliderWindow.offsetWidth === 279 || 266) &&
           newOffset === (books.length - 3) * 91) ||
-        (sliderWindow &&
-          sliderWindow.offsetWidth === 634 &&
-          newOffset === ((books.length - 6) / 2) * 91) ||
+        // (sliderWindow &&
+        //   sliderWindow.offsetWidth === 266 &&
+        //   newOffset === ((books.length - 6) / 2) * 91) ||
         (sliderWindow &&
           sliderWindow.offsetWidth === 789 &&
           newOffset >= ((books.length - 8) / 2) * 91)
@@ -153,12 +153,11 @@ export default function MyLibraryPage() {
     );
   }, [books, dispatch]);
 
-
-
-
   const renderedOwnBooks = useMemo(() => {
-    const SortStatus = bookStatus === "" ? ownBooks : ownBooks.filter(
-      (element) => element.status === bookStatus);
+    const SortStatus =
+      bookStatus === ""
+        ? ownBooks
+        : ownBooks.filter((element) => element.status === bookStatus);
     console.log(SortStatus);
     return ownBooks && SortStatus.length !== 0 ? (
       SortStatus.map((book, item) => (
@@ -185,15 +184,17 @@ export default function MyLibraryPage() {
         </li>
       ))
     ) : (
-      <div className="EmptyOwnBookContainer">
-        <div className="ImagContainer">
-          <div className="EmptyBookImg" />
+      <div className="EmptyContainer">
+        <div className="EmptyOwnBookContainer">
+          <div className="ImagContainer">
+            <div className="EmptyBookImg" />
+          </div>
+          <p className="TextAddBook">
+            To start training, add{" "}
+            <span className="PartText">some of your books</span> or from the
+            recommended ones
+          </p>
         </div>
-        <p className="TextAddBook">
-          To start training, add{" "}
-          <span className="PartText">some of your books</span> or from the
-          recommended ones
-        </p>
       </div>
     );
   }, [ownBooks, dispatch, trashHovered, bookStatus]);
@@ -235,8 +236,6 @@ export default function MyLibraryPage() {
       document.removeEventListener("click", handleDocumentClick);
     };
   }, []);
-
-
 
   return (
     <MyLibraryPageContainer $lengthbooks={books.length}>
@@ -302,18 +301,15 @@ export default function MyLibraryPage() {
             </div>
           )}
           <ul className="ButtonList">
-            <li ><NavLink className="ButtonHome" to="">Home</NavLink></li>
+            <li>
+              <NavLink className="ButtonHome" to="/recommended">
+                Home
+              </NavLink>
+            </li>
             <li>
               <Arrow className="ArrowNext" />
             </li>
           </ul>
-        </div>
-        <div className="DesctopBookContainer">
-          <div className="BooksPicture" />
-          <p className="TextBook">
-            "Books are <span className="PartTextBook">windows</span> to the
-            world, and reading is a journey into the unknown."
-          </p>
         </div>
       </div>
       <div className="RecommendedboksContainer">
@@ -323,10 +319,7 @@ export default function MyLibraryPage() {
             <SwitchInput className="IconSwitch" />
             <input className="InputAllBooks" placeholder="All books" />
             <ul className="dropdown">
-              <li
-                className="ListItem"
-                onClick={() => setStatus("")}
-              >
+              <li className="ListItem" onClick={() => setStatus("")}>
                 All books
               </li>
               {status ? (

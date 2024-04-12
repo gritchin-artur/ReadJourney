@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import BookImg from "../../img/png/📚desctop.png";
+import BookImgDesctop from "../../img/png/📚mobile.png"
 
 export const MyLibraryPageContainer = styled.div`
   display: grid;
@@ -135,12 +136,20 @@ export const MyLibraryPageContainer = styled.div`
     }
     transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
       background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    @media only screen and (min-width: 768px) {
+      margin-top: 45px;
+      width: 131px;
+      height: 42px;
+
+      font-size: 16px;
+      line-height: 112%;
+    }
   }
 
   .StartWorkContainer {
     display: grid;
     justify-content: center;
-    /* gap: 20px; */
     box-sizing: border-box;
     margin-top: 18px;
     padding: 20px;
@@ -151,14 +160,13 @@ export const MyLibraryPageContainer = styled.div`
     background: #262626;
 
     @media only screen and (min-width: 768px) {
-      gap: 40px;
       margin-top: 0px;
       width: 313px;
       height: 272px;
     }
 
     @media only screen and (min-width: 1440px) {
-      margin-top: 20px;
+          margin-top: 60px;
       border-radius: 12px;
       width: 313px;
       height: 272px;
@@ -177,48 +185,6 @@ export const MyLibraryPageContainer = styled.div`
       font-size: 20px;
     }
   }
-
-  /* .WorkOutList {
-    display: grid;
-    gap: 20px;
-  }
-
-  .WorkOutElement {
-    display: -webkit-box;
-    width: 230px;
-    gap: 12px;
-  } */
-
-  /* .WorkOutNumber {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #ffff;
-
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: -0.02em;
-
-    color: #1f1f1f;
-  }
-
-  .WorkOutText {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 129%;
-    letter-spacing: -0.02em;
-    color: #f9f9f9;
-  }
-
-  .WorkOutPartText {
-    color: #686868;
-    margin-left: 8px;
-  } */
 
   .ButtonList {
     display: flex;
@@ -255,42 +221,6 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-  .DesctopBookContainer {
-    display: none;
-
-    @media only screen and (min-width: 1440px) {
-      margin-top: 20px;
-      padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-radius: 12px;
-      width: 313px;
-      height: 83px;
-
-      background: #262626;
-    }
-  }
-
-  .BooksPicture {
-    width: 45px;
-    height: 45px;
-    background-image: url(${BookImg});
-  }
-
-  .TextBook {
-    width: 219px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 129%;
-    letter-spacing: -0.02em;
-    color: #686868;
-  }
-
-  .PartTextBook {
-    color: #f9f9f9;
-  }
 
   .RecommendedboksContainer {
     box-sizing: border-box;
@@ -305,9 +235,11 @@ export const MyLibraryPageContainer = styled.div`
 
     @media only screen and (min-width: 768px) {
       width: 704px;
-      height: 663px;
+      min-height: 518px;
 
-      padding: 50px;
+      padding: 48px;
+      justify-content: unset;
+      display: block;
     }
 
     @media only screen and (min-width: 1440px) {
@@ -323,8 +255,9 @@ export const MyLibraryPageContainer = styled.div`
     gap: 80px;
 
     @media only screen and (min-width: 768px) {
-      align-items: center;
       padding: 0;
+      gap: 0;
+          justify-content: space-between;
     }
   }
 
@@ -342,30 +275,6 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-  /* .PrevNextButtonList {
-    display: flex;
-    gap: 8px;
-  } */
-
-  /* .PrevNextButton {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid #686868;
-
-    &:hover .Arrow {
-      path {
-        stroke: #686868;
-        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  } */
-
   .BookListLibraryContainer {
     width: 253px;
     height: 141px;
@@ -375,16 +284,14 @@ export const MyLibraryPageContainer = styled.div`
     /* box-sizing: border-box; */
 
     @media only screen and (min-width: 768px) {
-      margin-top: 20px;
-
-      width: 634px;
-      height: 548px;
+      width: 266px;
+      height: 154px;
     }
 
-    @media only screen and (min-width: 1440px) {
+    /* @media only screen and (min-width: 1440px) {
       width: 789px;
       height: 550px;
-    }
+    } */
   }
 
   .BookListLibrary {
@@ -397,12 +304,13 @@ export const MyLibraryPageContainer = styled.div`
     width: ${(props) => console.log(props.$lengthbooks * 91)}px;
 
     @media only screen and (min-width: 768px) {
-      margin-left: 0;
+       margin-left: 20px;
+      /* margin-left: 0;
       flex-direction: column;
       list-style-type: none;
       flex-wrap: wrap;
       width: ${(props) => (props.$lengthbooks * 91) / 2}px;
-      height: 516px;
+      height: 516px; */
     }
   }
 
@@ -462,6 +370,11 @@ export const MyLibraryPageContainer = styled.div`
     line-height: 133%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+        @media only screen and (min-width: 768px) {
+width: 153px;
+height: 46px;
+    }
   }
 
   .IconSwitch {
@@ -513,7 +426,10 @@ export const MyLibraryPageContainer = styled.div`
     flex-wrap: wrap;
     gap: 20px;
 
-    justify-content: center;
+
+            @media only screen and (min-width: 768px) {
+margin-top: 48;
+    }
   }
 
   .BookOwnItem {
@@ -574,39 +490,69 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-  .EmptyOwnBookContainer{
-width: 197px;
-height: 164px;
-    text-align: center;
-    display: ruby;
+
+  .EmptyContainer{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
 
-  .ImagContainer{
+  .EmptyOwnBookContainer {
+    width: 197px;
+    height: 164px;
+    text-align: center;
+    display: ruby;
+
+                @media only screen and (min-width: 768px) {
+width: 274px;
+height: 186px;
+    }
+  }
+
+
+  .ImagContainer {
     width: 100px;
     height: 100px;
-    background:  #262626;
+    background: #262626;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+
+                @media only screen and (min-width: 768px) {
+    width: 130px;
+    height: 130px;
+    }
   }
 
-  .EmptyBookImg{
-     width: 50px;
+  .EmptyBookImg {
+    width: 50px;
     height: 50px;
     background-image: url(${BookImg});
+
+                    @media only screen and (min-width: 768px) {
+                          width: 70px;
+    height: 70px;
+  background-image: url(${BookImgDesctop});
+    }
   }
 
-  .TextAddBook{
+  .TextAddBook {
     margin-top: 10px;
     font-weight: 500;
-font-size: 14px;
-line-height: 129%;
-letter-spacing: -0.02em;
-color: #f9f9f9;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+
+                        @media only screen and (min-width: 768px) {
+margin-top: 20px;
+    }
   }
 
-  .PartText{
+  .PartText {
     color: #686868;
   }
 `;

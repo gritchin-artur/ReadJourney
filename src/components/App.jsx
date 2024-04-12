@@ -22,7 +22,7 @@ export const App = () => {
   );
 
   useEffect(() => {
-    dispatch(authOperations.fetchCurrentUser());
+    dispatch(authOperations.fetchCurrentUser())
   }, [dispatch]);
   return (
     <>
