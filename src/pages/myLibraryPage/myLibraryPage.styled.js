@@ -281,17 +281,11 @@ export const MyLibraryPageContainer = styled.div`
     transform: translate(0%, 0%);
     overflow: hidden;
     padding: 13px;
-    /* box-sizing: border-box; */
 
     @media only screen and (min-width: 768px) {
       width: 266px;
       height: 154px;
     }
-
-    /* @media only screen and (min-width: 1440px) {
-      width: 789px;
-      height: 550px;
-    } */
   }
 
   .BookListLibrary {
@@ -305,12 +299,6 @@ export const MyLibraryPageContainer = styled.div`
 
     @media only screen and (min-width: 768px) {
        margin-left: 20px;
-      /* margin-left: 0;
-      flex-direction: column;
-      list-style-type: none;
-      flex-wrap: wrap;
-      width: ${(props) => (props.$lengthbooks * 91) / 2}px;
-      height: 516px; */
     }
   }
 
@@ -402,7 +390,6 @@ height: 46px;
 
     border-radius: 15px;
     padding: 12px 18px;
-    /* border: 1px solid #3e3e3e; */
 
     background: #262626;
   }

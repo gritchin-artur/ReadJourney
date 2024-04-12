@@ -59,29 +59,24 @@ export default function MyLibraryPage() {
     initialValues: {
       title: "",
       author: "",
-      page: 1,
-      limit: 10,
+totalPages: "",
     },
 
     onSubmit: (values) => {
-      handleChange({
-        target: {
-          name: "page",
-          value: 1,
-        },
-      });
-      dispatch(getRecommendBooks(values));
+      // dispatch(getRecommendBooks(values));
     },
   });
 
-  useEffect(() => {
-    setPage((prevState) => ({
-      ...prevState,
-      page: values.page,
-    }));
-  }, [values.page]);
+  // useEffect(() => {
+  //   console.log(page)
+  //   setPage((prevState) => ({
+  //     ...prevState,
+  //     page: values.page,
+  //   }));
+  // }, [values.page]);
 
   useEffect(() => {
+    console.log(page)
     dispatch(getRecommendBooks(page));
     dispatch(getOwnBooks(isAddBook || isDeleteBook));
   }, [dispatch, page, isDeleteBook, isAddBook]);
@@ -102,26 +97,30 @@ export default function MyLibraryPage() {
       console.log((books.length - 3) * 91, newOffset);
       if (
         (sliderWindow &&
-          (sliderWindow.offsetWidth === 279 || 266) &&
-          newOffset === (books.length - 3) * 91) ||
+          (sliderWindow.offsetWidth === 279 || 292 ) &&
+          newOffset === (books.length - 3) * 91)
         // (sliderWindow &&
         //   sliderWindow.offsetWidth === 266 &&
         //   newOffset === ((books.length - 6) / 2) * 91) ||
-        (sliderWindow &&
-          sliderWindow.offsetWidth === 789 &&
-          newOffset >= ((books.length - 8) / 2) * 91)
+        // (sliderWindow &&
+        //   sliderWindow.offsetWidth === 789 &&
+        //   newOffset >= ((books.length - 8) / 2) * 91)
       ) {
-        console.log("updatedPage");
-        const updatedPage = values.page + 1;
+        const updatedPage = page.page + 1;
+        console.log(updatedPage, recommendedBooks.totalPages)
         if (updatedPage > recommendedBooks.totalPages) {
           newOffset = 0;
         } else {
-          handleChange({
-            target: {
-              name: "page",
-              value: updatedPage,
-            },
-          });
+          // handleChange({
+          //   target: {
+          //     name: "page",
+          //     value: updatedPage,
+          //   },
+          // });
+          setPage(prevPage => ({
+  ...prevPage,
+  page: updatedPage
+}));
         }
       }
       setOffset(newOffset);
