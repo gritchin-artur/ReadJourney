@@ -6,12 +6,15 @@ import { useFormik } from "formik";
 import {
   getOwnBooks,
   getRecommendBooks,
+  postAddOwnBook,
   removeBooks,
 } from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
 import { openModalBook } from "../../redux/modals/modal-slice";
 import { MyLibraryPageContainer } from "./myLibraryPage.styled";
 import { NavLink } from "react-router-dom";
+import { AddBookSchema } from "utils/validationSchemas";
+import { ShowRules } from "utils/showRules";
 
 export default function MyLibraryPage() {
   const dispatch = useDispatch();
@@ -52,31 +55,34 @@ export default function MyLibraryPage() {
         }
       });
     }
-    console.log(books);
   }, [recommendedBooks, books]);
 
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
+  const {
+    values,
+    touched,
+    errors,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  } = useFormik({
     initialValues: {
       title: "",
       author: "",
-totalPages: "",
+      totalPages: "",
     },
 
+    validationSchema: AddBookSchema,
+
     onSubmit: (values) => {
-      // dispatch(getRecommendBooks(values));
+      dispatch(postAddOwnBook(values)).then((response) => {
+        response.payload.title && resetForm();
+        console.log(response.payload)
+      });
     },
   });
 
-  // useEffect(() => {
-  //   console.log(page)
-  //   setPage((prevState) => ({
-  //     ...prevState,
-  //     page: values.page,
-  //   }));
-  // }, [values.page]);
-
   useEffect(() => {
-    console.log(page)
     dispatch(getRecommendBooks(page));
     dispatch(getOwnBooks(isAddBook || isDeleteBook));
   }, [dispatch, page, isDeleteBook, isAddBook]);
@@ -94,33 +100,19 @@ totalPages: "",
       ) {
         newOffset = 0;
       }
-      console.log((books.length - 3) * 91, newOffset);
       if (
-        (sliderWindow &&
-          (sliderWindow.offsetWidth === 279 || 292 ) &&
-          newOffset === (books.length - 3) * 91)
-        // (sliderWindow &&
-        //   sliderWindow.offsetWidth === 266 &&
-        //   newOffset === ((books.length - 6) / 2) * 91) ||
-        // (sliderWindow &&
-        //   sliderWindow.offsetWidth === 789 &&
-        //   newOffset >= ((books.length - 8) / 2) * 91)
+        sliderWindow &&
+        (sliderWindow.offsetWidth === 279 || 292) &&
+        newOffset === (books.length - 3) * 91
       ) {
         const updatedPage = page.page + 1;
-        console.log(updatedPage, recommendedBooks.totalPages)
         if (updatedPage > recommendedBooks.totalPages) {
           newOffset = 0;
         } else {
-          // handleChange({
-          //   target: {
-          //     name: "page",
-          //     value: updatedPage,
-          //   },
-          // });
-          setPage(prevPage => ({
-  ...prevPage,
-  page: updatedPage
-}));
+          setPage((prevPage) => ({
+            ...prevPage,
+            page: updatedPage,
+          }));
         }
       }
       setOffset(newOffset);
@@ -157,7 +149,6 @@ totalPages: "",
       bookStatus === ""
         ? ownBooks
         : ownBooks.filter((element) => element.status === bookStatus);
-    console.log(SortStatus);
     return ownBooks && SortStatus.length !== 0 ? (
       SortStatus.map((book, item) => (
         <li
@@ -236,6 +227,8 @@ totalPages: "",
     };
   }, []);
 
+  const { getInputAlert, getInputClass } = ShowRules(values, touched, errors);
+
   return (
     <MyLibraryPageContainer $lengthbooks={books.length}>
       <div className="FormContainer">
@@ -248,12 +241,14 @@ totalPages: "",
                 name="title"
                 type="text"
                 placeholder="Enter text"
-                className="TitleInput"
+                className={getInputClass("title")}
+                // className="TitleInput"
                 onChange={handleChange}
                 value={values.title}
                 onBlur={handleBlur}
               />
               <span className="TextInput">Book title:</span>
+              {getInputAlert("title")}
             </div>
             <div className="DivInput">
               <input
@@ -261,26 +256,31 @@ totalPages: "",
                 name="author"
                 type="text"
                 placeholder="Enter text"
-                className="AuthorInput"
+                className={getInputClass("author")}
+                // className="AuthorInput"
                 onChange={handleChange}
                 value={values.author}
                 onBlur={handleBlur}
               />
               <span className="TextInput">The author:</span>
+              {getInputAlert("author")}
             </div>
 
             <div className="DivInput">
               <input
-                id="number"
-                name="number"
-                type="number"
+                id="totalPages"
+                name="totalPages"
+                type="text"
                 placeholder="Enter text"
-                className="AuthorInput"
+                className={getInputClass("totalPages")}
+                // className="AuthorInput"
                 onChange={handleChange}
-                value={values.number}
+                value={values.totalPages}
                 onBlur={handleBlur}
               />
+
               <span className="TextInput">Number of pages:</span>
+              {getInputAlert("totalPages")}
             </div>
           </form>
           <button

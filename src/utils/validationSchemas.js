@@ -3,8 +3,8 @@ import * as Yup from "yup";
 const passwordRules = /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/;
 const emailRules = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
-const EnWord = /\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/;
-const UaWord = /^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/;
+// const EnWord = /\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/;
+// const UaWord = /^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/;
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,35 +34,24 @@ const SigninSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const LessonSchema = Yup.object().shape({
-  reason: Yup.string().required("Required"),
-  fullName: Yup.string()
+
+const AddBookSchema = Yup.object().shape({
+  title: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  number: Yup.string()
-    .matches(/^\d+$/)
-    .min(5, "Too Short!")
-    .max(10, "Too Long!")
+  author: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
     .required("Required"),
-});
-
-const AddWordSchema = Yup.object().shape({
-  en: Yup.string().matches(EnWord, "Must be en letter").required("Required"),
-  ua: Yup.string().matches(UaWord, "Must be ua letter").required("Required"),
-  category: Yup.string().required("Required"),
-});
-
-const EditWordSchema = Yup.object().shape({
-  en: Yup.string().matches(EnWord, "Must be en letter").required("Required"),
-  ua: Yup.string().matches(UaWord, "Must be ua letter").required("Required"),
+  totalPages: Yup.number()
+    .min(5, "A few!")
+    .max(5000, "Too mach!")
+    .required("Required"),
 });
 
 export {
   SignupSchema,
   SigninSchema,
-  LessonSchema,
-  AddWordSchema,
-  EditWordSchema,
+  AddBookSchema,
 };

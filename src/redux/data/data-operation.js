@@ -23,6 +23,28 @@ export const getRecommendBooks = createAsyncThunk(
   }
 );
 
+export const postAddOwnBook = createAsyncThunk(
+  "/books/add",
+  async (params, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    try {
+      const response = await axios.post("/books/add", { params });
+      token.set(persistedToken);
+      toast.success(`Succsess add to own ${response.data.author}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return toast.error("Service not found");
+      }
+      if (error.response && error.response.status === 500) {
+        return toast.error("Server error");
+      }
+    }
+  }
+);
+
 export const addBooks = createAsyncThunk(
   "/books/add",
   async (bookId, thunkAPI) => {

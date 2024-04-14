@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import BookImg from "../../img/png/📚desctop.png";
-import BookImgDesctop from "../../img/png/📚mobile.png"
+import BookImgDesctop from "../../img/png/📚mobile.png";
 
 export const MyLibraryPageContainer = styled.div`
   display: grid;
@@ -92,7 +92,7 @@ export const MyLibraryPageContainer = styled.div`
     padding-left: 80px;
   }
 
-  input[id="number"] {
+  input[id="totalPages"] {
     padding-left: 112px;
   }
 
@@ -107,6 +107,38 @@ export const MyLibraryPageContainer = styled.div`
     letter-spacing: -0.02em;
     text-align: center;
     color: #686868;
+  }
+
+  .ErrorInput {
+    border: 1px solid #e74a3b;
+  }
+
+  .SuccessInput {
+    border: 1px solid #3cbc81;
+  }
+
+  .ErrorText {
+    position: absolute;
+    top: 43px;
+    left: 20px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 117%;
+    letter-spacing: -0.02em;
+    color: #e90516;
+
+  }
+
+  .SuccessText {
+    position: absolute;
+    top: 43px;
+    left: 20px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 117%;
+    letter-spacing: -0.02em;
+    color: #30b94d;
+
   }
 
   .ButtonAddBook {
@@ -166,7 +198,7 @@ export const MyLibraryPageContainer = styled.div`
     }
 
     @media only screen and (min-width: 1440px) {
-          margin-top: 60px;
+      margin-top: 60px;
       border-radius: 12px;
       width: 313px;
       height: 272px;
@@ -221,7 +253,6 @@ export const MyLibraryPageContainer = styled.div`
     }
   }
 
-
   .RecommendedboksContainer {
     box-sizing: border-box;
     border-radius: 30px;
@@ -257,7 +288,7 @@ export const MyLibraryPageContainer = styled.div`
     @media only screen and (min-width: 768px) {
       padding: 0;
       gap: 0;
-          justify-content: space-between;
+      justify-content: space-between;
     }
   }
 
@@ -298,7 +329,7 @@ export const MyLibraryPageContainer = styled.div`
     width: ${(props) => console.log(props.$lengthbooks * 91)}px;
 
     @media only screen and (min-width: 768px) {
-       margin-left: 20px;
+      margin-left: 20px;
     }
   }
 
@@ -359,9 +390,9 @@ export const MyLibraryPageContainer = styled.div`
     letter-spacing: -0.02em;
     color: #f9f9f9;
 
-        @media only screen and (min-width: 768px) {
-width: 153px;
-height: 46px;
+    @media only screen and (min-width: 768px) {
+      width: 153px;
+      height: 46px;
     }
   }
 
@@ -413,9 +444,8 @@ height: 46px;
     flex-wrap: wrap;
     gap: 20px;
 
-
-            @media only screen and (min-width: 768px) {
-margin-top: 48;
+    @media only screen and (min-width: 768px) {
+      margin-top: 48;
     }
   }
 
@@ -477,8 +507,7 @@ margin-top: 48;
     }
   }
 
-
-  .EmptyContainer{
+  .EmptyContainer {
     justify-content: center;
     display: flex;
     align-items: center;
@@ -492,12 +521,11 @@ margin-top: 48;
     text-align: center;
     display: ruby;
 
-                @media only screen and (min-width: 768px) {
-width: 274px;
-height: 186px;
+    @media only screen and (min-width: 768px) {
+      width: 274px;
+      height: 186px;
     }
   }
-
 
   .ImagContainer {
     width: 100px;
@@ -508,9 +536,9 @@ height: 186px;
     justify-content: center;
     align-items: center;
 
-                @media only screen and (min-width: 768px) {
-    width: 130px;
-    height: 130px;
+    @media only screen and (min-width: 768px) {
+      width: 130px;
+      height: 130px;
     }
   }
 
@@ -519,10 +547,10 @@ height: 186px;
     height: 50px;
     background-image: url(${BookImg});
 
-                    @media only screen and (min-width: 768px) {
-                          width: 70px;
-    height: 70px;
-  background-image: url(${BookImgDesctop});
+    @media only screen and (min-width: 768px) {
+      width: 70px;
+      height: 70px;
+      background-image: url(${BookImgDesctop});
     }
   }
 
@@ -534,8 +562,8 @@ height: 186px;
     letter-spacing: -0.02em;
     color: #f9f9f9;
 
-                        @media only screen and (min-width: 768px) {
-margin-top: 20px;
+    @media only screen and (min-width: 768px) {
+      margin-top: 20px;
     }
   }
 
