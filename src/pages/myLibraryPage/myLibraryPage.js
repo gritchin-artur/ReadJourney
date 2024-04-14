@@ -32,7 +32,6 @@ export default function MyLibraryPage() {
   const status = ["in-progress", "unread", "done"];
 
   useEffect(() => {
-    console.log(recommendedBooks)
     if (recommendedBooks.totalPages < 3) {
       setBooks(recommendedBooks.results);
     } else {
