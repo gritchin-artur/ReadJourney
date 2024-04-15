@@ -70,15 +70,19 @@ export default function MyLibraryPage() {
     initialValues: {
       title: "",
       author: "",
-      totalPages: null,
+      totalPages: "",
     },
 
     validationSchema: AddBookSchema,
 
     onSubmit: (values) => {
       dispatch(postAddOwnBook(values)).then((response) => {
-        response.payload.title && resetForm();
-        console.log(response.payload);
+        response.payload.title && resetForm() && handleChange({
+          target: {
+            name: "totalPages",
+            value: '',
+          },
+        });;
       });
     },
   });
