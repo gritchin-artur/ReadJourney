@@ -30,7 +30,7 @@ export const postAddOwnBook = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     try {
-      const response = await axios.post("/books/add", { params });
+      const response = await axios.post("/books/add", params);
       token.set(persistedToken);
       toast.success(`Succsess add to own ${response.data.author}`);
       return response.data;

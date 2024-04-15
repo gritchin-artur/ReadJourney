@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ModalBookContainer } from "./modalBook.styled";
 import { addBooks } from "../../redux/data/data-operation";
+import Default from "../../img/png/default-Img.jpg";
 
 export default function ModalBook({ handleClickClose }) {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function ModalBook({ handleClickClose }) {
       <div className="ContentContainer">
         <img
           className="BookImg"
-          src={bookContent.imageUrl}
+          src={bookContent.imageUrl ? bookContent.imageUrl : Default}
           alt={bookContent.author}
         />
         <h2 className="BookTitle">{bookContent.title}</h2>

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Arrow } from "../../img/svg/log-in.svg";
 import { ReactComponent as SwitchInput } from "../../img/svg/chevron-down-2.svg";
 import { ReactComponent as Trash } from "../../img/svg/block-2.svg";
+import Default from "../../img/png/default-Img.jpg";
 import { useFormik } from "formik";
 import {
   getOwnBooks,
@@ -69,7 +70,7 @@ export default function MyLibraryPage() {
     initialValues: {
       title: "",
       author: "",
-      totalPages: "",
+      totalPages: null,
     },
 
     validationSchema: AddBookSchema,
@@ -77,7 +78,7 @@ export default function MyLibraryPage() {
     onSubmit: (values) => {
       dispatch(postAddOwnBook(values)).then((response) => {
         response.payload.title && resetForm();
-        console.log(response.payload)
+        console.log(response.payload);
       });
     },
   });
@@ -157,7 +158,11 @@ export default function MyLibraryPage() {
           className="BookOwnItem"
           onClick={() => trashHovered && dispatch(openModalBook(book))}
         >
-          <img className="BookOwnImg" src={book.imageUrl} alt={book.author} />
+          <img
+            className="BookOwnImg"
+            src={book.imageUrl ? book.imageUrl : Default}
+            alt={book.author}
+          />
           <div className="BookOwnContainer">
             <div className="BookOwnTitleContainer">
               <h2 className="BookOwnTitle">{book.title}</h2>

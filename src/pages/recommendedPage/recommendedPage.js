@@ -241,7 +241,11 @@ export default function RecommendedPage() {
             </li>
           </ul>
           <ul className="ButtonList">
-            <li ><NavLink className="ButtonMyLibrary" to="/library">My library</NavLink></li>
+            <li>
+              <NavLink className="ButtonMyLibrary" to="/library">
+                My library
+              </NavLink>
+            </li>
             <li>
               <Arrow className="ArrowNext" />
             </li>
