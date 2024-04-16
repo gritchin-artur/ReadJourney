@@ -12,17 +12,11 @@ export default function MyReadingPage() {
   const dispatch = useDispatch();
 
   const bookContent = useSelector((state) => state.modal.bookContent);
-  console.log(bookContent);
+const readPage = bookContent.progress[bookContent.progress.length - 1];
 
   const [reading, setReading] = useState(
-    bookContent.progress
-      ? false
-      : bookContent.progress[bookContent.progress.length - 1].status ===
-        "active"
-      ? true
-      : false
+    bookContent.progress ? false : readPage.status === "active" ? true : false
   );
-  console.log(bookContent.progress.length ? true : false);
   const {
     values,
     // touched,
@@ -35,7 +29,7 @@ export default function MyReadingPage() {
     initialValues: {
       id: bookContent._id,
       page: bookContent.progress.length
-        ? bookContent.progress[bookContent.progress.length - 1].finishPage : 0,
+        ? readPage.finishPage : 0,
     },
 
     // validationSchema: AddBookSchema,
