@@ -61,7 +61,6 @@ export default function RecommendedPage() {
           value: 1,
         },
       });
-      console.log(values);
       dispatch(getRecommendBooks(values));
     },
   });
@@ -98,7 +97,6 @@ export default function RecommendedPage() {
 
   const handleNextClick = useCallback(() => {
     let newOffset = hideButtons ? 0 : offset + 157;
-    console.log(newOffset);
     if (
       sliderWindow &&
       books.length &&

@@ -2,17 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { ModalBookContainer } from "./modalBook.styled";
 import { addBooks } from "../../redux/data/data-operation";
 import Default from "../../img/png/default-Img.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function ModalBook({ handleClickClose }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const bookContent = useSelector((state) => state.modal.bookContent);
-  console.log(bookContent);
   const handleAddToLibrary = (id) => {
-        dispatch(addBooks(id)).then((response) => {
-        response.payload.author && handleClickClose();
-      });
-}
+    dispatch(addBooks(id)).then((response) => {
+      response.payload.author && handleClickClose();
+    });
+  };
+  const handleClick = () => {
+    bookContent.progress
+      ? navigate("/reading")
+      : handleAddToLibrary(bookContent._id);
+   handleClickClose()
+  };
   return (
     <ModalBookContainer>
       <div className="ButtonClose" onClick={handleClickClose} />
@@ -26,7 +33,9 @@ export default function ModalBook({ handleClickClose }) {
         <h2 className="BookTitle">{bookContent.title}</h2>
         <p className="BookAuthor">{bookContent.author}</p>
         <p className="BookPages">{bookContent.totalPages} pages</p>
-        <button className="ButtonAdd" onClick={()=>handleAddToLibrary(bookContent._id)}>Add to library</button>
+        <button className="ButtonAdd" onClick={handleClick}>
+          {bookContent.progress ? "Start reading" : "Add to library"}
+        </button>
       </div>
     </ModalBookContainer>
   );

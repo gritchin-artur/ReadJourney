@@ -251,7 +251,6 @@ export default function MyLibraryPage() {
                 type="text"
                 placeholder="Enter text"
                 className={getInputClass("title")}
-                // className="TitleInput"
                 onChange={handleChange}
                 value={values.title}
                 onBlur={handleBlur}
@@ -266,7 +265,6 @@ export default function MyLibraryPage() {
                 type="text"
                 placeholder="Enter text"
                 className={getInputClass("author")}
-                // className="AuthorInput"
                 onChange={handleChange}
                 value={values.author}
                 onBlur={handleBlur}
@@ -282,7 +280,6 @@ export default function MyLibraryPage() {
                 type="text"
                 placeholder="Enter text"
                 className={getInputClass("totalPages")}
-                // className="AuthorInput"
                 onChange={handleChange}
                 value={values.totalPages}
                 onBlur={handleBlur}

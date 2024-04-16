@@ -39,7 +39,7 @@ export const ModalBookContainer = styled.div`
   } */
 
   .BookImg {
-    border-radius: 8px;
+    border-radius: 10px;
     width: 140px;
     height: 213px;
   }

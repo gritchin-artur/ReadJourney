@@ -326,7 +326,7 @@ export const MyLibraryPageContainer = styled.div`
     transition: all ease 1s;
     gap: 20px;
     margin-left: 13px;
-    width: ${(props) => console.log(props.$lengthbooks * 91)}px;
+    width: ${(props) => props.$lengthbooks * 91}px;
 
     @media only screen and (min-width: 768px) {
       margin-left: 20px;
@@ -474,7 +474,7 @@ export const MyLibraryPageContainer = styled.div`
   }
 
   .BookOwnImg {
-    border-radius: 8px;
+    border-radius: 10px;
     width: 137px;
     height: 208px;
   }
