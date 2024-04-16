@@ -12,11 +12,12 @@ export default function MyReadingPage() {
   const dispatch = useDispatch();
 
   const bookContent = useSelector((state) => state.modal.bookContent);
-const readPage = bookContent.progress[bookContent.progress.length - 1];
-
+  const readPage = bookContent.progress[bookContent.progress.length - 1];
+  console.log(bookContent);
   const [reading, setReading] = useState(
-    bookContent.progress ? false : readPage.status === "active" ? true : false
+    bookContent.progress.length === 0 ? false : readPage.status === "active" ? true : false
   );
+  console.log(bookContent, reading);
   const {
     values,
     // touched,
@@ -28,8 +29,9 @@ const readPage = bookContent.progress[bookContent.progress.length - 1];
   } = useFormik({
     initialValues: {
       id: bookContent._id,
-      page: bookContent.progress.length
-        ? readPage.finishPage : 0,
+      page: bookContent.progress.length ? 
+(readPage.status === "active" ? readPage.startPage : readPage.finishPage)
+      : 0,
     },
 
     // validationSchema: AddBookSchema,
@@ -63,7 +65,7 @@ const readPage = bookContent.progress[bookContent.progress.length - 1];
               value={values.page}
               onBlur={handleBlur}
             />
-            <span className="TextInput">Book title:</span>
+            <span className="TextInput">Page number:</span>
             {/* {getInputAlert("title")} */}
           </div>
           <button className="ButtonToStart" onClick={handleSubmit}>
@@ -71,16 +73,22 @@ const readPage = bookContent.progress[bookContent.progress.length - 1];
           </button>
         </form>
 
-        <div className="ProgressContainer">
-          <h2 className="TitleProgress">Progress</h2>
-          <p className="ProgressText">
-            Here you will see when and how much you read. To record, click on
-            the red button above.
-          </p>
-        </div>
-        <div className="ImgContainer">
-          <div className="ImgStar" />
-        </div>
+        {reading ? (
+          <div>rfgefdsv</div>
+        ) : (
+          <>
+            <div className="ProgressContainer">
+              <h2 className="TitleProgress">Progress</h2>
+              <p className="ProgressText">
+                Here you will see when and how much you read. To record, click
+                on the red button above.
+              </p>
+            </div>
+            <div className="ImgContainer">
+              <div className="ImgStar" />
+            </div>
+          </>
+        )}
       </div>
       <div className="OwnBookContainer">
         <h2 className="TitleMyReading">My reading</h2>

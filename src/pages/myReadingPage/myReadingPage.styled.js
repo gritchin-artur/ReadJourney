@@ -39,7 +39,7 @@ export const MainContainer = styled.div`
     height: 44px;
     background: #262626;
     border: unset;
-    padding-left: 72px;
+    padding-left: 96px;
 
     box-sizing: border-box;
 
