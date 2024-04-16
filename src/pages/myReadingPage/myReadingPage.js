@@ -15,9 +15,14 @@ export default function MyReadingPage() {
   console.log(bookContent);
 
   const [reading, setReading] = useState(
-   bookContent.progress ? false : (bookContent.progress[bookContent.progress.length - 1].status === "active" ? true : false)
+    bookContent.progress
+      ? false
+      : bookContent.progress[bookContent.progress.length - 1].status ===
+        "active"
+      ? true
+      : false
   );
-  console.log(bookContent.progress[bookContent.progress.length - 1].finishPage);
+  console.log(bookContent.progress.length ? true : false);
   const {
     values,
     // touched,
@@ -29,13 +34,14 @@ export default function MyReadingPage() {
   } = useFormik({
     initialValues: {
       id: bookContent._id,
-      page: bookContent.progress ? bookContent.progress[bookContent.progress.length - 1].finishPage : 0
+      page: bookContent.progress.length
+        ? bookContent.progress[bookContent.progress.length - 1].finishPage : 0,
     },
 
     // validationSchema: AddBookSchema,
 
     onSubmit: (values) => {
-        console.log(values)
+      console.log(values);
       if (!reading) {
         dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
