@@ -16,9 +16,8 @@ export default function ModalBook({ handleClickClose }) {
   };
   const handleClick = () => {
     bookContent.progress
-      ? navigate("/reading")
+      ? navigate("/reading") || handleClickClose()
       : handleAddToLibrary(bookContent._id);
-   handleClickClose()
   };
   return (
     <ModalBookContainer>
