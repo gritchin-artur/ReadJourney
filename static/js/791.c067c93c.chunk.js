@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[791],{5791:function(n,e,o){o.r(e),o.d(e,{default:function(){return s}});var r,t=o(168),a=o(7924).ZP.div(r||(r=(0,t.Z)(["\n\n.ControlBookContainer{\n    border-radius: 30px;\nwidth: 335px;\nheight: 390px;\nbackground: #1f1f1f;\n}\n"]))),i=o(184);function s(){return(0,i.jsxs)(a,{children:[(0,i.jsx)("div",{className:"ControlBookContainer"}),(0,i.jsx)("div",{className:"OwnBookContainer"})]})}}}]);
-//# sourceMappingURL=791.c067c93c.chunk.js.map
