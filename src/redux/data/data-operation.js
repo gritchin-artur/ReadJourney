@@ -135,7 +135,7 @@ export const startReadingBook = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        return toast.error("This book now reading!");
+        return toast.error("This book already read!");
       }
       if (error.response && error.response.status === 403) {
         return toast.error("You don't have right to edit this word!");

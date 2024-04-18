@@ -4,18 +4,46 @@ import { useDispatch, useSelector } from "react-redux";
 import Default from "../../img/png/default-Img.jpg";
 import { ReactComponent as Watch } from "../../img/svg/hourglass.svg";
 import { ReactComponent as Pie } from "../../img/svg/pie-chart.svg";
+import { ReactComponent as Trash } from "../../img/svg/trash.svg";
+import { ReactComponent as Frame } from "../../img/svg/Frame.svg";
 import {
   finishReadingBook,
   startReadingBook,
 } from "../../redux/data/data-operation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+// import faker from 'faker';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+
 
 export default function MyReadingPage() {
   const dispatch = useDispatch();
 
   const bookContent = useSelector((state) => state.modal.bookContent);
   const readPage = bookContent.progress[bookContent.progress.length - 1];
-  console.log(bookContent);
   const [reading, setReading] = useState(
     bookContent.progress.length === 0
       ? false
@@ -47,6 +75,7 @@ export default function MyReadingPage() {
 
     onSubmit: (values) => {
       console.log(values);
+      values.page === bookContent.totalPages && toast.success("Gradulate you");
       if (!reading) {
         dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
@@ -66,36 +95,74 @@ export default function MyReadingPage() {
     const minutes = finishReadingDate.getMinutes().toString().padStart(2, "0");
     const year = finishReadingDate.getFullYear().toString().slice(-2);
 
-    const formattedDate = `${hours}:${minutes}-${year}`;
+    const formattedDate = `${hours}.${minutes}.${year}`;
     return formattedDate;
   };
 
   const handleReadingPercent = (pageRead) => {
     const totalPage = bookContent.totalPages;
     const readPage = pageRead.finishPage - pageRead.startPage;
-    const percent = (readPage / totalPage) * 100;
+    const percent = ((readPage / totalPage) * 100).toFixed(1);
     return percent;
   };
 
   const handleReadingTime = (item) => {
     const startReadingDate = new Date(item.startReading);
-const finishReadingDate = new Date(item.finishReading);
+    const finishReadingDate = new Date(item.finishReading);
 
-const differenceInMilliseconds = finishReadingDate - startReadingDate;
+    const differenceInMilliseconds = finishReadingDate - startReadingDate;
 
-const differenceInMinutes = Math.round((differenceInMilliseconds / 1000) / 60);
-return differenceInMinutes;
-  }
+    const differenceInMinutes = Math.round(
+      differenceInMilliseconds / 1000 / 60
+    );
+    return differenceInMinutes;
+  };
 
-  const handleReadingPage = (item) =>{
+  const handleReadingPage = (item) => {
     const readPage = item.finishPage - item.startPage;
-    return readPage
-  }
+    return readPage;
+  };
 
-  const handleReadingPagePerHour = (item) =>{
-    const pagePerHour = (handleReadingTime() / 60) * handleReadingPage();
+  const handleReadingPagePerHour = (item) => {
+    const pagePerHour = Math.round(
+      (handleReadingTime(item) / 60) * handleReadingPage(item)
+    );
+    console.log(pagePerHour);
     return pagePerHour;
-  }
+  };
+
+
+
+ const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Line Chart',
+    },
+  },
+};
+
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+ const data = {
+  labels,
+  datasets: [
+    {
+      fill: true,
+      label: 'Dataset 2',
+    //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
+  ],
+};
+
+
+
   return (
     <MainContainer $reading={reading}>
       <div className="ControlBookContainer">
@@ -129,27 +196,42 @@ return differenceInMinutes;
               </div>
             </div>
             <div className="StatisticContainer">
-              <ul>
+              <ul className="ProgressList">
                 {bookContent.progress !== 0 &&
-                  bookContent.progress.map((progress, item) => 
-                    progress.finishReading && (
-                      <li key={item}>
-                        <div className="DateContainer">
-                          <p className="DateItem">
-                            {handleData(progress.finishReading)}
-                          </p>
-                          <p className="PercentItem">
-                            {handleReadingPercent(progress)}%
-                          </p>
-                          <p className="MinuteItem">{handleReadingTime(progress)} minutes</p>
-                        </div>
+                  bookContent.progress.map(
+                    (progress, item) =>
+                      progress.finishReading && (
+                        <li key={item} className="ProgressElement">
+                          <div className="FramePercentContainer">
+                            <Frame/>
+                            <div className="DateContainer">
+                            <p className="DateItem">
+                              {handleData(progress.finishReading)}
+                            </p>
+                            <p className="PercentItem">
+                              {handleReadingPercent(progress)}%
+                            </p>
+                            <p className="MinuteItem">
+                              {handleReadingTime(progress)} minutes
+                            </p>
+                          </div>
+                          </div>
 
-                        <div>
-                            <p className="readPage">{handleReadingPage(progress)} pages</p>
-                            <p className="PagePerHour">{handleReadingPagePerHour(progress)} pages per hour</p>
-                        </div>
-                      </li>
-                    )
+                          <div>
+                            <p className="ReadPage">
+                              {handleReadingPage(progress)} pages
+                            </p>
+                            <div className="GraphikContainer">
+                                <Line options={options} data={data} />
+                              <Trash />
+                            </div>
+                            <p className="PagePerHour">
+                              {handleReadingPagePerHour(progress)} pages per
+                              hour
+                            </p>
+                          </div>
+                        </li>
+                      )
                   )}
               </ul>
             </div>

@@ -110,12 +110,76 @@ export const MainContainer = styled.div`
     color: #f9f9f9;
   }
 
-  .StatisticContainer{
+  .StatisticContainer {
     margin-top: 10px;
     border-radius: 12px;
-width: 295px;
-height: 211px;
-background: #262626;
+    width: 295px;
+    height: 211px;
+    background: #262626;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .ProgressElement {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .FramePercentContainer{
+    display: flex;
+    gap: 5px;
+  }
+
+  .ProgressList{
+    display: grid;
+    gap: 30px;
+  }
+
+  .DateItem {
+    font-weight: 700;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: 0.02em;
+    color: #686868;
+  }
+
+  .PercentItem {
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+  }
+
+  .MinuteItem {
+    margin-top: 5px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #686868;
+  }
+
+  .ReadPage {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #686868;
+  }
+
+  .PagePerHour {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #686868;
   }
 
   .IconList {
