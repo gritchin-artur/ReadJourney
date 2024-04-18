@@ -2,6 +2,8 @@ import { useFormik } from "formik";
 import { MainContainer } from "./myReadingPage.styled";
 import { useDispatch, useSelector } from "react-redux";
 import Default from "../../img/png/default-Img.jpg";
+import { ReactComponent as Watch } from "../../img/svg/hourglass.svg";
+import { ReactComponent as Pie } from "../../img/svg/pie-chart.svg";
 import {
   finishReadingBook,
   startReadingBook,
@@ -15,8 +17,13 @@ export default function MyReadingPage() {
   const readPage = bookContent.progress[bookContent.progress.length - 1];
   console.log(bookContent);
   const [reading, setReading] = useState(
-    bookContent.progress.length === 0 ? false : readPage.status === "active" ? true : false
+    bookContent.progress.length === 0
+      ? false
+      : readPage.status === "active"
+      ? true
+      : false
   );
+
   console.log(bookContent, reading);
   const {
     values,
@@ -29,9 +36,11 @@ export default function MyReadingPage() {
   } = useFormik({
     initialValues: {
       id: bookContent._id,
-      page: bookContent.progress.length ? 
-(readPage.status === "active" ? readPage.startPage : readPage.finishPage)
-      : 0,
+      page: bookContent.progress.length
+        ? readPage.status === "active"
+          ? readPage.startPage
+          : readPage.finishPage
+        : 0,
     },
 
     // validationSchema: AddBookSchema,
@@ -50,6 +59,43 @@ export default function MyReadingPage() {
       }
     },
   });
+
+  const handleData = (date) => {
+    const finishReadingDate = new Date(date);
+    const hours = finishReadingDate.getHours().toString().padStart(2, "0");
+    const minutes = finishReadingDate.getMinutes().toString().padStart(2, "0");
+    const year = finishReadingDate.getFullYear().toString().slice(-2);
+
+    const formattedDate = `${hours}:${minutes}-${year}`;
+    return formattedDate;
+  };
+
+  const handleReadingPercent = (pageRead) => {
+    const totalPage = bookContent.totalPages;
+    const readPage = pageRead.finishPage - pageRead.startPage;
+    const percent = (readPage / totalPage) * 100;
+    return percent;
+  };
+
+  const handleReadingTime = (item) => {
+    const startReadingDate = new Date(item.startReading);
+const finishReadingDate = new Date(item.finishReading);
+
+const differenceInMilliseconds = finishReadingDate - startReadingDate;
+
+const differenceInMinutes = Math.round((differenceInMilliseconds / 1000) / 60);
+return differenceInMinutes;
+  }
+
+  const handleReadingPage = (item) =>{
+    const readPage = item.finishPage - item.startPage;
+    return readPage
+  }
+
+  const handleReadingPagePerHour = (item) =>{
+    const pagePerHour = (handleReadingTime() / 60) * handleReadingPage();
+    return pagePerHour;
+  }
   return (
     <MainContainer $reading={reading}>
       <div className="ControlBookContainer">
@@ -74,7 +120,40 @@ export default function MyReadingPage() {
         </form>
 
         {reading ? (
-          <div>rfgefdsv</div>
+          <div className="DairyContainer">
+            <div className="DairyContainerHeader">
+              <h1 className="TitleDairy">Dairy</h1>
+              <div className="IconList">
+                <Watch />
+                <Pie />
+              </div>
+            </div>
+            <div className="StatisticContainer">
+              <ul>
+                {bookContent.progress !== 0 &&
+                  bookContent.progress.map((progress, item) => 
+                    progress.finishReading && (
+                      <li key={item}>
+                        <div className="DateContainer">
+                          <p className="DateItem">
+                            {handleData(progress.finishReading)}
+                          </p>
+                          <p className="PercentItem">
+                            {handleReadingPercent(progress)}%
+                          </p>
+                          <p className="MinuteItem">{handleReadingTime(progress)} minutes</p>
+                        </div>
+
+                        <div>
+                            <p className="readPage">{handleReadingPage(progress)} pages</p>
+                            <p className="PagePerHour">{handleReadingPagePerHour(progress)} pages per hour</p>
+                        </div>
+                      </li>
+                    )
+                  )}
+              </ul>
+            </div>
+          </div>
         ) : (
           <>
             <div className="ProgressContainer">

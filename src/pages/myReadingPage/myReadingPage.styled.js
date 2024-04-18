@@ -11,7 +11,7 @@ export const MainContainer = styled.div`
   .ControlBookContainer {
     border-radius: 30px;
     width: 335px;
-    height: 390px;
+    min-height: 390px;
     background: #1f1f1f;
 
     padding: 20px;
@@ -90,6 +90,37 @@ export const MainContainer = styled.div`
     }
     transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
       background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .DairyContainer {
+    margin-top: 30px;
+  }
+
+  .DairyContainerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .TitleDairy {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+  }
+
+  .StatisticContainer{
+    margin-top: 10px;
+    border-radius: 12px;
+width: 295px;
+height: 211px;
+background: #262626;
+  }
+
+  .IconList {
+    display: flex;
+    gap: 8px;
   }
 
   .ProgressContainer {
@@ -198,18 +229,8 @@ export const MainContainer = styled.div`
   }
 
   .RecordButton {
-    /* cursor: pointer; */
     width: 50px;
     height: 50px;
-    background-image: url(${(props) => props.$reading ? stopRecordImg : recordImg })
-        /* width: ${(props) => props.$lengthbooks * 157}px; */
-
-    /* &:hover {
-      transform: scale(1.1);
-    }
-
-    &:active {
-      background-image: url(${stopRecordImg});
-    } */
+    background-image: url(${(props) => props.$reading ? stopRecordImg : recordImg});
   }
 `;
