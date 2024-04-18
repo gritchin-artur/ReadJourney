@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/ReadJourney/static/css/main.7acaea2f.css",
-    "main.js": "/ReadJourney/static/js/main.8e0d66bb.js",
+    "main.js": "/ReadJourney/static/js/main.daa54984.js",
     "static/js/319.904d9874.chunk.js": "/ReadJourney/static/js/319.904d9874.chunk.js",
     "static/js/412.fc8cacac.chunk.js": "/ReadJourney/static/js/412.fc8cacac.chunk.js",
     "static/js/806.3fb24f0c.chunk.js": "/ReadJourney/static/js/806.3fb24f0c.chunk.js",
     "static/js/410.5d41d00b.chunk.js": "/ReadJourney/static/js/410.5d41d00b.chunk.js",
     "static/js/522.bd2d3789.chunk.js": "/ReadJourney/static/js/522.bd2d3789.chunk.js",
-    "static/js/571.2b603112.chunk.js": "/ReadJourney/static/js/571.2b603112.chunk.js",
+    "static/js/127.e0ec8f78.chunk.js": "/ReadJourney/static/js/127.e0ec8f78.chunk.js",
     "static/js/705.503bdf76.chunk.js": "/ReadJourney/static/js/705.503bdf76.chunk.js",
     "static/js/7.5658b88f.chunk.js": "/ReadJourney/static/js/7.5658b88f.chunk.js",
+    "static/js/623.7a1fdaff.chunk.js": "/ReadJourney/static/js/623.7a1fdaff.chunk.js",
     "static/media/iPhone-15-Black-mobile.png": "/ReadJourney/static/media/iPhone-15-Black-mobile.270acc1ba39f20443464.png",
     "static/media/iPhone-15-Black-desctop.png": "/ReadJourney/static/media/iPhone-15-Black-desctop.475c795dd564d2b3f7f6.png",
     "static/media/Logo-desctop.svg": "/ReadJourney/static/media/Logo-desctop.3dad6d4247fd7f44f5fa3ae6fcb80fda.svg",
@@ -21,26 +22,29 @@
     "static/media/eye.svg": "/ReadJourney/static/media/eye.7b456f2652081817d7ec76832e662f83.svg",
     "static/media/Group-2.svg": "/ReadJourney/static/media/Group-2.71d2e83c430390083d88fa9277b4fa14.svg",
     "static/media/Vector.svg": "/ReadJourney/static/media/Vector.8d6988d1717f008c7a772f74d18b1505.svg",
+    "static/media/trash.svg": "/ReadJourney/static/media/trash.4783a4b5fbb07e8218667ecfa93ed891.svg",
     "static/media/Logo.svg": "/ReadJourney/static/media/Logo.10cdde073cf07a4e44ac322896f264a0.svg",
     "static/media/menu-04-2.svg": "/ReadJourney/static/media/menu-04-2.ae90cbf0571081f46095251c7a060c7b.svg",
     "static/media/log-in.svg": "/ReadJourney/static/media/log-in.ab68170b60877b44bff772279028c488.svg",
+    "static/media/Frame.svg": "/ReadJourney/static/media/Frame.8cbbf70b90531e369438e7049c8703ca.svg",
     "static/media/x-2.svg": "/ReadJourney/static/media/x-2.3baa47e2440773e914feca0766cce75d.svg",
     "static/media/chevron-left (1)-2.svg": "/ReadJourney/static/media/chevron-left (1)-2.d0f718852f8c59c4bd2fefa1ea808107.svg",
     "static/media/chevron-down-2.svg": "/ReadJourney/static/media/chevron-down-2.c4d86ae83a4cfea55a8bd99057fead93.svg",
     "static/media/chevron-left-2.svg": "/ReadJourney/static/media/chevron-left-2.90c57739b798f66303c2a856b8dddd96.svg",
     "main.7acaea2f.css.map": "/ReadJourney/static/css/main.7acaea2f.css.map",
-    "main.8e0d66bb.js.map": "/ReadJourney/static/js/main.8e0d66bb.js.map",
+    "main.daa54984.js.map": "/ReadJourney/static/js/main.daa54984.js.map",
     "319.904d9874.chunk.js.map": "/ReadJourney/static/js/319.904d9874.chunk.js.map",
     "412.fc8cacac.chunk.js.map": "/ReadJourney/static/js/412.fc8cacac.chunk.js.map",
     "806.3fb24f0c.chunk.js.map": "/ReadJourney/static/js/806.3fb24f0c.chunk.js.map",
     "410.5d41d00b.chunk.js.map": "/ReadJourney/static/js/410.5d41d00b.chunk.js.map",
     "522.bd2d3789.chunk.js.map": "/ReadJourney/static/js/522.bd2d3789.chunk.js.map",
-    "571.2b603112.chunk.js.map": "/ReadJourney/static/js/571.2b603112.chunk.js.map",
+    "127.e0ec8f78.chunk.js.map": "/ReadJourney/static/js/127.e0ec8f78.chunk.js.map",
     "705.503bdf76.chunk.js.map": "/ReadJourney/static/js/705.503bdf76.chunk.js.map",
-    "7.5658b88f.chunk.js.map": "/ReadJourney/static/js/7.5658b88f.chunk.js.map"
+    "7.5658b88f.chunk.js.map": "/ReadJourney/static/js/7.5658b88f.chunk.js.map",
+    "623.7a1fdaff.chunk.js.map": "/ReadJourney/static/js/623.7a1fdaff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.8e0d66bb.js"
+    "static/js/main.daa54984.js"
   ]
 }
