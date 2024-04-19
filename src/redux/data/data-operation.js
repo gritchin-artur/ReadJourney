@@ -177,3 +177,31 @@ export const finishReadingBook = createAsyncThunk(
     }
   }
 );
+
+export const deleteReadingOfTheBook = createAsyncThunk(
+  "/books/reading",
+  async (bookId, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    try {
+      const response = await axios.delete(`/books/reading?bookId=${bookId.bookId}&readingId=${bookId.readingId}`);
+      token.set(persistedToken);
+      toast.success(`You are delete statistic of ${response.data.author}`);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return toast.error("You haven't started reading this book | This book is already read | The finish page cann't be less than the start page!");
+      }
+      if (error.response && error.response.status === 403) {
+        return toast.error("You don't have right to edit this word!");
+      }
+      if (error.response && error.response.status === 404) {
+        return toast.error("Service not found");
+      }
+      if (error.response && error.response.status === 500) {
+        return toast.error("Server error");
+      }
+    }
+  }
+);

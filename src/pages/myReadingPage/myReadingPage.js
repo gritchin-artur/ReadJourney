@@ -7,10 +7,11 @@ import { ReactComponent as Pie } from "../../img/svg/pie-chart.svg";
 import { ReactComponent as Trash } from "../../img/svg/trash.svg";
 import { ReactComponent as Frame } from "../../img/svg/Frame.svg";
 import {
+  deleteReadingOfTheBook,
   finishReadingBook,
   startReadingBook,
 } from "../../redux/data/data-operation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
@@ -23,26 +24,42 @@ import {
   Tooltip,
   Filler,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-// import faker from 'faker';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend
+// );
 
+if (ChartJS) {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
+} else {
+  console.error("ChartJS is not defined!");
+}
 
 export default function MyReadingPage() {
   const dispatch = useDispatch();
 
   const bookContent = useSelector((state) => state.modal.bookContent);
+  const isDeleteStatistic = useSelector(
+    (state) => state.data.isDeleteStatistic
+  );
   const readPage = bookContent.progress[bookContent.progress.length - 1];
   const [reading, setReading] = useState(
     bookContent.progress.length === 0
@@ -50,9 +67,9 @@ export default function MyReadingPage() {
       : readPage.status === "active"
       ? true
       : false
+    // bookContent.progress.length === 0 ? false : true
   );
 
-  console.log(bookContent, reading);
   const {
     values,
     // touched,
@@ -91,11 +108,11 @@ export default function MyReadingPage() {
 
   const handleData = (date) => {
     const finishReadingDate = new Date(date);
-    const hours = finishReadingDate.getHours().toString().padStart(2, "0");
-    const minutes = finishReadingDate.getMinutes().toString().padStart(2, "0");
+    const days = finishReadingDate.getDay().toString().padStart(2, "0");
+    const month = finishReadingDate.getMonth().toString().padStart(2, "0");
     const year = finishReadingDate.getFullYear().toString().slice(-2);
 
-    const formattedDate = `${hours}.${minutes}.${year}`;
+    const formattedDate = `${days}.${month}.${year}`;
     return formattedDate;
   };
 
@@ -131,37 +148,94 @@ export default function MyReadingPage() {
     return pagePerHour;
   };
 
+  const labels = bookContent.progress.map((entry) => entry.finishPage);
 
+  const faker = bookContent.progress.map((entry) => entry.speed);
 
- const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        fill: true,
+        label: "Statistics",
+        data: faker,
+        borderColor: "#30b94d",
+        backgroundColor: "rgba(48, 185, 77, 0.2)",
+        pointStyle: "rect",
+        pointRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+      },
     },
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart',
+    scales: {
+      x: {
+        display: false,
+      },
+      y: {
+        display: false,
+      },
     },
-  },
-};
+  };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const handleDeleteStatistic = (statisticId) => {
+    const arrayOfId = {bookId: bookContent._id, readingId: statisticId };
+    dispatch(deleteReadingOfTheBook(arrayOfId));
+  };
 
- const data = {
-  labels,
-  datasets: [
-    {
-      fill: true,
-      label: 'Dataset 2',
-    //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+  const renderedStatisticItem = useMemo(() => {
+    return (
+      bookContent.progress.length !== 0 &&
+      bookContent.progress.map(
+        (progress, item) =>
+          progress.finishReading && (
+            <li key={item} className="ProgressElement">
+              <div className="FramePercentContainer">
+                <div className="FrameImg">
+                    <Frame/>
+                </div>
+                
+                <div className="DateContainer">
+                  <p className="DateItem">
+                    {handleData(progress.finishReading)}
+                  </p>
+                  <p className="PercentItem">
+                    {handleReadingPercent(progress)}%
+                  </p>
+                  <p className="MinuteItem">
+                    {handleReadingTime(progress)} minutes
+                  </p>
+                </div>
+              </div>
 
-
+              <div>
+                <p className="ReadPage">{handleReadingPage(progress)} pages</p>
+                <div className="GraphikContainer">
+                  <div className="Graphique">
+                    <Line options={options} data={data} />
+                    <p className="PagePerHour">
+                      {handleReadingPagePerHour(progress)} pages per hour
+                    </p>
+                  </div>
+                  <Trash
+                    className="Trash"
+                    onClick={() => handleDeleteStatistic(progress._id)}
+                  />
+                </div>
+              </div>
+            </li>
+          )
+      )
+    );
+  }, [bookContent.progress, data, options]);
 
   return (
     <MainContainer $reading={reading}>
@@ -186,7 +260,7 @@ const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
           </button>
         </form>
 
-        {reading ? (
+        {bookContent.progress.length !== 0 ? (
           <div className="DairyContainer">
             <div className="DairyContainerHeader">
               <h1 className="TitleDairy">Dairy</h1>
@@ -197,24 +271,25 @@ const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
             </div>
             <div className="StatisticContainer">
               <ul className="ProgressList">
-                {bookContent.progress !== 0 &&
+                {renderedStatisticItem}
+                {/* {bookContent.progress !== 0 &&
                   bookContent.progress.map(
                     (progress, item) =>
                       progress.finishReading && (
                         <li key={item} className="ProgressElement">
                           <div className="FramePercentContainer">
-                            <Frame/>
+                            <Frame />
                             <div className="DateContainer">
-                            <p className="DateItem">
-                              {handleData(progress.finishReading)}
-                            </p>
-                            <p className="PercentItem">
-                              {handleReadingPercent(progress)}%
-                            </p>
-                            <p className="MinuteItem">
-                              {handleReadingTime(progress)} minutes
-                            </p>
-                          </div>
+                              <p className="DateItem">
+                                {handleData(progress.finishReading)}
+                              </p>
+                              <p className="PercentItem">
+                                {handleReadingPercent(progress)}%
+                              </p>
+                              <p className="MinuteItem">
+                                {handleReadingTime(progress)} minutes
+                              </p>
+                            </div>
                           </div>
 
                           <div>
@@ -222,17 +297,19 @@ const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
                               {handleReadingPage(progress)} pages
                             </p>
                             <div className="GraphikContainer">
-                                <Line options={options} data={data} />
-                              <Trash />
-                            </div>
-                            <p className="PagePerHour">
+                                <div className="Graphique">
+                                    <Line options={options} data={data} />
+                                                               <p className="PagePerHour">
                               {handleReadingPagePerHour(progress)} pages per
                               hour
                             </p>
+                                    </div>
+                              <Trash className="Trash" onClick={()=> handleDeleteStatistic(progress._id)}/>
+                            </div>
                           </div>
                         </li>
                       )
-                  )}
+                  )} */}
               </ul>
             </div>
           </div>

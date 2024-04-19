@@ -1,15 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  // answersWord,
-  // getAllCategories,
-  // getAllWord,
   getRecommendBooks,
   getOwnBooks,
   addBooks,
   removeBooks,
-  // ownWord,
-  // statisticsWords,
-  // tasksWords,
+  deleteReadingOfTheBook,
 } from "./data-operation";
 
 const initialState = {
@@ -19,17 +14,7 @@ const initialState = {
   isLoadingOwn: false,
   isAddBook: false,
   isDeleteBook: false,
-
-  // statistics: [],
-  // isLoadingStatistics: false,
-  // words: [],
-  // isLoadingWords: false,
-  // allWords: [],
-  // isLoadingAllWords: false,
-  // tasks: [],
-  // isLoadingTasks: false,
-  // answers: [],
-  // isLoadingAnswers: false,
+isDeleteStatistic: false,
 };
 
 const handleGetRecommendedBooksPending = (state, { payload }) => {
@@ -82,48 +67,17 @@ const handleDeleteOwnBooksRejected = (state, { payload }) => {
   state.isDeleteBook = true;
 };
 
-// const handleGetStatisticsWordPending = (state, { payload }) => {
-//   state.isLoadingStatistics = true;
-// };
-// const handleGetStatisticsWordFulfilled = (state, { payload }) => {
-//   state.statistics = payload;
-//   state.isLoadingStatistics = false;
-// };
+const handleDeleteStatisticPending = (state, { payload }) => {
+  state.isDeleteStatistic = true;
+};
 
-// const handleGetOwnWordPending = (state, { payload }) => {
-//   state.isLoadingWords = true;
-// };
-// const handleGetOwnWordFulfilled = (state, { payload }) => {
-//   state.words = payload;
-//   state.isLoadingWords = false;
-// };
-// const handleGetOwnWordRejected = (state, { payload }) => {
-//   state.isLoadingWords = true;
-// };
+const handleDeleteStatisticFulfilled = (state, { payload }) => {
+  state.isDeleteStatistic = false;
+};
 
-// const handlegetAllWordsPending = (state, { payload }) => {
-//   state.isLoadingAllWords = true;
-// };
-// const handlegetAllWords = (state, { payload }) => {
-//   state.allWords = payload;
-//   state.isLoadingAllWords = false;
-// };
-
-// const handTasksWordsPending = (state, { payload }) => {
-//   state.isLoadingTasks = true;
-// };
-// const handTasksWords = (state, { payload }) => {
-//   state.tasks = payload;
-//   state.isLoadingTasks = false;
-// };
-
-// const handleAnswersPending = (state, { payload }) => {
-//   state.isLoadingAnswers = true;
-// };
-// const handleAnswers = (state, { payload }) => {
-//   state.answers = payload;
-//   state.isLoadingAnswers = false;
-// };
+const handleDeleteStatisticRejected = (state, { payload }) => {
+  state.isDeleteStatistic = true;
+};
 
 const dataSlise = createSlice({
   name: "data",
@@ -143,16 +97,9 @@ const dataSlise = createSlice({
                .addCase(removeBooks.pending, handleDeleteOwnBooksPending)
       .addCase(removeBooks.fulfilled, handleDeleteOwnBooksFulfilled)
       .addCase(removeBooks.rejected, handleDeleteOwnBooksRejected)
-    // .addCase(statisticsWords.fulfilled, handleGetStatisticsWordFulfilled)
-    // .addCase(ownWord.pending, handleGetOwnWordPending)
-    // .addCase(ownWord.fulfilled, handleGetOwnWordFulfilled)
-    // .addCase(ownWord.rejected, handleGetOwnWordRejected)
-    // .addCase(getAllWord.pending, handlegetAllWordsPending)
-    // .addCase(getAllWord.fulfilled, handlegetAllWords)
-    // .addCase(tasksWords.pending, handTasksWordsPending)
-    // .addCase(tasksWords.fulfilled, handTasksWords)
-    // .addCase(answersWord.pending, handleAnswersPending)
-    // .addCase(answersWord.fulfilled, handleAnswers);
+                     .addCase(deleteReadingOfTheBook.pending, handleDeleteStatisticPending)
+      .addCase(deleteReadingOfTheBook.fulfilled, handleDeleteStatisticFulfilled)
+      .addCase(deleteReadingOfTheBook.rejected, handleDeleteStatisticRejected)
   },
 });
 

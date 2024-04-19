@@ -126,12 +126,12 @@ export const MainContainer = styled.div`
     justify-content: space-between;
   }
 
-  .FramePercentContainer{
+  .FramePercentContainer {
     display: flex;
     gap: 5px;
   }
 
-  .ProgressList{
+  .ProgressList {
     display: grid;
     gap: 30px;
   }
@@ -154,6 +154,25 @@ export const MainContainer = styled.div`
     color: #f9f9f9;
   }
 
+  .ProgressElement:not(:first-child) .FrameImg {
+    rect[rx="4"] {
+      fill: #686868;
+      transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .ProgressElement:not(:last-child) .FrameImg {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      height: 69px;
+      border: 2px solid #1f1f1f;
+      top: 16px;
+      left: 6px;
+    }
+  }
+
   .MinuteItem {
     margin-top: 5px;
     font-weight: 500;
@@ -169,11 +188,37 @@ export const MainContainer = styled.div`
     font-size: 12px;
     line-height: 133%;
     letter-spacing: -0.02em;
-    text-align: center;
+    /* text-align: center; */
     color: #686868;
   }
 
+  .GraphikContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  .Graphique {
+    height: 22px;
+    width: 44px;
+  }
+
+  .Trash {
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.1);
+      path {
+        stroke: #e90516;
+        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
   .PagePerHour {
+    margin-top: 5px;
     font-weight: 500;
     font-size: 10px;
     line-height: 120%;
