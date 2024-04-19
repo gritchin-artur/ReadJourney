@@ -1,10 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   getRecommendBooks,
   getOwnBooks,
   addBooks,
   removeBooks,
   deleteReadingOfTheBook,
+  startReadingBook,
+  finishReadingBook,
 } from "./data-operation";
 
 const initialState = {
@@ -97,10 +99,31 @@ const dataSlise = createSlice({
                .addCase(removeBooks.pending, handleDeleteOwnBooksPending)
       .addCase(removeBooks.fulfilled, handleDeleteOwnBooksFulfilled)
       .addCase(removeBooks.rejected, handleDeleteOwnBooksRejected)
-                     .addCase(deleteReadingOfTheBook.pending, handleDeleteStatisticPending)
-      .addCase(deleteReadingOfTheBook.fulfilled, handleDeleteStatisticFulfilled)
-      .addCase(deleteReadingOfTheBook.rejected, handleDeleteStatisticRejected)
-  },
+            .addMatcher(
+        isAnyOf(
+          deleteReadingOfTheBook.pending,
+          startReadingBook.pending,
+          finishReadingBook.pending
+        ),
+        handleDeleteStatisticPending
+      )
+                  .addMatcher(
+        isAnyOf(
+          deleteReadingOfTheBook.fulfilled,
+          startReadingBook.fulfilled,
+          finishReadingBook.fulfilled
+        ),
+        handleDeleteStatisticFulfilled
+      )
+      .addMatcher(
+        isAnyOf(
+          deleteReadingOfTheBook.rejected,
+          startReadingBook.rejected,
+          finishReadingBook.rejected
+        ),
+        handleDeleteStatisticRejected
+      )
+        },
 });
 
 export default dataSlise.reducer;
