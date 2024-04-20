@@ -390,7 +390,7 @@ export const RecommendedPageContainer = styled.div`
     width: ${(props) => props.$lengthbooks * 157}px;
 
     @media only screen and (min-width: 768px) {
-      margin-left: 0;
+      margin-left: 5px;
       flex-direction: column;
       flex-wrap: wrap;
       width: ${(props) => (props.$lengthbooks * 157) / 2}px;

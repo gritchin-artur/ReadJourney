@@ -12,8 +12,7 @@ import {
   getOwnBooks,
   startReadingBook,
 } from "../../redux/data/data-operation";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   Chart as ChartJS,
@@ -27,32 +26,18 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { openModalFinishRead } from "../../redux/modals/modal-slice";
 
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Filler,
-//   Legend
-// );
-
-if (ChartJS) {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend
-  );
-} else {
-  console.error("ChartJS is not defined!");
-}
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
 
 export default function MyReadingPage() {
   const dispatch = useDispatch();
@@ -74,11 +59,8 @@ export default function MyReadingPage() {
       : false
   );
 
-    useEffect(() => {
-    console.log(isDeleteStatistic);
-    if (isDeleteStatistic) {
-      dispatch(getOwnBooks(isDeleteStatistic));
-    }
+  useEffect(() => {
+    dispatch(getOwnBooks(isDeleteStatistic));
   }, [dispatch, isDeleteStatistic]);
 
   const {
@@ -103,7 +85,7 @@ export default function MyReadingPage() {
 
     onSubmit: (values) => {
       console.log(values);
-      values.page === bookContent.totalPages && toast.success("Gradulate you");
+      values.page === bookContent.totalPages && dispatch(openModalFinishRead());
       if (!reading) {
         dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
@@ -127,12 +109,7 @@ export default function MyReadingPage() {
     return formattedDate;
   };
 
-  const handleReadingPercent = (pageRead) => {
-    const totalPage = bookContent.totalPages;
-    const readPage = pageRead.finishPage - pageRead.startPage;
-    const percent = ((readPage / totalPage) * 100).toFixed(1);
-    return percent;
-  };
+
 
   const handleReadingTime = (item) => {
     const startReadingDate = new Date(item.startReading);
@@ -151,19 +128,20 @@ export default function MyReadingPage() {
     return readPage;
   };
 
-  const handleReadingPagePerHour = (item) => {
-    const pagePerHour = Math.round(
-      (handleReadingTime(item) / 60) * handleReadingPage(item)
-    );
-    console.log(pagePerHour);
-    return pagePerHour;
-  };
 
-  const labels = bookContent.progress.map((entry) => entry.finishPage);
+
+
+
+
+
+
+
+  const renderedStatisticItem = useMemo(() => {
+      const labels = bookContent.progress.map((entry) => entry.finishPage);
 
   const faker = bookContent.progress.map((entry) => entry.speed);
 
-  const data = {
+      const data = {
     labels: labels,
     datasets: [
       {
@@ -197,57 +175,72 @@ export default function MyReadingPage() {
     },
   };
 
+  const handleReadingPercent = (pageRead) => {
+    const totalPage = bookContent.totalPages;
+    const readPage = pageRead.finishPage - pageRead.startPage;
+    const percent = ((readPage / totalPage) * 100).toFixed(1);
+    return percent;
+  };
 
-  const handleDeleteStatistic = (statisticId) => {
+  const handleReadingPagePerHour = (item) => {
+    const pagePerHour = Math.round(
+      (handleReadingTime(item) / 60) * handleReadingPage(item)
+    );
+    console.log(pagePerHour);
+    return pagePerHour;
+  };
+
+      const handleDeleteStatistic = (statisticId) => {
     const arrayOfId = { bookId: bookContent._id, readingId: statisticId };
     dispatch(deleteReadingOfTheBook(arrayOfId));
   };
+    return (
+      bookContent.progress.length !== 0 &&
+      bookContent.progress.map(
+        (progress, item) =>
+          progress.finishReading && (
+            <li key={item} className="ProgressElement">
+              <div className="FramePercentContainer">
+                <div className="FrameImg">
+                  <Frame />
+                </div>
 
-//   const renderedStatisticItem = useMemo(() => {
-//     return (
-//       bookContent.progress.length !== 0 &&
-//       bookContent.progress.map(
-//         (progress, item) =>
-//           progress.finishReading && (
-//             <li key={item} className="ProgressElement">
-//               <div className="FramePercentContainer">
-//                 <div className="FrameImg">
-//                   <Frame />
-//                 </div>
+                <div className="DateContainer">
+                  <p className="DateItem">
+                    {handleData(progress.finishReading)}
+                  </p>
+                  <p className="PercentItem">
+                    {handleReadingPercent(progress)}%
+                  </p>
+                  <p className="MinuteItem">
+                    {handleReadingTime(progress)} minutes
+                  </p>
+                </div>
+              </div>
 
-//                 <div className="DateContainer">
-//                   <p className="DateItem">
-//                     {handleData(progress.finishReading)}
-//                   </p>
-//                   <p className="PercentItem">
-//                     {handleReadingPercent(progress)}%
-//                   </p>
-//                   <p className="MinuteItem">
-//                     {handleReadingTime(progress)} minutes
-//                   </p>
-//                 </div>
-//               </div>
-
-//               <div>
-//                 <p className="ReadPage">{handleReadingPage(progress)} pages</p>
-//                 <div className="GraphikContainer">
-//                   <div className="Graphique">
-//                     {ChartJS && <Line options={options} data={data} />}
-//                     <p className="PagePerHour">
-//                       {handleReadingPagePerHour(progress)} pages per hour
-//                     </p>
-//                   </div>
-//                   <Trash
-//                     className="Trash"
-//                     onClick={() => handleDeleteStatistic(progress._id)}
-//                   />
-//                 </div>
-//               </div>
-//             </li>
-//           )
-//       )
-//     );
-//   }, [bookContent, data, options, handleDeleteStatistic, handleReadingPagePerHour]);
+              <div>
+                <p className="ReadPage">{handleReadingPage(progress)} pages</p>
+                <div className="GraphikContainer">
+                  <div className="Graphique">
+                    <Line options={options} data={data} />
+                    <p className="PagePerHour">
+                      {handleReadingPagePerHour(progress)} pages per hour
+                    </p>
+                  </div>
+                  <Trash
+                    className="Trash"
+                    onClick={() => handleDeleteStatistic(progress._id)}
+                  />
+                </div>
+              </div>
+            </li>
+          )
+      )
+    );
+  }, [
+    bookContent,
+    dispatch
+  ]);
 
   return (
     <MainContainer $reading={reading}>
@@ -283,8 +276,8 @@ export default function MyReadingPage() {
             </div>
             <div className="StatisticContainer">
               <ul className="ProgressList">
-                {/* {renderedStatisticItem} */}
-                {bookContent.progress !== 0 &&
+                {renderedStatisticItem}
+                {/* {bookContent.progress !== 0 &&
                   bookContent.progress.map(
                     (progress, item) =>
                       progress.finishReading && (
@@ -321,7 +314,7 @@ export default function MyReadingPage() {
                           </div>
                         </li>
                       )
-                  )}
+                  )} */}
               </ul>
             </div>
           </div>
