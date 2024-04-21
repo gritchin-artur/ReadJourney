@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/ReadJourney/static/css/main.7acaea2f.css",
-    "main.js": "/ReadJourney/static/js/main.08cc64f3.js",
+    "main.js": "/ReadJourney/static/js/main.ceed6e94.js",
     "static/js/60.4ff2f41a.chunk.js": "/ReadJourney/static/js/60.4ff2f41a.chunk.js",
     "static/js/412.fc8cacac.chunk.js": "/ReadJourney/static/js/412.fc8cacac.chunk.js",
     "static/js/806.3fb24f0c.chunk.js": "/ReadJourney/static/js/806.3fb24f0c.chunk.js",
     "static/js/410.5a30bd15.chunk.js": "/ReadJourney/static/js/410.5a30bd15.chunk.js",
     "static/js/136.95b5d296.chunk.js": "/ReadJourney/static/js/136.95b5d296.chunk.js",
-    "static/js/127.519fa387.chunk.js": "/ReadJourney/static/js/127.519fa387.chunk.js",
+    "static/js/127.b80a8706.chunk.js": "/ReadJourney/static/js/127.b80a8706.chunk.js",
     "static/js/705.503bdf76.chunk.js": "/ReadJourney/static/js/705.503bdf76.chunk.js",
     "static/js/7.5658b88f.chunk.js": "/ReadJourney/static/js/7.5658b88f.chunk.js",
-    "static/js/623.7a1fdaff.chunk.js": "/ReadJourney/static/js/623.7a1fdaff.chunk.js",
+    "static/js/623.5f3edfd0.chunk.js": "/ReadJourney/static/js/623.5f3edfd0.chunk.js",
     "static/media/iPhone-15-Black-mobile.png": "/ReadJourney/static/media/iPhone-15-Black-mobile.270acc1ba39f20443464.png",
     "static/media/iPhone-15-Black-desctop.png": "/ReadJourney/static/media/iPhone-15-Black-desctop.475c795dd564d2b3f7f6.png",
     "static/media/Logo-desctop.svg": "/ReadJourney/static/media/Logo-desctop.3dad6d4247fd7f44f5fa3ae6fcb80fda.svg",
@@ -32,19 +32,19 @@
     "static/media/chevron-down-2.svg": "/ReadJourney/static/media/chevron-down-2.c4d86ae83a4cfea55a8bd99057fead93.svg",
     "static/media/chevron-left-2.svg": "/ReadJourney/static/media/chevron-left-2.90c57739b798f66303c2a856b8dddd96.svg",
     "main.7acaea2f.css.map": "/ReadJourney/static/css/main.7acaea2f.css.map",
-    "main.08cc64f3.js.map": "/ReadJourney/static/js/main.08cc64f3.js.map",
+    "main.ceed6e94.js.map": "/ReadJourney/static/js/main.ceed6e94.js.map",
     "60.4ff2f41a.chunk.js.map": "/ReadJourney/static/js/60.4ff2f41a.chunk.js.map",
     "412.fc8cacac.chunk.js.map": "/ReadJourney/static/js/412.fc8cacac.chunk.js.map",
     "806.3fb24f0c.chunk.js.map": "/ReadJourney/static/js/806.3fb24f0c.chunk.js.map",
     "410.5a30bd15.chunk.js.map": "/ReadJourney/static/js/410.5a30bd15.chunk.js.map",
     "136.95b5d296.chunk.js.map": "/ReadJourney/static/js/136.95b5d296.chunk.js.map",
-    "127.519fa387.chunk.js.map": "/ReadJourney/static/js/127.519fa387.chunk.js.map",
+    "127.b80a8706.chunk.js.map": "/ReadJourney/static/js/127.b80a8706.chunk.js.map",
     "705.503bdf76.chunk.js.map": "/ReadJourney/static/js/705.503bdf76.chunk.js.map",
     "7.5658b88f.chunk.js.map": "/ReadJourney/static/js/7.5658b88f.chunk.js.map",
-    "623.7a1fdaff.chunk.js.map": "/ReadJourney/static/js/623.7a1fdaff.chunk.js.map"
+    "623.5f3edfd0.chunk.js.map": "/ReadJourney/static/js/623.5f3edfd0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.08cc64f3.js"
+    "static/js/main.ceed6e94.js"
   ]
 }
