@@ -131,6 +131,26 @@ export const MainContainer = styled.div`
     gap: 5px;
   }
 
+  .StatisticCircle {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 116px;
+    height: 116x;
+    position: relative;
+  }
+
+  .PercentStatistic {
+    position: absolute;
+
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 111%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+  }
+
   .ProgressList {
     display: grid;
     gap: 30px;
@@ -230,6 +250,44 @@ export const MainContainer = styled.div`
   .IconList {
     display: flex;
     gap: 8px;
+  }
+
+  .ButtonDairy {
+    cursor: pointer;
+    path {
+      stroke: ${(props) => (props.$onStatistic ? "#686868" : "#F9F9F9")};
+    }
+
+    transition: transform 0.3s ease;
+
+    &:hover,
+    &.active {
+      transform: scale(1.1);
+      path {
+        stroke: #f9f9f9;
+        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .ButtonStatistic {
+    cursor: pointer;
+    path {
+      stroke: ${(props) => (props.$onStatistic ? "#F9F9F9" : "#686868")};
+    }
+
+    transition: transform 0.3s ease;
+
+    &:hover,
+    &.active {
+      transform: scale(1.1);
+      path {
+        stroke: #f9f9f9;
+        transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
   }
 
   .ProgressContainer {

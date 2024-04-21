@@ -14,30 +14,33 @@ import {
 } from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend,
+// } from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
 import { openModalFinishRead } from "../../redux/modals/modal-slice";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend
+// );
+
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
 
 export default function MyReadingPage() {
   const dispatch = useDispatch();
@@ -58,6 +61,7 @@ export default function MyReadingPage() {
       ? true
       : false
   );
+  const [onStatistic, setOnStatistic] = useState(false);
 
   useEffect(() => {
     dispatch(getOwnBooks(isDeleteStatistic));
@@ -109,8 +113,6 @@ export default function MyReadingPage() {
     return formattedDate;
   };
 
-
-
   const handleReadingTime = (item) => {
     const startReadingDate = new Date(item.startReading);
     const finishReadingDate = new Date(item.finishReading);
@@ -130,120 +132,150 @@ export default function MyReadingPage() {
 
 
 
-
-
-
-
-
-
   const renderedStatisticItem = useMemo(() => {
-      const labels = bookContent.progress.map((entry) => entry.finishPage);
+    const labels = bookContent.progress.map((entry) => entry.finishPage);
 
-  const faker = bookContent.progress.map((entry) => entry.speed);
+    const faker = bookContent.progress.map((entry) => entry.speed);
 
-      const data = {
-    labels: labels,
-    datasets: [
-      {
-        fill: true,
-        label: "Statistics",
-        data: faker,
-        borderColor: "#30b94d",
-        backgroundColor: "rgba(48, 185, 77, 0.2)",
-        pointStyle: "rect",
-        pointRadius: 0,
+      const lastReadPage =  bookContent.progress[bookContent.progress.length - 1]
+
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          fill: true,
+          label: "Statistics",
+          data: faker,
+          borderColor: "#30b94d",
+          backgroundColor: "rgba(48, 185, 77, 0.2)",
+          pointStyle: "rect",
+          pointRadius: 0,
+        },
+      ],
+    };
+
+    const options = {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: false,
+        },
       },
-    ],
-  };
-
-  const options = {
-    plugins: {
-      legend: {
-        display: false,
+      scales: {
+        x: {
+          display: false,
+        },
+        y: {
+          display: false,
+        },
       },
-      title: {
-        display: false,
+    };
+
+
+
+    const handleReadingPercent = (pageRead) => {
+      const totalPage = bookContent.totalPages;
+      const readPage = pageRead.finishPage - pageRead.startPage;
+      const percent = ((readPage / totalPage) * 100).toFixed(1);
+      return percent;
+    };
+
+    const handleReadingPagePerHour = (item) => {
+      const pagePerHour = Math.round(
+        (handleReadingTime(item) / 60) * handleReadingPage(item)
+      );
+      console.log(pagePerHour);
+      return pagePerHour;
+    };
+
+    const handleDeleteStatistic = (statisticId) => {
+      const arrayOfId = { bookId: bookContent._id, readingId: statisticId };
+      dispatch(deleteReadingOfTheBook(arrayOfId));
+    };
+
+        const dataStatistic = {
+      datasets: [
+        {
+          data: [handleReadingPercent(lastReadPage), 100],
+          backgroundColor: ["#30B94D", "#0f0f0f"],
+          borderWidth: 0,
+          borderRadius: 50,
+        },
+      ],
+    };
+
+    const optionsStatistic = {
+      cutout: "80%",
+      hover: { mode: null },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
       },
-    },
-    scales: {
-      x: {
-        display: false,
-      },
-      y: {
-        display: false,
-      },
-    },
-  };
+    };
+    return onStatistic ? (
+        <div className="StatisticContainer">
+      <div className="StatisticCircle">
+        <Doughnut data={dataStatistic} options={optionsStatistic} />
+          <p className="PercentStatistic">{handleReadingPercent(lastReadPage)}%</p>
+      </div>
+      </div>
+    ) : (
+      <ul className="ProgressList">
+        {bookContent.progress.length !== 0 &&
+          bookContent.progress.map(
+            (progress, item) =>
+              progress.finishReading && (
+                <li key={item} className="ProgressElement">
+                  <div className="FramePercentContainer">
+                    <div className="FrameImg">
+                      <Frame />
+                    </div>
 
-  const handleReadingPercent = (pageRead) => {
-    const totalPage = bookContent.totalPages;
-    const readPage = pageRead.finishPage - pageRead.startPage;
-    const percent = ((readPage / totalPage) * 100).toFixed(1);
-    return percent;
-  };
-
-  const handleReadingPagePerHour = (item) => {
-    const pagePerHour = Math.round(
-      (handleReadingTime(item) / 60) * handleReadingPage(item)
-    );
-    console.log(pagePerHour);
-    return pagePerHour;
-  };
-
-      const handleDeleteStatistic = (statisticId) => {
-    const arrayOfId = { bookId: bookContent._id, readingId: statisticId };
-    dispatch(deleteReadingOfTheBook(arrayOfId));
-  };
-    return (
-      bookContent.progress.length !== 0 &&
-      bookContent.progress.map(
-        (progress, item) =>
-          progress.finishReading && (
-            <li key={item} className="ProgressElement">
-              <div className="FramePercentContainer">
-                <div className="FrameImg">
-                  <Frame />
-                </div>
-
-                <div className="DateContainer">
-                  <p className="DateItem">
-                    {handleData(progress.finishReading)}
-                  </p>
-                  <p className="PercentItem">
-                    {handleReadingPercent(progress)}%
-                  </p>
-                  <p className="MinuteItem">
-                    {handleReadingTime(progress)} minutes
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <p className="ReadPage">{handleReadingPage(progress)} pages</p>
-                <div className="GraphikContainer">
-                  <div className="Graphique">
-                    <Line options={options} data={data} />
-                    <p className="PagePerHour">
-                      {handleReadingPagePerHour(progress)} pages per hour
-                    </p>
+                    <div className="DateContainer">
+                      <p className="DateItem">
+                        {handleData(progress.finishReading)}
+                      </p>
+                      <p className="PercentItem">
+                        {handleReadingPercent(progress)}%
+                      </p>
+                      <p className="MinuteItem">
+                        {handleReadingTime(progress)} minutes
+                      </p>
+                    </div>
                   </div>
-                  <Trash
-                    className="Trash"
-                    onClick={() => handleDeleteStatistic(progress._id)}
-                  />
-                </div>
-              </div>
-            </li>
-          )
-      )
+
+                  <div>
+                    <p className="ReadPage">
+                      {handleReadingPage(progress)} pages
+                    </p>
+                    <div className="GraphikContainer">
+                      <div className="Graphique">
+                        <Line options={options} data={data} />
+                        <p className="PagePerHour">
+                          {handleReadingPagePerHour(progress)} pages per hour
+                        </p>
+                      </div>
+                      <Trash
+                        className="Trash"
+                        onClick={() => handleDeleteStatistic(progress._id)}
+                      />
+                    </div>
+                  </div>
+                </li>
+              )
+          )}
+      </ul>
     );
-  }, [
-    bookContent,
-    dispatch
-  ]);
+  }, [bookContent, onStatistic, dispatch]);
 
   return (
-    <MainContainer $reading={reading}>
+    <MainContainer $reading={reading} $onStatistic={onStatistic}>
       <div className="ControlBookContainer">
         <form className="Form">
           <p className="FormTitle">Filters:</p>
@@ -268,16 +300,23 @@ export default function MyReadingPage() {
         {bookContent.progress.length !== 0 ? (
           <div className="DairyContainer">
             <div className="DairyContainerHeader">
-              <h1 className="TitleDairy">Dairy</h1>
+              <h1 className="TitleDairy">
+                {onStatistic ? "Statistics" : "Dairy"}
+              </h1>
               <div className="IconList">
-                <Watch />
-                <Pie />
+                <Watch
+                  onClick={() => setOnStatistic(false)}
+                  className="ButtonDairy"
+                />
+                <Pie
+                  onClick={() => setOnStatistic(true)}
+                  className="ButtonStatistic"
+                />
               </div>
             </div>
             <div className="StatisticContainer">
-              <ul className="ProgressList">
-                {renderedStatisticItem}
-                {/* {bookContent.progress !== 0 &&
+              {renderedStatisticItem}
+              {/* {bookContent.progress !== 0 &&
                   bookContent.progress.map(
                     (progress, item) =>
                       progress.finishReading && (
@@ -315,7 +354,6 @@ export default function MyReadingPage() {
                         </li>
                       )
                   )} */}
-              </ul>
             </div>
           </div>
         ) : (

@@ -38,6 +38,21 @@ const handleFetchCurrentUserReject = (state) => {
   state.isLoggedIn = false;
 };
 
+const handleRefreshCurrentUserReject = (state) => {
+  state.isFetchingCurrentUser = false;
+  state.isLoggedIn = false;
+};
+
+const handleRefreshCurrentUserPending = (state) => {
+  state.isRefreshing = true;
+  state.isLoggedIn = false;
+};
+
+const handleRefreshCurrentUserFulfilled = (state, { payload }) => {
+  state.token = payload.token;
+  state.refreshToken = payload.refreshToken;
+};
+
 const handleRegisterLogInPending = (state, { payload }) => {
   state.isLoggedIn = false;
 };
@@ -73,6 +88,19 @@ const authSlice = createSlice({
       .addCase(
         authOperations.fetchCurrentUser.rejected,
         handleFetchCurrentUserReject
+      )
+
+            .addCase(
+        authOperations.refreshTokenUser.pending,
+        handleRefreshCurrentUserPending
+      )
+      .addCase(
+        authOperations.refreshTokenUser.fulfilled,
+        handleRefreshCurrentUserFulfilled
+      )
+      .addCase(
+        authOperations.refreshTokenUser.rejected,
+        handleRefreshCurrentUserReject
       )
 
       .addMatcher(
