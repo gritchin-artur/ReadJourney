@@ -131,6 +131,13 @@ export const MainContainer = styled.div`
     gap: 5px;
   }
 
+  .StatisticCircleContainer {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+  }
+
   .StatisticCircle {
     box-sizing: border-box;
     display: flex;
@@ -149,6 +156,42 @@ export const MainContainer = styled.div`
     line-height: 111%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+  }
+
+  .PercentContainer {
+    margin-top: 20px;
+
+    display: grid;
+    justify-content: center;
+  }
+
+  .CircleColorContainer {
+    position: relative;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    color: #f9f9f9;
+
+    &::before {
+      content: "";
+      position: absolute;
+      border-radius: 4px;
+      width: 14px;
+      height: 14px;
+      background: #30b94d;
+          left: -25px;
+    top: 2px;
+    }
+  }
+
+  .PageAlreadyRead {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #686868;
   }
 
   .ProgressList {
@@ -398,6 +441,7 @@ export const MainContainer = styled.div`
   .RecordButton {
     width: 50px;
     height: 50px;
-    background-image: url(${(props) => props.$reading ? stopRecordImg : recordImg});
+    background-image: url(${(props) =>
+      props.$reading ? stopRecordImg : recordImg});
   }
 `;

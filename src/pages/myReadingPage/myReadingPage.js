@@ -219,11 +219,16 @@ export default function MyReadingPage() {
       },
     };
     return onStatistic ? (
-        <div className="StatisticContainer">
+        <div className="StatisticCircleContainer">
       <div className="StatisticCircle">
         <Doughnut data={dataStatistic} options={optionsStatistic} />
-          <p className="PercentStatistic">{handleReadingPercent(lastReadPage)}%</p>
+          <p className="PercentStatistic">100%</p>
       </div>
+
+      {handleReadingPercent(lastReadPage) > 0 && <div className="PercentContainer">
+        <p className="CircleColorContainer">{handleReadingPercent(lastReadPage)}%</p>
+        <p className="PageAlreadyRead">{bookContent.progress[bookContent.progress.length - 1].finishPage} pages read</p>
+        </div>}
       </div>
     ) : (
       <ul className="ProgressList">
