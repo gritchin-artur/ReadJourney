@@ -441,7 +441,6 @@ export const MainContainer = styled.div`
   .RecordButton {
     width: 50px;
     height: 50px;
-    background-image: url(${(props) =>
-      props.$reading ? stopRecordImg : recordImg});
+    background-image: url(${(props) => props.$reading ? stopRecordImg : recordImg});
   }
 `;
