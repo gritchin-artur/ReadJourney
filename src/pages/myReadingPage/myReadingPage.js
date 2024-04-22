@@ -40,6 +40,7 @@ import { openModalFinishRead } from "../../redux/modals/modal-slice";
 // );
 
 import { Chart, registerables } from "chart.js";
+import toast from "react-hot-toast";
 Chart.register(...registerables);
 
 export default function MyReadingPage() {
@@ -88,17 +89,18 @@ export default function MyReadingPage() {
     // validationSchema: AddBookSchema,
 
     onSubmit: (values) => {
-      console.log(values);
       values.page === bookContent.totalPages && dispatch(openModalFinishRead());
       if (!reading) {
-        dispatch(startReadingBook(values)).then((response) => {
+        return dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
         });
       }
-      if (reading) {
-        dispatch(finishReadingBook(values)).then((response) => {
+      if (reading && values.page <= bookContent.totalPages) {
+        return dispatch(finishReadingBook(values)).then((response) => {
           response.payload.title && setReading(false);
         });
+      } else {
+        return toast.error(`This book have ${bookContent.totalPages} pages!`);
       }
     },
   });
@@ -130,14 +132,12 @@ export default function MyReadingPage() {
     return readPage;
   };
 
-
-
   const renderedStatisticItem = useMemo(() => {
     const labels = bookContent.progress.map((entry) => entry.finishPage);
 
     const faker = bookContent.progress.map((entry) => entry.speed);
 
-      const lastReadPage =  bookContent.progress[bookContent.progress.length - 1]
+    const lastReadPage = bookContent.progress[bookContent.progress.length - 1];
 
     const data = {
       labels: labels,
@@ -173,11 +173,9 @@ export default function MyReadingPage() {
       },
     };
 
-
-
     const handleReadingPercent = (pageRead) => {
       const totalPage = bookContent.totalPages;
-      const readPage = pageRead.finishPage - pageRead.startPage;
+      const readPage = pageRead && pageRead.finishPage - pageRead.startPage;
       const percent = ((readPage / totalPage) * 100).toFixed(1);
       return percent;
     };
@@ -195,10 +193,21 @@ export default function MyReadingPage() {
       dispatch(deleteReadingOfTheBook(arrayOfId));
     };
 
-        const dataStatistic = {
+    const handleQuantityReadingPercent = (pageRead) => {
+      const totalPage = bookContent.totalPages;
+      const readPage = totalPage - pageRead.finishPage;
+      const percent = 100 - ((readPage / totalPage) * 100).toFixed(1);
+      console.log(percent);
+      return percent;
+    };
+
+    const currentProgress = handleQuantityReadingPercent(lastReadPage);
+const remainingProgress = 100 - currentProgress;
+
+    const dataStatistic = {
       datasets: [
         {
-          data: [handleReadingPercent(lastReadPage), 100],
+          data: [currentProgress, remainingProgress],
           backgroundColor: ["#30B94D", "#0f0f0f"],
           borderWidth: 0,
           borderRadius: 50,
@@ -219,16 +228,23 @@ export default function MyReadingPage() {
       },
     };
     return onStatistic ? (
-        <div className="StatisticCircleContainer">
-      <div className="StatisticCircle">
-        <Doughnut data={dataStatistic} options={optionsStatistic} />
+      <div className="StatisticCircleContainer">
+        <div className="StatisticCircle">
+          <Doughnut data={dataStatistic} options={optionsStatistic} />
           <p className="PercentStatistic">100%</p>
-      </div>
+        </div>
 
-      {handleReadingPercent(lastReadPage) > 0 && <div className="PercentContainer">
-        <p className="CircleColorContainer">{handleReadingPercent(lastReadPage)}%</p>
-        <p className="PageAlreadyRead">{bookContent.progress[bookContent.progress.length - 1].finishPage} pages read</p>
-        </div>}
+        {handleQuantityReadingPercent(lastReadPage) > 0 && (
+          <div className="PercentContainer">
+            <p className="CircleColorContainer">
+              {handleQuantityReadingPercent(lastReadPage)}%
+            </p>
+            <p className="PageAlreadyRead">
+              {bookContent.progress[bookContent.progress.length - 1].finishPage}{" "}
+              pages read
+            </p>
+          </div>
+        )}
       </div>
     ) : (
       <ul className="ProgressList">
