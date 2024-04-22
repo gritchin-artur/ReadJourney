@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ReadJourney/static/css/main.7acaea2f.css",
-    "main.js": "/ReadJourney/static/js/main.b38263d7.js",
-    "static/js/60.4ff2f41a.chunk.js": "/ReadJourney/static/js/60.4ff2f41a.chunk.js",
+    "main.js": "/ReadJourney/static/js/main.e3a1aec1.js",
+    "static/js/278.fd749bff.chunk.js": "/ReadJourney/static/js/278.fd749bff.chunk.js",
     "static/js/412.fc8cacac.chunk.js": "/ReadJourney/static/js/412.fc8cacac.chunk.js",
     "static/js/806.3fb24f0c.chunk.js": "/ReadJourney/static/js/806.3fb24f0c.chunk.js",
     "static/js/410.5a30bd15.chunk.js": "/ReadJourney/static/js/410.5a30bd15.chunk.js",
@@ -32,8 +32,8 @@
     "static/media/chevron-down-2.svg": "/ReadJourney/static/media/chevron-down-2.c4d86ae83a4cfea55a8bd99057fead93.svg",
     "static/media/chevron-left-2.svg": "/ReadJourney/static/media/chevron-left-2.90c57739b798f66303c2a856b8dddd96.svg",
     "main.7acaea2f.css.map": "/ReadJourney/static/css/main.7acaea2f.css.map",
-    "main.b38263d7.js.map": "/ReadJourney/static/js/main.b38263d7.js.map",
-    "60.4ff2f41a.chunk.js.map": "/ReadJourney/static/js/60.4ff2f41a.chunk.js.map",
+    "main.e3a1aec1.js.map": "/ReadJourney/static/js/main.e3a1aec1.js.map",
+    "278.fd749bff.chunk.js.map": "/ReadJourney/static/js/278.fd749bff.chunk.js.map",
     "412.fc8cacac.chunk.js.map": "/ReadJourney/static/js/412.fc8cacac.chunk.js.map",
     "806.3fb24f0c.chunk.js.map": "/ReadJourney/static/js/806.3fb24f0c.chunk.js.map",
     "410.5a30bd15.chunk.js.map": "/ReadJourney/static/js/410.5a30bd15.chunk.js.map",
@@ -45,6 +45,6 @@
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.b38263d7.js"
+    "static/js/main.e3a1aec1.js"
   ]
 }
