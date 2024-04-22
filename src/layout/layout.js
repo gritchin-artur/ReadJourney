@@ -15,7 +15,12 @@ export default function Layout() {
     (state) => state.modal.isModalOpenMobile
   );
   const isModalOpenBook = useSelector((state) => state.modal.isModalOpenBook);
-  const isModalOpenFinishRead = useSelector((state)=>state.modal.isModalOpenFinishRead)
+  const isModalOpenFinishRead = useSelector(
+    (state) => state.modal.isModalOpenFinishRead
+  );
+  const isModalOpenAddBook = useSelector(
+    (state) => state.modal.isModalOpenAddBook
+  );
 
   return (
     <>
@@ -57,7 +62,9 @@ export default function Layout() {
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
-      {(isMobileModalOpen || isModalOpenBook || isModalOpenFinishRead) && <Modals />}
+      {(isMobileModalOpen || isModalOpenBook || isModalOpenFinishRead || isModalOpenAddBook) && (
+        <Modals />
+      )}
     </>
   );
 }

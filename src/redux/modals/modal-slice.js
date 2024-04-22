@@ -6,7 +6,8 @@ const modalSlice = createSlice({
     isModalOpenMobile: false,
     isModalOpenBook: false,
     bookContent: [],
-    isModalOpenFinishRead: false
+    isModalOpenFinishRead: false,
+    isModalOpenAddBook: false,
   },
   reducers: {
     openModalMobile: (state) => {
@@ -28,6 +29,12 @@ const modalSlice = createSlice({
     closeModalFinishRead: (state) => {
       state.isModalOpenFinishRead = false;
     },
+            openModalAddBook: (state) => {
+      state.isModalOpenAddBook = true;
+    },
+    closeModalAddBook: (state) => {
+      state.isModalOpenAddBook = false;
+    },
   },
 });
 
@@ -40,4 +47,6 @@ export const {
   closeModalBook,
   openModalFinishRead,
   closeModalFinishRead,
+  openModalAddBook,
+  closeModalAddBook,
 } = modalSlice.actions;

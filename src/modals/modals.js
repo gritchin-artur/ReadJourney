@@ -1,11 +1,12 @@
 import { useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModalBook, closeModalFinishRead, closeModalMobile } from "../redux/modals/modal-slice";
+import { closeModalAddBook, closeModalBook, closeModalFinishRead, closeModalMobile } from "../redux/modals/modal-slice";
 import MobileModal from "./mobileModal/mobileModal";
 import { BackdropStyle } from "./modals.styled";
 import ModalBook from "./modalBook/modalBook";
 import ModalFinishRead from "./modalFinishRead/modalFinishRead";
+import ModalAddBBook from "./modalAddBBook/modalAddBBook";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -16,11 +17,15 @@ export default function Modals() {
   );
   const isModalOpenBook = useSelector((state) => state.modal.isModalOpenBook);
   const isModalOpenFinishRead = useSelector((state)=>state.modal.isModalOpenFinishRead)
+    const isModalOpenAddBook = useSelector(
+    (state) => state.modal.isModalOpenAddBook
+  );
 
   const handleClickClose = useCallback(() => {
     dispatch(closeModalMobile());
     dispatch(closeModalBook());
     dispatch(closeModalFinishRead())
+    dispatch(closeModalAddBook())
   }, [dispatch]);
 
   const handleBackdropClick = (e) => {
@@ -43,23 +48,19 @@ export default function Modals() {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.cssText = `overflow: auto; `;
     };
-  }, [isMobileModalOpen, isModalOpenBook, isModalOpenFinishRead, handleClickClose, dispatch]);
+  }, [isMobileModalOpen, isModalOpenBook, isModalOpenFinishRead, isModalOpenAddBook, handleClickClose, dispatch]);
   return createPortal(
     <>
-      {(isMobileModalOpen || isModalOpenBook || isModalOpenFinishRead) && (
+      {(isMobileModalOpen || isModalOpenBook || isModalOpenFinishRead || isModalOpenAddBook) && (
         <BackdropStyle onClick={handleBackdropClick}>
           {isMobileModalOpen && (
             <MobileModal handleClickClose={handleClickClose} />
           )}
           {isModalOpenBook && <ModalBook handleClickClose={handleClickClose} />}
           {isModalOpenFinishRead && <ModalFinishRead handleClickClose={handleClickClose}/>}
+          {isModalOpenAddBook && <ModalAddBBook handleClickClose={handleClickClose}/>}
         </BackdropStyle>
       )}
-      {/* {isModalOpenClickWord && (
-        <BackdropClickWord onClick={handleBackdropClick}>
-          <ClickWord handleClickClose={handleClickClose} />
-        </BackdropClickWord>
-      )} */}
     </>,
     modalRoot
   );

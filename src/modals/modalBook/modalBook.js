@@ -3,6 +3,7 @@ import { ModalBookContainer } from "./modalBook.styled";
 import { addBooks } from "../../redux/data/data-operation";
 import Default from "../../img/png/default-Img.jpg";
 import { useNavigate } from "react-router-dom";
+import { openModalAddBook } from "../../redux/modals/modal-slice";
 
 export default function ModalBook({ handleClickClose }) {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function ModalBook({ handleClickClose }) {
   const bookContent = useSelector((state) => state.modal.bookContent);
   const handleAddToLibrary = (id) => {
     dispatch(addBooks(id)).then((response) => {
-      response.payload.author && handleClickClose();
+      response.payload.author && (handleClickClose() || dispatch(openModalAddBook()));
     });
   };
   const handleClick = () => {
