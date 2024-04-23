@@ -90,11 +90,15 @@ export default function MyReadingPage() {
 
     onSubmit: (values) => {
       values.page === bookContent.totalPages && dispatch(openModalFinishRead());
-      if (!reading) {
+      const lastStopReadPage = bookContent.progress[bookContent.progress.length - 1].finishPage
+      if (!reading && values.page > lastStopReadPage  + 1) {
+        return toast.error(`You stopped at page ${lastStopReadPage}!`);
+      }
+      if (!reading && values.page <= lastStopReadPage + 1) {
         return dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
         });
-      }
+      } 
       if (reading && values.page <= bookContent.totalPages) {
         return dispatch(finishReadingBook(values)).then((response) => {
           response.payload.title && setReading(false);
@@ -195,14 +199,14 @@ export default function MyReadingPage() {
 
     const handleQuantityReadingPercent = (pageRead) => {
       const totalPage = bookContent.totalPages;
-      const readPage = totalPage - pageRead.finishPage;
-      const percent = 100 - ((readPage / totalPage) * 100).toFixed(1);
+      const readPage = pageRead && totalPage - pageRead.finishPage;
+      const percent = (100 - ((readPage / totalPage) * 100)).toFixed(1);
       console.log(percent);
       return percent;
     };
 
     const currentProgress = handleQuantityReadingPercent(lastReadPage);
-const remainingProgress = 100 - currentProgress;
+    const remainingProgress = 100 - currentProgress;
 
     const dataStatistic = {
       datasets: [
@@ -299,7 +303,7 @@ const remainingProgress = 100 - currentProgress;
     <MainContainer $reading={reading} $onStatistic={onStatistic}>
       <div className="ControlBookContainer">
         <form className="Form">
-          <p className="FormTitle">Filters:</p>
+          <p className="FormTitle">{!reading ? "Start page" : "Stop page"}:</p>
           <div className="DivInput">
             <input
               id="page"
@@ -378,7 +382,7 @@ const remainingProgress = 100 - currentProgress;
             </div>
           </div>
         ) : (
-          <>
+          <div className="ProgressMainContainer">
             <div className="ProgressContainer">
               <h2 className="TitleProgress">Progress</h2>
               <p className="ProgressText">
@@ -389,7 +393,7 @@ const remainingProgress = 100 - currentProgress;
             <div className="ImgContainer">
               <div className="ImgStar" />
             </div>
-          </>
+          </div>
         )}
       </div>
       <div className="OwnBookContainer">

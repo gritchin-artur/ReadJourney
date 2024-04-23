@@ -16,6 +16,14 @@ export const MainContainer = styled.div`
 
     padding: 20px;
     box-sizing: border-box;
+
+    @media only screen and (min-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 20px 20px 40px;
+      min-width: 704px;
+      min-height: 336px;
+    }
   }
 
   .FormTitle {
@@ -52,6 +60,13 @@ export const MainContainer = styled.div`
     &:focus {
       outline: none;
     }
+  }
+
+    input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0; 
   }
 
   .TextInput {
@@ -94,6 +109,9 @@ export const MainContainer = styled.div`
 
   .DairyContainer {
     margin-top: 30px;
+    @media only screen and (min-width: 768px) {
+      margin-top: 0px;
+    }
   }
 
   .DairyContainerHeader {
@@ -108,6 +126,11 @@ export const MainContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+    @media only screen and (min-width: 768px) {
+      margin: 0;
+      font-size: 20px;
+    }
   }
 
   .StatisticContainer {
@@ -119,6 +142,11 @@ export const MainContainer = styled.div`
     overflow-y: auto;
     padding: 20px;
     box-sizing: border-box;
+
+    @media only screen and (min-width: 768px) {
+      width: 321px;
+      height: 252px;
+    }
   }
 
   .ProgressElement {
@@ -180,8 +208,8 @@ export const MainContainer = styled.div`
       width: 14px;
       height: 14px;
       background: #30b94d;
-          left: -25px;
-    top: 2px;
+      left: -25px;
+      top: 2px;
     }
   }
 
@@ -333,8 +361,18 @@ export const MainContainer = styled.div`
     }
   }
 
+  .ProgressMainContainer {
+    @media only screen and (min-width: 768px) {
+      display: block;
+      padding-left: inherit;
+    }
+  }
+
   .ProgressContainer {
     margin-top: 40px;
+    @media only screen and (min-width: 768px) {
+      margin-top: 0px;
+    }
   }
 
   .TitleProgress {
@@ -343,6 +381,10 @@ export const MainContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 20px;
+    }
   }
 
   .ProgressText {
@@ -360,6 +402,10 @@ export const MainContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (min-width: 768px) {
+      height: 65%;
+    }
   }
 
   .ImgStar {
@@ -376,6 +422,12 @@ export const MainContainer = styled.div`
     width: 335px;
     height: 471px;
     background: #1f1f1f;
+
+    @media only screen and (min-width: 768px) {
+      width: 704px;
+      height: 518px;
+      padding: 40px;
+    }
   }
 
   .BookContainer {
@@ -384,6 +436,9 @@ export const MainContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (min-width: 768px) {
+      height: 65%;
+    }
   }
 
   .ContentContainer {
@@ -392,6 +447,12 @@ export const MainContainer = styled.div`
     height: 208px;
 
     text-align: center;
+
+    @media only screen and (min-width: 768px) {
+      display: table;
+      margin-top: auto;
+      padding-top: 40px;
+    }
   }
 
   .TitleMyReading {
@@ -400,12 +461,24 @@ export const MainContainer = styled.div`
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #f9f9f9;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 28px;
+      line-height: 114%;
+      letter-spacing: 0.02em;
+    }
   }
 
   .BookImg {
     border-radius: 10px;
     width: 140px;
     height: 213px;
+
+    @media only screen and (min-width: 768px) {
+      border-radius: 8px;
+      width: 169px;
+      height: 256px;
+    }
   }
 
   .BookTitle {
@@ -418,8 +491,11 @@ export const MainContainer = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 150px;
+    max-width: 150px;
     margin-top: 15px;
+    @media only screen and (min-width: 768px) {
+      max-width: 500px;
+    }
   }
 
   .BookAuthor {
