@@ -26,7 +26,6 @@ export default function LoginPage() {
     validationSchema: SigninSchema,
 
     onSubmit: (values) => {
-      console.log(values);
       dispatch(authOperations.logIn(values)).then((response) => {
         response.payload.name && navigate("/recommended");
       });

@@ -13,31 +13,8 @@ import {
   startReadingBook,
 } from "../../redux/data/data-operation";
 import { useEffect, useMemo, useState } from "react";
-
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Filler,
-//   Legend,
-// } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 import { openModalFinishRead } from "../../redux/modals/modal-slice";
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Filler,
-//   Legend
-// );
 
 import { Chart, registerables } from "chart.js";
 import toast from "react-hot-toast";
@@ -70,12 +47,9 @@ export default function MyReadingPage() {
 
   const {
     values,
-    // touched,
-    // errors,
     handleBlur,
     handleChange,
     handleSubmit,
-    // resetForm,
   } = useFormik({
     initialValues: {
       id: bookContent._id,
@@ -86,11 +60,9 @@ export default function MyReadingPage() {
         : 0,
     },
 
-    // validationSchema: AddBookSchema,
-
     onSubmit: (values) => {
       values.page === bookContent.totalPages && dispatch(openModalFinishRead());
-      const lastStopReadPage = bookContent.progress[bookContent.progress.length - 1].finishPage
+    const lastStopReadPage = bookContent.progress.length > 0 ? bookContent.progress[bookContent.progress.length - 1].finishPage : null;
       if (!reading && values.page > lastStopReadPage  + 1) {
         return toast.error(`You stopped at page ${lastStopReadPage}!`);
       }
@@ -188,7 +160,6 @@ export default function MyReadingPage() {
       const pagePerHour = Math.round(
         (handleReadingTime(item) / 60) * handleReadingPage(item)
       );
-      console.log(pagePerHour);
       return pagePerHour;
     };
 
@@ -201,7 +172,6 @@ export default function MyReadingPage() {
       const totalPage = bookContent.totalPages;
       const readPage = pageRead && totalPage - pageRead.finishPage;
       const percent = (100 - ((readPage / totalPage) * 100)).toFixed(1);
-      console.log(percent);
       return percent;
     };
 
@@ -309,15 +279,13 @@ export default function MyReadingPage() {
               id="page"
               name="page"
               type="number"
-              // className={getInputClass("title")}
               onChange={handleChange}
               value={values.page}
               onBlur={handleBlur}
             />
             <span className="TextInput">Page number:</span>
-            {/* {getInputAlert("title")} */}
           </div>
-          <button className="ButtonToStart" onClick={handleSubmit}>
+          <button className="ButtonToStart" onClick={handleSubmit} type="submit">
             {reading ? "To stop" : "To start"}
           </button>
         </form>
@@ -342,44 +310,6 @@ export default function MyReadingPage() {
             <p className="TextStatisticVisible">Each page, each chapter is a new round of knowledge, a new step towards understanding. By rewriting statistics, we create our own reading history.</p>
             <div className="StatisticContainer">
               {renderedStatisticItem}
-              {/* {bookContent.progress !== 0 &&
-                  bookContent.progress.map(
-                    (progress, item) =>
-                      progress.finishReading && (
-                        <li key={item} className="ProgressElement">
-                          <div className="FramePercentContainer">
-                            <Frame />
-                            <div className="DateContainer">
-                              <p className="DateItem">
-                                {handleData(progress.finishReading)}
-                              </p>
-                              <p className="PercentItem">
-                                {handleReadingPercent(progress)}%
-                              </p>
-                              <p className="MinuteItem">
-                                {handleReadingTime(progress)} minutes
-                              </p>
-                            </div>
-                          </div>
-
-                          <div>
-                            <p className="ReadPage">
-                              {handleReadingPage(progress)} pages
-                            </p>
-                            <div className="GraphikContainer">
-                                <div className="Graphique">
-                                    <Line options={options} data={data} />
-                                                               <p className="PagePerHour">
-                              {handleReadingPagePerHour(progress)} pages per
-                              hour
-                            </p>
-                                    </div>
-                              <Trash className="Trash" onClick={()=> handleDeleteStatistic(progress._id)}/>
-                            </div>
-                          </div>
-                        </li>
-                      )
-                  )} */}
             </div>
           </div>
         ) : (
