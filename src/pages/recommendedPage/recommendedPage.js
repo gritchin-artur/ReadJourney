@@ -27,7 +27,7 @@ export default function RecommendedPage() {
     if (recommendedBooks.totalPages < 3) {
       setBooks(recommendedBooks.results);
     } else {
-      const updatedBooks = recommendedBooks.results
+      const updatedBooks = recommendedBooks && recommendedBooks.results
         ? [...books, ...recommendedBooks.results]
         : [];
       const uniqueBooks = Array.from(
@@ -135,7 +135,7 @@ export default function RecommendedPage() {
     sliderWindow,
     handleChange,
     values.page,
-    recommendedBooks.totalPages,
+    recommendedBooks,
   ]);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function RecommendedPage() {
   }, [offset, sliderLine]);
 
   const renderedBooks = useMemo(() => {
-    return recommendedBooks.results && recommendedBooks.results.length !== 0 ? (
+    return recommendedBooks && recommendedBooks.results && recommendedBooks.results.length !== 0 ? (
       books.map((book, item) => (
         <li
           key={item}

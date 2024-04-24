@@ -17,21 +17,18 @@ import dataSlise from "./data/data-slise";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"],
+  whitelist: ["token", "refreshToken", "isLoggedIn"],
 };
 
 const modalPersistConfig = {
   key: "modal",
   storage,
   whitelist: [
-    "isModalOpenMobile",
-    "isModalOpenAddWord",
-    "isModalOpenTrainOneseif",
-    "isModalOpenConfirmation",
-    "isModalOpenEdit",
-    "clickWordCoordinates",
-    "clickWordId",
-    "isModalOpenWellDone",
+  "isModalOpenMobile",
+    "isModalOpenBook",
+    "bookContent",
+    "isModalOpenFinishRead",
+    "isModalOpenAddBook",
   ],
 };
 

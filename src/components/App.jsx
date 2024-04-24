@@ -30,6 +30,7 @@ export const App = () => {
 
   //   useEffect(() => {
   //   if(!isLoggedIn){
+  //      console.log("refreshTokenUser")
   //     dispatch(authOperations.refreshTokenUser());
   //   }
   // }, [dispatch, isLoggedIn]);

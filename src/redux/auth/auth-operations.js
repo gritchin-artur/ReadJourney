@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { token } from "../../api/axiosSettings";
+import axios, { token, refreshToken } from "../../api/axiosSettings";
 import toast from "react-hot-toast";
 
 const register = createAsyncThunk(
@@ -8,6 +8,7 @@ const register = createAsyncThunk(
     try {
       const { data } = await axios.post("/users/signup", credentials);
       token.set(data.token);
+      refreshToken.set(data.refreshToken);
       toast.success(`Hello ${credentials.name}`);
       return data;
     } catch (error) {
@@ -31,6 +32,7 @@ const logIn = createAsyncThunk("auth/signin", async (credentials, thunkAPI) => {
   try {
     const { data } = await axios.post("/users/signin", credentials);
     token.set(data.token);
+    refreshToken.set(data.refreshToken);
     toast.success(`Hello ${data.name}`);
     return data;
   } catch (error) {
@@ -88,13 +90,14 @@ const refreshTokenUser = createAsyncThunk(
   "users/current/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
+    const persistedToken = state.auth.refreshToken;
+ console.log(thunkAPI.rejectWithValue(null))
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue(null);
     }
     try {
-      token.set(persistedToken);
+     
+      refreshToken.set(persistedToken);
       const { data } = await axios.get("/users/current/refresh");
       return data;
     } catch (error) {

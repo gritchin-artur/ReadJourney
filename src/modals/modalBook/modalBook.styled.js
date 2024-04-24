@@ -30,13 +30,6 @@ export const ModalBookContainer = styled.div`
     }
   }
 
-  /* .ContentContainer {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-  } */
 
   .BookImg {
     border-radius: 10px;

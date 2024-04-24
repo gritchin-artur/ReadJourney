@@ -3,8 +3,6 @@ import * as Yup from "yup";
 const passwordRules = /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/;
 const emailRules = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 
-// const EnWord = /\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/;
-// const UaWord = /^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/;
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
