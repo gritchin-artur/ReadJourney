@@ -8,6 +8,12 @@ export const MainContainer = styled.div`
   justify-content: center;
   margin-top: 10px;
 
+  @media only screen and (min-width: 1440px) {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+  }
+
   .ControlBookContainer {
     border-radius: 30px;
     width: 335px;
@@ -23,6 +29,13 @@ export const MainContainer = styled.div`
       padding: 40px 20px 20px 40px;
       min-width: 704px;
       min-height: 336px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      display: block;
+      min-width: 353px;
+      min-height: 651px;
+      padding: 40px 20px 20px 20px;
     }
   }
 
@@ -60,13 +73,17 @@ export const MainContainer = styled.div`
     &:focus {
       outline: none;
     }
+
+    @media only screen and (min-width: 1440px) {
+      width: 100%;
+    }
   }
 
-    input::-webkit-inner-spin-button,
+  input::-webkit-inner-spin-button,
   input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
   }
 
   .TextInput {
@@ -112,6 +129,9 @@ export const MainContainer = styled.div`
     @media only screen and (min-width: 768px) {
       margin-top: 0px;
     }
+    @media only screen and (min-width: 1440px) {
+      margin-top: 40px;
+    }
   }
 
   .DairyContainerHeader {
@@ -146,6 +166,28 @@ export const MainContainer = styled.div`
     @media only screen and (min-width: 768px) {
       width: 321px;
       height: 252px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      margin-top: 20px;
+      border-radius: 12px;
+      width: 313px;
+      /* height: 373px; */
+height: ${(props) => (props.$onStatistic ? 281 : 373)}px;
+    }
+  }
+
+  .TextStatisticVisible{
+    display: none;
+        @media only screen and (min-width: 1440px) {
+  display: ${(props) => (props.$onStatistic ? "flex" : "none")};
+
+  margin-top: 20px;
+  font-weight: 600;
+font-size: 14px;
+line-height: 129%;
+letter-spacing: -0.02em;
+color: #686868;
     }
   }
 
@@ -366,6 +408,10 @@ export const MainContainer = styled.div`
       display: block;
       padding-left: inherit;
     }
+        @media only screen and (min-width: 1440px) {
+margin-top: 40px;
+padding-left: initial;
+    }
   }
 
   .ProgressContainer {
@@ -406,6 +452,11 @@ export const MainContainer = styled.div`
     @media only screen and (min-width: 768px) {
       height: 65%;
     }
+
+            @media only screen and (min-width: 1440px) {
+margin-top: 60px;
+
+    }
   }
 
   .ImgStar {
@@ -427,6 +478,12 @@ export const MainContainer = styled.div`
       width: 704px;
       height: 518px;
       padding: 40px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      margin-top: 0px;
+      width: 847px;
+      height: 651px;
     }
   }
 
@@ -479,6 +536,11 @@ export const MainContainer = styled.div`
       width: 169px;
       height: 256px;
     }
+
+    @media only screen and (min-width: 1440px) {
+     width: 224px;
+height: 340px;
+    }
   }
 
   .BookTitle {
@@ -496,6 +558,9 @@ export const MainContainer = styled.div`
     @media only screen and (min-width: 768px) {
       max-width: 500px;
     }
+        @media only screen and (min-width: 1440px) {
+font-size: 20px;
+    }
   }
 
   .BookAuthor {
@@ -505,6 +570,11 @@ export const MainContainer = styled.div`
     letter-spacing: -0.02em;
     color: #686868;
     margin-top: 2px;
+
+            @media only screen and (min-width: 1440px) {
+font-size: 14px;
+line-height: 129%;
+    }
   }
 
   .RecordButtonContainer {
@@ -517,6 +587,7 @@ export const MainContainer = styled.div`
   .RecordButton {
     width: 50px;
     height: 50px;
-    background-image: url(${(props) => props.$reading ? stopRecordImg : recordImg});
+    background-image: url(${(props) =>
+      props.$reading ? stopRecordImg : recordImg});
   }
 `;

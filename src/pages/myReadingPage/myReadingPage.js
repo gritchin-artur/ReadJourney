@@ -339,6 +339,7 @@ export default function MyReadingPage() {
                 />
               </div>
             </div>
+            <p className="TextStatisticVisible">Each page, each chapter is a new round of knowledge, a new step towards understanding. By rewriting statistics, we create our own reading history.</p>
             <div className="StatisticContainer">
               {renderedStatisticItem}
               {/* {bookContent.progress !== 0 &&
