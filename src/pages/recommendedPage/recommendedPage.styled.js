@@ -236,6 +236,7 @@ export const RecommendedPageContainer = styled.div`
   }
 
   .ArrowNext {
+        display: none;
     cursor: pointer;
     &:hover,
     &:active {

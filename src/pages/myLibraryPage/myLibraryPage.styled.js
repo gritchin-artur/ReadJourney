@@ -242,6 +242,7 @@ export const MyLibraryPageContainer = styled.div`
   }
 
   .ArrowNext {
+        display: none;
     cursor: pointer;
     &:hover,
     &:active {
