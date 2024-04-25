@@ -55,6 +55,7 @@ export default function RecommendedPage() {
     },
 
     onSubmit: (values) => {
+      console.log(values)
       handleChange({
         target: {
           name: "page",
