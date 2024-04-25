@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/ReadJourney/static/css/main.7acaea2f.css",
-    "main.js": "/ReadJourney/static/js/main.4baf5c3b.js",
+    "main.js": "/ReadJourney/static/js/main.5839a136.js",
     "static/js/278.54750ed5.chunk.js": "/ReadJourney/static/js/278.54750ed5.chunk.js",
     "static/js/412.75d2dd6b.chunk.js": "/ReadJourney/static/js/412.75d2dd6b.chunk.js",
     "static/js/806.3fb24f0c.chunk.js": "/ReadJourney/static/js/806.3fb24f0c.chunk.js",
-    "static/js/410.b681b6c1.chunk.js": "/ReadJourney/static/js/410.b681b6c1.chunk.js",
+    "static/js/410.1ab49ad7.chunk.js": "/ReadJourney/static/js/410.1ab49ad7.chunk.js",
     "static/js/136.7768fad3.chunk.js": "/ReadJourney/static/js/136.7768fad3.chunk.js",
     "static/js/127.0126b92a.chunk.js": "/ReadJourney/static/js/127.0126b92a.chunk.js",
     "static/js/705.503bdf76.chunk.js": "/ReadJourney/static/js/705.503bdf76.chunk.js",
@@ -32,11 +32,11 @@
     "static/media/chevron-down-2.svg": "/ReadJourney/static/media/chevron-down-2.c4d86ae83a4cfea55a8bd99057fead93.svg",
     "static/media/chevron-left-2.svg": "/ReadJourney/static/media/chevron-left-2.90c57739b798f66303c2a856b8dddd96.svg",
     "main.7acaea2f.css.map": "/ReadJourney/static/css/main.7acaea2f.css.map",
-    "main.4baf5c3b.js.map": "/ReadJourney/static/js/main.4baf5c3b.js.map",
+    "main.5839a136.js.map": "/ReadJourney/static/js/main.5839a136.js.map",
     "278.54750ed5.chunk.js.map": "/ReadJourney/static/js/278.54750ed5.chunk.js.map",
     "412.75d2dd6b.chunk.js.map": "/ReadJourney/static/js/412.75d2dd6b.chunk.js.map",
     "806.3fb24f0c.chunk.js.map": "/ReadJourney/static/js/806.3fb24f0c.chunk.js.map",
-    "410.b681b6c1.chunk.js.map": "/ReadJourney/static/js/410.b681b6c1.chunk.js.map",
+    "410.1ab49ad7.chunk.js.map": "/ReadJourney/static/js/410.1ab49ad7.chunk.js.map",
     "136.7768fad3.chunk.js.map": "/ReadJourney/static/js/136.7768fad3.chunk.js.map",
     "127.0126b92a.chunk.js.map": "/ReadJourney/static/js/127.0126b92a.chunk.js.map",
     "705.503bdf76.chunk.js.map": "/ReadJourney/static/js/705.503bdf76.chunk.js.map",
@@ -45,6 +45,6 @@
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.4baf5c3b.js"
+    "static/js/main.5839a136.js"
   ]
 }
