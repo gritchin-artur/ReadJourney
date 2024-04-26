@@ -11,13 +11,5 @@ export const token = {
   },
 };
 
-export const refreshToken = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = "";
-  },
-};
 
 export default axios;

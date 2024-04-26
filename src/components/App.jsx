@@ -22,18 +22,18 @@ export const App = () => {
     (state) => state.auth.isFetchingCurrentUser
   );
 
-  // const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn)
+  // const isInitial = useSelector((state)=> state.auth.isInitial)
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser())
   }, [dispatch]);
 
   //   useEffect(() => {
-  //   if(!isLoggedIn){
+  //   if(!isInitial){
   //      console.log("refreshTokenUser")
   //     dispatch(authOperations.refreshTokenUser());
   //   }
-  // }, [dispatch, isLoggedIn]);
+  // }, [dispatch, isInitial]);
   return (
     <>
       {isFetchingCurrentUser ? (

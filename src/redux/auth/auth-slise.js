@@ -62,7 +62,8 @@ const handleRegisterLogInFulfilled = (state, { payload }) => {
   state.email = payload.email;
   state.token = payload.token;
   state.refreshToken = payload.refreshToken;
-  state.isLoggedIn = payload.token ? true : false;
+  // state.isLoggedIn = payload.token ? true : false;
+  state.isLoggedIn = true;
 };
 
 const handleRegisterLogInReject = (state, { payload }) => {
@@ -76,7 +77,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      .addCase(authOperations.logOut.pending, handleLogOutFulfilled)
+      .addCase(authOperations.logOut.fulfilled, handleLogOutFulfilled)
       .addCase(
         authOperations.fetchCurrentUser.pending,
         handleFetchCurrentUserPending

@@ -17,7 +17,7 @@ import dataSlise from "./data/data-slise";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token", "refreshToken", "isLoggedIn"],
+  whitelist: ["token"],
 };
 
 const modalPersistConfig = {
