@@ -89,7 +89,6 @@ const refreshTokenUser = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.refreshToken;
-
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue(null);
     }
@@ -103,6 +102,7 @@ const refreshTokenUser = createAsyncThunk(
     }
   }
 );
+
 
 const authOperations = {
   register,

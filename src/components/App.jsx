@@ -22,24 +22,24 @@ export const App = () => {
     (state) => state.auth.isFetchingCurrentUser
   );
 
-  // const isInitial = useSelector((state)=> state.auth.isInitial)
+  const isInitial = useSelector((state)=> state.auth.isInitial)
 
   useEffect(() => {
     dispatch(authOperations.fetchCurrentUser())
   }, [dispatch]);
 
-  //   useEffect(() => {
-  //   if(!isInitial){
-  //      console.log("refreshTokenUser")
-  //     dispatch(authOperations.refreshTokenUser());
-  //   }
-  // }, [dispatch, isInitial]);
+    useEffect(() => {
+    if(isInitial){
+       console.log("refreshTokenUser")
+      dispatch(authOperations.refreshTokenUser());
+    }
+  }, [dispatch, isInitial]);
   return (
     <>
       {isFetchingCurrentUser ? (
-        <h1>...Loading</h1>
+        <h1 style={{color:"white", textAlign:"center"}}>...Loading</h1>
       ) : (
-        <Suspense fallback={<p>Загружаем...</p>}>
+        <Suspense fallback={<p style={{color:"white", textAlign:"center"}}>Загружаем...</p>}>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route
