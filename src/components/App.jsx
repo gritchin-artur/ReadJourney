@@ -22,24 +22,32 @@ export const App = () => {
     (state) => state.auth.isFetchingCurrentUser
   );
 
-  const isInitial = useSelector((state)=> state.auth.isInitial)
+  const isInitial = useSelector((state) => state.auth.isInitial);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  console.log(isInitial, isLoggedIn, isFetchingCurrentUser);
 
   useEffect(() => {
-    dispatch(authOperations.fetchCurrentUser())
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(authOperations.fetchCurrentUser());
+    }
+  }, [dispatch, isLoggedIn]);
 
-    useEffect(() => {
-    if(isInitial){
-       console.log("refreshTokenUser")
+  useEffect(() => {
+    if (isInitial) {
+      console.log(isInitial);
       dispatch(authOperations.refreshTokenUser());
     }
   }, [dispatch, isInitial]);
   return (
     <>
-      {isFetchingCurrentUser ? (
-        <h1 style={{color:"white", textAlign:"center"}}>...Loading</h1>
+      { isFetchingCurrentUser ? (
+        <h1 style={{ color: "white", textAlign: "center" }}>...Loading</h1>
       ) : (
-        <Suspense fallback={<p style={{color:"white", textAlign:"center"}}>Загружаем...</p>}>
+        <Suspense
+          fallback={
+            <p style={{ color: "white", textAlign: "center" }}>Загружаем...</p>
+          }
+        >
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route
@@ -67,10 +75,14 @@ export const App = () => {
                   </PrivateRoute>
                 }
               />
-              <Route path="reading" element={ <PrivateRoute>
+              <Route
+                path="reading"
+                element={
+                  <PrivateRoute>
                     <MyReadingPage />
-                  </PrivateRoute>} />
-              {/* <Route path="register" element={<RegisterPage />} /> */}
+                  </PrivateRoute>
+                }
+              />
               <Route
                 path="login"
                 element={

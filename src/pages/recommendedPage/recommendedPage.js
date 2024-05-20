@@ -12,6 +12,7 @@ import { NavLink } from "react-router-dom";
 export default function RecommendedPage() {
   const dispatch = useDispatch();
   const recommendedBooks = useSelector((state) => state.data.recommendedBooks);
+// const isInitial = useSelector((state)=> state.auth.isInitial)
 
   const [books, setBooks] = useState([]);
   const [offset, setOffset] = useState(0);

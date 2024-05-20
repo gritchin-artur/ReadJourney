@@ -31,7 +31,8 @@ export default function MyReadingPage() {
 
   const bookContent = ownBooks.find((item) => item._id === bookContentId);
 
-  const readPage = bookContent.progress[bookContent.progress.length - 1];
+  const readPage = bookContent?.progress?.[bookContent.progress.length - 1];
+  // const readPage = bookContent.progress[bookContent.progress.length - 1];
   const [reading, setReading] = useState(
     bookContent.progress.length === 0
       ? false
@@ -45,12 +46,7 @@ export default function MyReadingPage() {
     dispatch(getOwnBooks(isDeleteStatistic));
   }, [dispatch, isDeleteStatistic]);
 
-  const {
-    values,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
+  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
       id: bookContent._id,
       page: bookContent.progress.length
@@ -62,15 +58,18 @@ export default function MyReadingPage() {
 
     onSubmit: (values) => {
       values.page === bookContent.totalPages && dispatch(openModalFinishRead());
-    const lastStopReadPage = bookContent.progress.length > 0 ? bookContent.progress[bookContent.progress.length - 1].finishPage : null;
-      if (!reading && values.page > lastStopReadPage  + 1) {
+      const lastStopReadPage =
+        bookContent.progress.length > 0
+          ? bookContent.progress[bookContent.progress.length - 1].finishPage
+          : null;
+      if (!reading && values.page > lastStopReadPage + 1) {
         return toast.error(`You stopped at page ${lastStopReadPage}!`);
       }
       if (!reading && values.page <= lastStopReadPage + 1) {
         return dispatch(startReadingBook(values)).then((response) => {
           response.payload.title && setReading(true);
         });
-      } 
+      }
       if (reading && values.page <= bookContent.totalPages) {
         return dispatch(finishReadingBook(values)).then((response) => {
           response.payload.title && setReading(false);
@@ -171,7 +170,7 @@ export default function MyReadingPage() {
     const handleQuantityReadingPercent = (pageRead) => {
       const totalPage = bookContent.totalPages;
       const readPage = pageRead && totalPage - pageRead.finishPage;
-      const percent = (100 - ((readPage / totalPage) * 100)).toFixed(1);
+      const percent = (100 - (readPage / totalPage) * 100).toFixed(1);
       return percent;
     };
 
@@ -285,7 +284,11 @@ export default function MyReadingPage() {
             />
             <span className="TextInput">Page number:</span>
           </div>
-          <button className="ButtonToStart" onClick={handleSubmit} type="submit">
+          <button
+            className="ButtonToStart"
+            onClick={handleSubmit}
+            type="submit"
+          >
             {reading ? "To stop" : "To start"}
           </button>
         </form>
@@ -307,10 +310,12 @@ export default function MyReadingPage() {
                 />
               </div>
             </div>
-            <p className="TextStatisticVisible">Each page, each chapter is a new round of knowledge, a new step towards understanding. By rewriting statistics, we create our own reading history.</p>
-            <div className="StatisticContainer">
-              {renderedStatisticItem}
-            </div>
+            <p className="TextStatisticVisible">
+              Each page, each chapter is a new round of knowledge, a new step
+              towards understanding. By rewriting statistics, we create our own
+              reading history.
+            </p>
+            <div className="StatisticContainer">{renderedStatisticItem}</div>
           </div>
         ) : (
           <div className="ProgressMainContainer">

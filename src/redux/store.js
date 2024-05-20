@@ -17,7 +17,7 @@ import dataSlise from "./data/data-slise";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token", "refreshToken"],
+  whitelist: ["token", "refreshToken", "isLoggedIn", "isFetchingCurrentUser"],
 };
 
 const modalPersistConfig = {
@@ -35,7 +35,7 @@ const modalPersistConfig = {
 const dataPersistConfig = {
   key: "data",
   storage,
-  whitelist: ["recommendedBooks"],
+  whitelist: ["recommendedBooks", "ownBooks"],
 };
 
 const rootReducer = combineReducers({
